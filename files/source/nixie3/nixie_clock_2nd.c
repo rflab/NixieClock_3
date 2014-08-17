@@ -1,4 +1,3 @@
-#if 0
 //Rf Lab. all rights reserved.
 
 #include <htc.h>
@@ -1291,7 +1290,7 @@ void Rtc_Init()
 	I2c_Start();
 	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE);
 	I2c_Write(0x02); // 秒のアドレス
-	I2c_RepeatStart();
+	I2c_RepeatStart(); // 読み出しの場合はrepeatする
 	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_READ);
 	vl_bit = (I2c_Read(0) >> 7) & 1; // バックアップ異常検出VL
 	I2c_Stop();
@@ -2880,6 +2879,3 @@ void main(void)
 		Wait10ms(1);
 	}
 }
-
-
-#endif

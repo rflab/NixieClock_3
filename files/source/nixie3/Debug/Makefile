@@ -36,9 +36,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../nixie3.c \
-../nixieclock_1st.c \
-../nixieclock_2nd.c
+../nixie_clock_3rd.c
 
 
 PREPROCESSING_SRCS += 
@@ -48,24 +46,16 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-nixie3.o \
-nixieclock_1st.o \
-nixieclock_2nd.o
+nixie_clock_3rd.o
 
 OBJS_AS_ARGS +=  \
-nixie3.o \
-nixieclock_1st.o \
-nixieclock_2nd.o
+nixie_clock_3rd.o
 
 C_DEPS +=  \
-nixie3.d \
-nixieclock_1st.d \
-nixieclock_2nd.d
+nixie_clock_3rd.d
 
 C_DEPS_AS_ARGS +=  \
-nixie3.d \
-nixieclock_1st.d \
-nixieclock_2nd.d
+nixie_clock_3rd.d
 
 OUTPUT_FILE_PATH +=nixie3.elf
 
@@ -78,10 +68,6 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
-
-
-
-
 
 
 

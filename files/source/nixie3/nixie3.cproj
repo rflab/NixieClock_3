@@ -120,15 +120,15 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="nixie3.c">
+    <Compile Include="nixie_clock_3rd.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="nixieclock_1st.c">
+    <None Include="nixie_clock_1st.c">
       <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="nixieclock_2nd.c">
+    </None>
+    <None Include="nixie_clock_2nd.c">
       <SubType>compile</SubType>
-    </Compile>
+    </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

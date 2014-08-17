@@ -1,5 +1,3 @@
-#if 0
-
 #include <3694.h>
 #include <stdlib.h>
 
@@ -1246,5 +1244,3 @@ void main(void)
 		}
 	}
 }
-
-#endif
