@@ -3,22 +3,22 @@
 #include <htc.h>
 #include <math.h>
 //----------------- 
-// ƒRƒ“ƒpƒCƒ‹ƒIƒvƒVƒ‡ƒ“
+// ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 //-----------------
 
-// ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“ƒŒƒWƒXƒ^‚ğƒfƒoƒbƒO—p‚É•ÏX‚·‚é
+// ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’ãƒ‡ãƒãƒƒã‚°ç”¨ã«å¤‰æ›´ã™ã‚‹
 //#define USE_DEBUGGER
 
 //---------------
-// ƒRƒ“ƒtƒBƒO
+// ã‚³ãƒ³ãƒ•ã‚£ã‚°
 //---------------
-// ƒRƒ“ƒtƒBƒOƒŒ[ƒVƒ‡ƒ“ƒŒƒWƒXƒ^
+// ã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ¬ã‚¸ã‚¹ã‚¿
 #ifdef USE_DEBUGGER
 	__CONFIG(
 		CP_OFF
 		& CPD_OFF
 		& FOSC_INTRC_NOCLKOUT
-		& DEBUG_ON // ƒCƒ“ƒT[ƒLƒbƒgƒfƒoƒbƒO—LŒø
+		& DEBUG_ON // ã‚¤ãƒ³ã‚µãƒ¼ã‚­ãƒƒãƒˆãƒ‡ãƒãƒƒã‚°æœ‰åŠ¹
 		& BOREN_ON
 		& IESO_OFF	// Internal/External Switchover mode
 		& MCLRE_ON	// RE3/MCLR pin function is digital input, MCLR internally tied to VDD
@@ -32,7 +32,7 @@
 		CP_OFF
 		& CPD_OFF
 		& FOSC_INTRC_NOCLKOUT
-		& DEBUG_OFF	  // ƒCƒ“ƒT[ƒLƒbƒgƒfƒoƒbƒO–³Œø
+		& DEBUG_OFF	  // ã‚¤ãƒ³ã‚µãƒ¼ã‚­ãƒƒãƒˆãƒ‡ãƒãƒƒã‚°ç„¡åŠ¹
 		& BOREN_ON
 		& IESO_OFF	 // Internal/External Switchover mode
 		& MCLRE_ON // RE3/MCLR pin function is digital input, MCLR internally tied to VDD
@@ -43,15 +43,15 @@
 		& WRT_OFF);
 #endif
 
-// PIC‚ÌƒNƒƒbƒN‚ğHz‚Åİ’è(wait‚Æ‚©‚Åg‚í‚ê‚é)
+// PICã®ã‚¯ãƒ­ãƒƒã‚¯ã‚’Hzã§è¨­å®š(waitã¨ã‹ã§ä½¿ã‚ã‚Œã‚‹)
 #define _XTAL_FREQ 8000000UL 
 
 //---------------
-// ’è”•defines
+// å®šæ•°ï¼†defines
 //---------------
 #define NIL 0
 
-// EEPROMŠÖ˜A
+// EEPROMé–¢é€£
 #define EEPROM_ADR_CONFIG (0x0)
 #define EEPROM_ADR_MAX_BRIGHTNESS (0x1)
 
@@ -59,30 +59,30 @@
 #define CONFIG_AUTO_OFF (1<<6)
 #define CONFIG_AUTO_BRIGHTNESS (1<<4)
 
-// I2CŠÖ˜A
+// I2Cé–¢é€£
 #define I2C_SLAVE_ADDRESS_RTC 0xa2
 #define I2C_READ 1
 #define I2C_WRITE 0
-// I2C‚ÌƒNƒƒbƒN•ªü
-// “`‘—ƒŒ[ƒg = (Fosc/4)/(İ’è’l-1)
-// ˆİ’è’l=((Fosc(8Mhz)/4)/“`‘—ƒŒ[ƒg(100kbps))-1 = (8,000,000/4)/(100,000)-1 = 19
+// I2Cã®ã‚¯ãƒ­ãƒƒã‚¯åˆ†å‘¨
+// ä¼é€ãƒ¬ãƒ¼ãƒˆ = (Fosc/4)/(è¨­å®šå€¤-1)
+// âˆ´è¨­å®šå€¤=((Fosc(8Mhz)/4)/ä¼é€ãƒ¬ãƒ¼ãƒˆ(100kbps))-1 = (8,000,000/4)/(100,000)-1 = 19
 #define I2C_CLOCK_DEVIDE_VAL 19
 
-// ADŠÖ˜A
+// ADé–¢é€£
 #define MAX_AD_CHANNELS 13
 
-// AD•ÏŠ·(resolution256) ¨ LM35(10mV/“x)¨ ƒAƒ“ƒv(7.8”{) ¨ ‰·“x ¨ 100”{’l‚Ì•ÏŠ·
-// adval * (5 / 256)@* 1000 / 10  / 7.8 * 100	= 25.0400641 ‚ğ‚©‚¯‚ê‚Î100”{‚³‚ê‚½‰·“x‚ª“¾‚ç‚ê‚é
+// ADå¤‰æ›(resolution256) â†’ LM35(10mV/åº¦)â†’ ã‚¢ãƒ³ãƒ—(7.8å€) â†’ æ¸©åº¦ â†’ 100å€å€¤ã®å¤‰æ›
+// adval * (5 / 256)ã€€* 1000 / 10  / 7.8 * 100	= 25.0400641 ã‚’ã‹ã‘ã‚Œã°100å€ã•ã‚ŒãŸæ¸©åº¦ãŒå¾—ã‚‰ã‚Œã‚‹
 #define ADVAL_2_TMPARATURE 25
 
-// ƒ|[ƒgƒXƒe[ƒg
-// PORTA 0,1‚ÍƒAƒiƒƒO“ü—Íi“ü—Í‚É‚·‚é•K—v‚ª‚ ‚éj
-// PORTB ƒ{ƒ^ƒ““ü—Í‚ª‚Ğ‚Æ‚Â
-// PORTC 3E4‚ÍI2C‚ÌSCL/SDAi“ü—Í‚É‚·‚é•K—v‚ª‚ ‚éjA0A1‚Íƒ{ƒ^ƒ““ü—Í
-// PORTD ‚ÍŒ‡”Ô
-// PORTE MCLR‚Í“ü—Í
-// AN 4-2‚ÍƒfƒWƒ^ƒ‹,0A1‚ÍƒAƒiƒƒO
-// AN 13-8ƒsƒ“‚ÍƒfƒWƒ^ƒ‹‚Åg—p
+// ãƒãƒ¼ãƒˆã‚¹ãƒ†ãƒ¼ãƒˆ
+// PORTA 0,1ã¯ã‚¢ãƒŠãƒ­ã‚°å…¥åŠ›ï¼ˆå…¥åŠ›ã«ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ï¼‰
+// PORTB ãƒœã‚¿ãƒ³å…¥åŠ›ãŒã²ã¨ã¤
+// PORTC 3ãƒ»4ã¯I2Cã®SCL/SDAï¼ˆå…¥åŠ›ã«ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ï¼‰ã€0ã€1ã¯ãƒœã‚¿ãƒ³å…¥åŠ›
+// PORTD ã¯æ¬ ç•ª
+// PORTE MCLRã¯å…¥åŠ›
+// AN 4-2ã¯ãƒ‡ã‚¸ã‚¿ãƒ«,0ã€1ã¯ã‚¢ãƒŠãƒ­ã‚°
+// AN 13-8ãƒ”ãƒ³ã¯ãƒ‡ã‚¸ã‚¿ãƒ«ã§ä½¿ç”¨
 #define PIO_A 0b00000011
 #define PIO_B 0b00100000
 #define PIO_C 0b00011011
@@ -91,7 +91,7 @@
 #define PIO_ANSEL  0b00000011;
 #define PIO_ANSELH 0b00000000;
 
-// ƒ|[ƒgŠ„‚è“–‚Ä
+// ãƒãƒ¼ãƒˆå‰²ã‚Šå½“ã¦
 #define PIN_LINDECODER_0 RA4
 #define PIN_LINDECODER_1 RA5
 #define PIN_LINDECODER_2 RA6
@@ -118,7 +118,7 @@
 #define PIN_SDA RC4
 #define PIN_NMCLK RE3
 
-//ƒ^ƒCƒ}[0ƒvƒŠƒXƒP[ƒ‰
+//ã‚¿ã‚¤ãƒãƒ¼0ãƒ—ãƒªã‚¹ã‚±ãƒ¼ãƒ©
 //	000		  | 1 : 2		| 1 : 1
 //	001		  | 1 : 4		| 1 : 2
 //	010		  | 1 : 8		| 1 : 4
@@ -130,7 +130,7 @@
 #define TIMER0_PRESCALER 0b10
 #define TMR0_OFFSET 125
 
-//ƒ^ƒCƒ}[1ƒvƒŠƒXƒP[ƒ‰
+//ã‚¿ã‚¤ãƒãƒ¼1ãƒ—ãƒªã‚¹ã‚±ãƒ¼ãƒ©
 //	11 = 1:8 Prescale Value
 //	10 = 1:4 Prescale Value
 //	01 = 1:2 Prescale Value
@@ -149,7 +149,7 @@
 //#define TMR1H_1SEC_OFFSET_DEFAULT (88)
 #define TMR1_SOFT_PRESCALER (32)
 
-// ”š‚©‚çƒ‰ƒCƒ“ƒfƒR[ƒ_—po—Í‚Ö•ÏŠ·‚·‚éƒe[ƒuƒ‹
+// æ•°å­—ã‹ã‚‰ãƒ©ã‚¤ãƒ³ãƒ‡ã‚³ãƒ¼ãƒ€ç”¨å‡ºåŠ›ã¸å¤‰æ›ã™ã‚‹ãƒ†ãƒ¼ãƒ–ãƒ«
 const unsigned char NUM_2_LINE[] = 
 {
 	0,
@@ -165,7 +165,7 @@ const unsigned char NUM_2_LINE[] =
 	10,
 };
 
-// ‹P“x‚Ì‰ºŒÀ
+// è¼åº¦ã®ä¸‹é™
 #define BRIGHTNESS_HIGHER_MAX (200)
 #define BRIGHTNESS_LOWER_THRESHOLD_NIXIE (50)
 #define BRIGHTNESS_LOWER_THRESHOLD_NEON  (180)
@@ -175,14 +175,14 @@ const unsigned char NUM_2_LINE[] =
 #define DYNAMIC_OFF_TIMER (0xff - 30)
 
 //---------------
-// ƒ}ƒNƒ
+// ãƒã‚¯ãƒ­
 //---------------
 #define STATIC_ASSERT(exp) {char is_size[(exp)?1:0]; (void)is_size;}
 #define LO(c) ((c)&0x0f)
 #define HI(c) (((c)>>4)&0x0f)
 
 //---------------
-// Œ^’è‹`
+// å‹å®šç¾©
 //---------------
 
 // bool
@@ -192,10 +192,10 @@ typedef enum _e_bool
 	TRUE
 }e_bool;
 
-// ƒR[ƒ‹ƒoƒbƒNƒ^ƒCƒv
+// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚¿ã‚¤ãƒ—
 typedef e_bool (*t_callback)(unsigned char arg_);
 
-// Œ…
+// æ¡
 typedef enum _e_digit
 {
 	DIGIT_0 = 0,
@@ -209,7 +209,7 @@ typedef enum _e_digit
 	DIGIT_OFF
 }e_digit;
 
-// ƒXƒe[ƒgƒ}ƒVƒ“—pƒXƒe[ƒg
+// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ç”¨ã‚¹ãƒ†ãƒ¼ãƒˆ
 typedef struct _STATE
 {
 	t_callback on_button0;
@@ -219,22 +219,22 @@ typedef struct _STATE
 
 
 //---------------
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //---------------
 
-// ƒRƒ“ƒtƒBƒO
+// ã‚³ãƒ³ãƒ•ã‚£ã‚°
 volatile static unsigned char g_config_alarm_enable = 1;
 volatile static unsigned char g_config_auto_off_enable = 1;
 volatile static unsigned char g_config_auto_brightness = 1;
 volatile static unsigned char g_config_max_brightness = BRIGHTNESS_HIGHER_MAX;
 volatile static unsigned char g_auto_off_count = 0;
 
-// Œ»İ‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”
+// ç¾åœ¨ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 //volatile static t_callback g_timer0_callback[3] = {NIL};
 volatile static t_callback g_timer1_callback[3] = {NIL};
 volatile static t_callback g_mainloop_callback[3] = {NIL};
 
-// •\¦‹L‰¯—Ìˆæ
+// è¡¨ç¤ºè¨˜æ†¶é ˜åŸŸ
 volatile static unsigned char g_disp_flag = 0b11111111;
 volatile static unsigned char g_disp[8] = {0, 0, DIGIT_OFF, 0, 0, DIGIT_OFF, 0, 0};
 volatile static unsigned char g_disp_prev[8] = {0, 0, DIGIT_OFF, 0, 0, DIGIT_OFF, 0, 0};
@@ -244,7 +244,7 @@ volatile static unsigned char g_disp_colon[8] = {0, 0, 3, 0, 0, 3, 0, 0};
 volatile static unsigned char g_disp_colon_prev[8] = {0, 0, 3, 0, 0, 3, 0, 0};
 volatile static unsigned char g_disp_colon_capture[8] = {0, 0, 3, 0, 0, 3, 0, 0};
 
-// ŠÔ‹L‰¯—Ìˆæ
+// æ™‚é–“è¨˜æ†¶é ˜åŸŸ
 volatile static unsigned char g_hour	= 0x00;
 volatile static unsigned char g_minute	= 0x00;
 volatile static unsigned char g_second	= 0x00;
@@ -255,14 +255,14 @@ volatile static unsigned char g_week	= 0x00;
 volatile static unsigned char g_alarm_hour	  = 0x12;
 volatile static unsigned char g_alarm_minute  = 0x00;
 
-// ‰·“x‹L‰¯—Ìˆæ
+// æ¸©åº¦è¨˜æ†¶é ˜åŸŸ
 volatile static unsigned char g_temparature_integer = 0;
 volatile static unsigned char g_temparature_fractional = 0;
 
-// “_–ÅŒ…İ’è
+// ç‚¹æ»…æ¡è¨­å®š
 volatile unsigned char g_blink_digits = 0b00000000;
 
-// CdS–¾‚é‚³‹L‰¯—Ìˆæ
+// CdSæ˜ã‚‹ã•è¨˜æ†¶é ˜åŸŸ
 volatile unsigned char g_cds_adval = 0;
 volatile unsigned char g_cds_100th_place = 0;
 volatile unsigned char g_cds_10th_place = 0;
@@ -273,7 +273,7 @@ volatile unsigned char* g_target_bcd_ptr = NIL;
 volatile unsigned char g_target_max = 59;
 volatile unsigned char g_target_min = 0;
 
-// ƒ{ƒ^ƒ“
+// ãƒœã‚¿ãƒ³
 volatile static unsigned char g_button0_push = 0;
 volatile static unsigned char g_button1_push = 0;
 volatile static unsigned char g_button2_push = 0;
@@ -281,11 +281,11 @@ volatile static unsigned char g_button0_press = 0;
 volatile static unsigned char g_button1_press = 0;
 volatile static unsigned char g_button2_press = 0;
 
-// ƒAƒ‰[ƒ€
+// ã‚¢ãƒ©ãƒ¼ãƒ 
 volatile static unsigned char g_alarm_trigger = 0;
 volatile static unsigned char g_alarm_beep_on = 0;
 
-// ƒXƒe[ƒgƒ}ƒVƒ“
+// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³
 static STATE* g_state_current;
 static STATE g_state_clock			= {NIL, NIL, NIL};
 static STATE g_state_alarm			= {NIL, NIL, NIL};
@@ -298,21 +298,21 @@ static STATE g_state_set_calendar	= {NIL, NIL, NIL};
 static STATE g_state_set_alarm		= {NIL, NIL, NIL};
 static STATE g_state_set_config		= {NIL, NIL, NIL};
 
-// b’èŒvXV‘¬“x’²®A–{—ˆ‚ÍRTC‚©‚ç‚ÌƒNƒƒbƒN‹Ÿ‹‹‚ğs‚¤‚×‚«
+// æš«å®šæ™‚è¨ˆæ›´æ–°é€Ÿåº¦èª¿æ•´ã€æœ¬æ¥ã¯RTCã‹ã‚‰ã®ã‚¯ãƒ­ãƒƒã‚¯ä¾›çµ¦ã‚’è¡Œã†ã¹ã
 volatile unsigned char timer1h_1sec_offset = TMR1H_1SEC_OFFSET_DEFAULT_DOWN;
 volatile unsigned char timer1l_1sec_offset = TMR1L_1SEC_OFFSET_DEFAULT_DOWN;
 volatile unsigned char g_next_timer1_ajustment = 0;
 
-// ‚Æ‚è‚ ‚¦‚¸ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ã¨ã‚Šã‚ãˆãšãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 e_bool State_ChangeConfig(unsigned char button_no_);
 e_bool State_CallbackBlink(unsigned char button_no_);
 
 
 //---------------
-// ”Ä—pŠÖ”
-// ’ˆÓ:waitŒv‚ÌŠÖ”‚Í”äŠr‚Æ‚©‚ğ–³‹‚µ‚Ä‚¢‚é‚Ì‚Å‚ ‚Ü‚è³Šm‚Å‚Í‚È‚¢
+// æ±ç”¨é–¢æ•°
+// æ³¨æ„:waitè¨ˆã®é–¢æ•°ã¯æ¯”è¼ƒã¨ã‹ã‚’ç„¡è¦–ã—ã¦ã„ã‚‹ã®ã§ã‚ã¾ã‚Šæ­£ç¢ºã§ã¯ãªã„
 //---------------
-// 100us‚Ìwait/
+// 100usã®wait/
 void Wait100us(unsigned char us100_)
 {
 	unsigned char count = us100_;
@@ -322,7 +322,7 @@ void Wait100us(unsigned char us100_)
 		count--;
 	}
 }
-// 100us‚Ìwait
+// 100usã®wait
 void Wait10us(unsigned char us10_)
 {
 	unsigned char count = us10_;
@@ -333,7 +333,7 @@ void Wait10us(unsigned char us10_)
 	}
 }
 
-// 100us‚Ìwait
+// 100usã®wait
 void Wait1us(unsigned char us100_)
 {
 	unsigned char count = us100_;
@@ -344,7 +344,7 @@ void Wait1us(unsigned char us100_)
 	}
 }
 
-// 100ms’PˆÊ‚Ìwait
+// 100mså˜ä½ã®wait
 void Wait1ms(unsigned char ms_)
 {
 	unsigned char count = ms_;
@@ -355,7 +355,7 @@ void Wait1ms(unsigned char ms_)
 	}
 }
 
-// 10ms’PˆÊ‚Ìwait
+// 10mså˜ä½ã®wait
 void Wait10ms(unsigned char ms_)
 {
 	unsigned char count = ms_;
@@ -366,7 +366,7 @@ void Wait10ms(unsigned char ms_)
 	}
 }
 
-// 100ms’PˆÊ‚Ìwait
+// 100mså˜ä½ã®wait
 void Wait100ms(unsigned char ms_)
 {
 	unsigned char count = ms_;
@@ -398,7 +398,7 @@ void Wait100ms(unsigned char ms_)
 	}
 #endif 
 
-// EEPROM “Ç‚İ‚İ
+// EEPROM èª­ã¿è¾¼ã¿
 unsigned char Eeprom_Read( unsigned char adr )
 {
 	EEADR = adr;
@@ -406,15 +406,15 @@ unsigned char Eeprom_Read( unsigned char adr )
 	return( EEDATA );		// Return read data
 }
 
-// EEPROM‘‚«‚İ
+// EEPROMæ›¸ãè¾¼ã¿
 void Eeprom_Write( unsigned char adr, unsigned char data )
 {
 	EEADR = adr;
 	EEDATA = data;
 
 	WREN = 1;  			// Set write enable bit
-	EECON2 = 0x55;      //‚¨‚Ü‚¶‚È‚¢
-	EECON2 = 0xaa;      //‚¨‚Ü‚¶‚È‚¢
+	EECON2 = 0x55;      //ãŠã¾ã˜ãªã„
+	EECON2 = 0xaa;      //ãŠã¾ã˜ãªã„
 
 	WR = 1;  				// Set programming bit
 	while( EEIF == 0 )		// Wait till write operation complete
@@ -425,17 +425,17 @@ void Eeprom_Write( unsigned char adr, unsigned char data )
 	WREN = 0;  			// Clear write enable bit
 }
 
-// I2CƒXƒ^[ƒgƒRƒ“ƒfƒBƒVƒ‡ƒ“
+// I2Cã‚¹ã‚¿ãƒ¼ãƒˆã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³
 void I2c_Start()
 {
 	unsigned char timeout;
-	// ƒXƒ^[ƒgƒRƒ“ƒfƒBƒVƒ‡ƒ“”­s
+	// ã‚¹ã‚¿ãƒ¼ãƒˆã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³ç™ºè¡Œ
 	SSPIF = 0;
 	SEN = 1;
 	
-	// SEN‚ªƒŠƒZƒbƒg‚³‚ê‚é‚©
-	// SSPIF‚ªƒZƒbƒg‚³‚êŠ„‚è‚İ‚ª”­¶‚·‚é‚©‚ğ‘Ò‚ÂB
-	// //SSPIF‚Í‚Ù‚©‚É‚à—vˆö‚ª—§‚Â‰Â”\«‚ª‚ ‚é‚Ì‚ÅA‚±‚±‚Å‚ÍSEN‚ğg—p‚·‚é
+	// SENãŒãƒªã‚»ãƒƒãƒˆã•ã‚Œã‚‹ã‹
+	// SSPIFãŒã‚»ãƒƒãƒˆã•ã‚Œå‰²ã‚Šè¾¼ã¿ãŒç™ºç”Ÿã™ã‚‹ã‹ã‚’å¾…ã¤ã€‚
+	// //SSPIFã¯ã»ã‹ã«ã‚‚è¦å› ãŒç«‹ã¤å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€ã“ã“ã§ã¯SENã‚’ä½¿ç”¨ã™ã‚‹
 	timeout = 0;
 	while (SEN)
 	//while (!SSPIF)
@@ -448,21 +448,21 @@ void I2c_Start()
 		}
 	}
 
-	// ˆê‰ƒNƒŠƒA‚µ‚Ä‚¨‚©‚È‚¢‚ÆŠ„‚è‚İ—LŒø‰»‚ÉŠ„‚è‚İ‚Å‚Ü‚­‚é‚Í‚¸
+	// ä¸€å¿œã‚¯ãƒªã‚¢ã—ã¦ãŠã‹ãªã„ã¨å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–æ™‚ã«å‰²ã‚Šè¾¼ã¿ã§ã¾ãã‚‹ã¯ãš
 	//SSPIF = 0;
 }
 
-// I2CƒŠƒs[ƒgƒXƒ^[ƒgƒRƒ“ƒfƒBƒVƒ‡ƒ“
+// I2Cãƒªãƒ”ãƒ¼ãƒˆã‚¹ã‚¿ãƒ¼ãƒˆã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³
 void I2c_RepeatStart()
 {
 	unsigned char timeout;
-	// ƒŠƒs[ƒgƒXƒ^[ƒgƒRƒ“ƒfƒBƒVƒ‡ƒ“”­s
+	// ãƒªãƒ”ãƒ¼ãƒˆã‚¹ã‚¿ãƒ¼ãƒˆã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³ç™ºè¡Œ
 	SSPIF = 0;
 	RSEN = 1;
 	
-	// RSEN‚ªƒŠƒZƒbƒg‚³‚ê‚é‚©
-	// SSPIF‚ªƒZƒbƒg‚³‚êŠ„‚è‚İ‚ª”­¶‚·‚é‚©‚ğ‘Ò‚ÂB
-	// //SSPIF‚Í‚Ù‚©‚É‚à—vˆö‚ª—§‚Â‰Â”\«‚ª‚ ‚é‚Ì‚ÅA‚±‚±‚Å‚ÍSEN‚ğg—p‚·‚é
+	// RSENãŒãƒªã‚»ãƒƒãƒˆã•ã‚Œã‚‹ã‹
+	// SSPIFãŒã‚»ãƒƒãƒˆã•ã‚Œå‰²ã‚Šè¾¼ã¿ãŒç™ºç”Ÿã™ã‚‹ã‹ã‚’å¾…ã¤ã€‚
+	// //SSPIFã¯ã»ã‹ã«ã‚‚è¦å› ãŒç«‹ã¤å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€ã“ã“ã§ã¯SENã‚’ä½¿ç”¨ã™ã‚‹
 	timeout = 0;
 	while (RSEN)
 	// while (!SSPIF)
@@ -475,21 +475,21 @@ void I2c_RepeatStart()
 		}
 	}
 
-	// ˆê‰ƒNƒŠƒA‚µ‚Ä‚¨‚©‚È‚¢‚ÆŠ„‚è‚İ—LŒø‰»‚ÉŠ„‚è‚İ‚Å‚Ü‚­‚é‚Í‚¸
+	// ä¸€å¿œã‚¯ãƒªã‚¢ã—ã¦ãŠã‹ãªã„ã¨å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–æ™‚ã«å‰²ã‚Šè¾¼ã¿ã§ã¾ãã‚‹ã¯ãš
 	SSPIF = 0;
 }
 
-// I2CƒXƒgƒbƒvƒRƒ“ƒfƒBƒVƒ‡ƒ“
+// I2Cã‚¹ãƒˆãƒƒãƒ—ã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³
 void I2c_Stop()
 {
 	unsigned char timeout;
-	// ƒXƒgƒbƒvƒRƒ“ƒfƒBƒVƒ‡ƒ“”­s
+	// ã‚¹ãƒˆãƒƒãƒ—ã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³ç™ºè¡Œ
 	SSPIF = 0;
 	PEN = 1;
 
-	// RSEN‚ªƒŠƒZƒbƒg‚³‚ê‚é‚©
-	// SSPIF‚ªƒZƒbƒg‚³‚êŠ„‚è‚İ‚ª”­¶‚·‚é‚©‚ğ‘Ò‚ÂB
-	// // SSPIF‚Í‚Ù‚©‚É‚à—vˆö‚ª—§‚Â‰Â”\«‚ª‚ ‚é‚Ì‚ÅA‚±‚±‚Å‚ÍPEN‚ğg—p‚·‚é
+	// RSENãŒãƒªã‚»ãƒƒãƒˆã•ã‚Œã‚‹ã‹
+	// SSPIFãŒã‚»ãƒƒãƒˆã•ã‚Œå‰²ã‚Šè¾¼ã¿ãŒç™ºç”Ÿã™ã‚‹ã‹ã‚’å¾…ã¤ã€‚
+	// // SSPIFã¯ã»ã‹ã«ã‚‚è¦å› ãŒç«‹ã¤å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€ã“ã“ã§ã¯PENã‚’ä½¿ç”¨ã™ã‚‹
 	timeout = 0;
 	while (PEN)
 	//while (!SSPIF)
@@ -502,19 +502,19 @@ void I2c_Stop()
 		}
 	}
 	
-	// ˆê‰ƒNƒŠƒA‚µ‚Ä‚¨‚©‚È‚¢‚ÆŠ„‚è‚İ—LŒø‰»‚ÉŠ„‚è‚İ‚Å‚Ü‚­‚é‚Í‚¸
+	// ä¸€å¿œã‚¯ãƒªã‚¢ã—ã¦ãŠã‹ãªã„ã¨å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–æ™‚ã«å‰²ã‚Šè¾¼ã¿ã§ã¾ãã‚‹ã¯ãš
 	//SSPIF = 0;
 }
 
-// I2C‘—M
+// I2Cé€ä¿¡
 e_bool I2c_Write(unsigned char data_)
 {
 	unsigned char timeout;
-	// Š„‚è‚İƒNƒŠƒA‚µ‚Äƒf[ƒ^‚ğ‘‚«‚Ş‚Æƒf[ƒ^‘—MŠJn
+	// å‰²ã‚Šè¾¼ã¿ã‚¯ãƒªã‚¢ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€ã¨ãƒ‡ãƒ¼ã‚¿é€ä¿¡é–‹å§‹
 	SSPIF = 0;
 	SSPBUF = data_;
 	
-	// ‘—MI—¹‘Ò‚¿
+	// é€ä¿¡çµ‚äº†å¾…ã¡
 	timeout = 0;
 	while (!SSPIF)
 	{
@@ -526,22 +526,22 @@ e_bool I2c_Write(unsigned char data_)
 		}
 	}
 
-	// ˆê‰ƒNƒŠƒA‚µ‚Ä‚¨‚©‚È‚¢‚ÆŠ„‚è‚İ—LŒø‰»‚ÉŠ„‚è‚İ‚Å‚Ü‚­‚é‚Í‚¸
+	// ä¸€å¿œã‚¯ãƒªã‚¢ã—ã¦ãŠã‹ãªã„ã¨å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–æ™‚ã«å‰²ã‚Šè¾¼ã¿ã§ã¾ãã‚‹ã¯ãš
 	//SSPIF = 0;
 
 	return TRUE;
 }
 
-// I2CóM
+// I2Cå—ä¿¡
 unsigned char I2c_Read(unsigned char ack_)
 {
 	unsigned char timeout;
 	
-	// I2CóMŠJn
+	// I2Cå—ä¿¡é–‹å§‹
 	SSPIF = 0;
 	RCEN = 1;
 
-	// óM‘Ò‚¿
+	// å—ä¿¡å¾…ã¡
 	timeout = 0;
 	while (RCEN)
 	//while (!SSPIF)
@@ -554,23 +554,23 @@ unsigned char I2c_Read(unsigned char ack_)
 		}
 	}
 
-	// ƒAƒNƒmƒŠƒbƒWƒV[ƒPƒ“ƒXŠJn
+	// ã‚¢ã‚¯ãƒãƒªãƒƒã‚¸ã‚·ãƒ¼ã‚±ãƒ³ã‚¹é–‹å§‹
 	if (ack_)
 	{
-		// ack‚Í0
+		// ackã¯0
 		ACKDT = 0;
 	}
 	else
 	{
-		// nack‚Í1
+		// nackã¯1
 		ACKDT = 1;
 	}
 	ACKEN = 1;
 	SSPIF = 0;
 	 
-	// ƒAƒNƒmƒŠƒbƒWƒV[ƒPƒ“ƒXI—¹‘Ò‚¿
-	// ACKENƒNƒŠƒA‚à‚µ‚­‚Í
-	// // SSPIF‚ªƒZƒbƒg‚³‚êŠ„‚è‚İ‚ª”­¶‚·‚é‚©‚ğ‘Ò‚ÂB	
+	// ã‚¢ã‚¯ãƒãƒªãƒƒã‚¸ã‚·ãƒ¼ã‚±ãƒ³ã‚¹çµ‚äº†å¾…ã¡
+	// ACKENã‚¯ãƒªã‚¢ã‚‚ã—ãã¯
+	// // SSPIFãŒã‚»ãƒƒãƒˆã•ã‚Œå‰²ã‚Šè¾¼ã¿ãŒç™ºç”Ÿã™ã‚‹ã‹ã‚’å¾…ã¤ã€‚	
 	timeout = 0;
 	while (ACKEN)
 	//while (!SSPIF)
@@ -583,11 +583,11 @@ unsigned char I2c_Read(unsigned char ack_)
 		}
 	}
 
-	// æ“¾‚µ‚½’l
+	// å–å¾—ã—ãŸå€¤
 	return SSPBUF;
 }
 
-// ADƒRƒ“ƒo[ƒ^‚Ì’l‚ğæ“¾‚·‚é
+// ADã‚³ãƒ³ãƒãƒ¼ã‚¿ã®å€¤ã‚’å–å¾—ã™ã‚‹
 unsigned char Pic_GetAd(unsigned char ch_)
 {
 	if (ch_ > MAX_AD_CHANNELS)
@@ -599,24 +599,24 @@ unsigned char Pic_GetAd(unsigned char ch_)
 	ADCON0 = (ADCON0 & 0b11000011) | (ch_ << 2);
 	ADCON0 |= 0b00000010;
 
-	// AD•ÏŠ·I—¹‚Ü‚Å‘Ò‚Â
+	// ADå¤‰æ›çµ‚äº†ã¾ã§å¾…ã¤
 	while (ADCON0 & 0b00000010)
 	{
 		Wait10us(1);
 	}
 	
-	// Œ‹‰Ê‚ğ“Ç‚İ‚İ
+	// çµæœã‚’èª­ã¿è¾¼ã¿
 	return ADRESH;
 };
 
 //---------------
-// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“
+// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³
 //---------------
-/// ƒŒƒWƒXƒ^‰Šúİ’è
+/// ãƒ¬ã‚¸ã‚¹ã‚¿åˆæœŸè¨­å®š
 void InitDevice()
 {
-	// “à•”ƒNƒƒbƒNİ’è
-	// bit 7 Unimplemented: Read as e0f
+	// å†…éƒ¨ã‚¯ãƒ­ãƒƒã‚¯è¨­å®š
+	// bit 7 Unimplemented: Read as â€˜0â€™
 	// bit 6-4 IRCF<2:0>: Internal Oscillator Frequency Select bits
 	//	111 = 8 MHz
 	//	110 = 4 MHz (default)
@@ -638,44 +638,44 @@ void InitDevice()
 	// bit 0 SCS: System Clock Select bit
 	//	1 = Internal oscillator is used for system clock
 	//	0 = Clock source defined by FOSC<2:0> of the CONFIG1 register
-	OSCCON = 0b01110001; // “à‘Ÿ8Mhz
+	OSCCON = 0b01110001; // å†…è‡“8Mhz
 
-	// ADƒRƒ“ƒo[ƒ^ƒRƒ“ƒgƒ[ƒ‹0
+	// ADã‚³ãƒ³ãƒãƒ¼ã‚¿ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«0
 	// bit 7-6 ADCS<1:0>: A/D Conversion Clock Select bits
-	//@ 00 = FOSC/2
-	//@ 01 = FOSC/8
-	//@ 10 = FOSC/32
-	// @11 = FRC (clock derived from a dedicated internal oscillator = 500 kHz max)
+	//ã€€ 00 = FOSC/2
+	//ã€€ 01 = FOSC/8
+	//ã€€ 10 = FOSC/32
+	// ã€€11 = FRC (clock derived from a dedicated internal oscillator = 500 kHz max)
 	// bit 5-2 CHS<3:0>: Analog Channel Select bits
-	// @0000 = AN0
-	//@@@EEE
-	// @1101 = AN13
-	// @1110 = CVREF
-	// @1111 = Fixed Ref (0.6V fixed voltage reference)
+	// ã€€0000 = AN0
+	//ã€€ã€€ã€€ãƒ»ãƒ»ãƒ»
+	// ã€€1101 = AN13
+	// ã€€1110 = CVREF
+	// ã€€1111 = Fixed Ref (0.6V fixed voltage reference)
 	// bit 1 GO/DONE: A/D Conversion Status bit
-	// @1 = A/D conversion cycle in progress. Setting this bit starts an A/D conversion cycle.
+	// ã€€1 = A/D conversion cycle in progress. Setting this bit starts an A/D conversion cycle.
 	//		This bit is automatically cleared by hardware when the A/D conversion has completed.
-	// @0 = A/D conversion completed/not in progress
+	// ã€€0 = A/D conversion completed/not in progress
 	// bit 0 ADON: ADC Enable bit
-	// @1 = ADC is enabled
-	// @0 = ADC is disabled and consumes no operating current
+	// ã€€1 = ADC is enabled
+	// ã€€0 = ADC is disabled and consumes no operating current
 	ADCON0 = 0b10000101; // AD0, FOSC/32, Enable
 
-	// ADƒRƒ“ƒo[ƒ^ƒRƒ“ƒgƒ[ƒ‹1
+	// ADã‚³ãƒ³ãƒãƒ¼ã‚¿ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«1
 	// bit 7 ADFM: A/D Conversion Result Format Select bit
 	//	1 = Right justified
 	//	0 = Left justified
-	// bit 6 Unimplemented: Read as e0f
+	// bit 6 Unimplemented: Read as â€˜0â€™
 	// bit 5 VCFG1: Voltage Reference bit
 	//	1 = VREF- pin
 	//	0 = VSS
 	// bit 4 VCFG0: Voltage Reference bit
 	//	1 = VREF+ pin
 	//	0 = VDD
-	// bit 3-0 Unimplemented: Read as e0f
+	// bit 3-0 Unimplemented: Read as â€˜0â€™
 	ADCON1 = 0b00000000; // left justified, Vref=Vdd,Vss
 		
-	// SSPƒRƒ“ƒgƒ[ƒ‹0
+	// SSPã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«0
 	// R/W-0 R/W-0 R/W-0 R/W-0 R/W-0 R/W-0 R/W-0 R/W-0
 	// WCOL	 SSPOV SSPEN CKP   SSPM3 SSPM2 SSPM1 SSPM0
 	// 
@@ -694,7 +694,7 @@ void InitDevice()
 	//		 initiated by writing to the SSPBUF register (must be cleared in software).
 	//	 0 = No overflow
 	//	In I2 C mode:
-	//	 1 = A byte is received while the SSPBUF register is still holding the previous byte. SSPOV is a gdonft careh in Transmit
+	//	 1 = A byte is received while the SSPBUF register is still holding the previous byte. SSPOV is a â€œdonâ€™t careâ€ in Transmit
 	//		 mode (must be cleared in software).
 	//	 0 = No overflow
 	// bit 5 SSPEN: Synchronous Serial Port Enable bit
@@ -732,9 +732,9 @@ void InitDevice()
 	//	1101 = Reserved
 	//	1110 = I2C Slave mode, 7-bit address with Start and Stop bit interrupts enabled
 	//	1111 = I2C Slave mode, 10-bit address with Start and Stop bit interrupts enabled
-	SSPCON = 0b00101000; // SSPƒ|[ƒg‚Æ‚µ‚Ä—˜—pAI2Cƒ}ƒXƒ^[‚Æ‚µ‚Ä—˜—p
+	SSPCON = 0b00101000; // SSPãƒãƒ¼ãƒˆã¨ã—ã¦åˆ©ç”¨ã€I2Cãƒã‚¹ã‚¿ãƒ¼ã¨ã—ã¦åˆ©ç”¨
 
-	// SSPƒRƒ“ƒgƒ[ƒ‹2
+	// SSPã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«2
 	// R/W-0 R-0	 R/W-0 R/W-0 R/W-0 R/W-0 R/W-0 R/W-0
 	// GCEN	 ACKSTAT ACKDT ACKEN RCEN  PEN	 RSEN  SEN
 	//
@@ -772,9 +772,9 @@ void InitDevice()
 	//	In Slave mode:
 	//	 1 = Clock stretching is enabled forboth slave transmit and slave receive (stretch enabled)
 	//	 0 = Clock stretching is disabled
-	SSPCON2 = 0b00000000; // ‚Æ‚è‚ ‚¦‚¸Idleó‘Ô‚ğ•Û‚Â
+	SSPCON2 = 0b00000000; // ã¨ã‚Šã‚ãˆãšIdleçŠ¶æ…‹ã‚’ä¿ã¤
 
-	// SSPƒXƒe[ƒ^ƒX
+	// SSPã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	// R/W-0 R/W-0 R-0 R-0 R-0 R-0 R-0 R-0
 	// SMP	 CKE   D/A P   S   R/W UA  BF
 	//
@@ -799,11 +799,11 @@ void InitDevice()
 	//	0 = Indicates that the last byte received or transmitted was address
 	// bit 4 P: Stop bit
 	//	(I2C mode only. This bit is cleared when the MSSP module is disabled, SSPEN is cleared.)
-	//	1 = Indicates that a Stop bit has been detected last (this bit is e0f on Reset)
+	//	1 = Indicates that a Stop bit has been detected last (this bit is â€˜0â€™ on Reset)
 	//	0 = Stop bit was not detected last
 	// bit 3 S: Start bit
 	//	(I2C mode only. This bit is cleared when the MSSP module is disabled, SSPEN is cleared.)
-	//	1 = Indicates that a Start bit has been detected last (this bit is e0f on Reset)
+	//	1 = Indicates that a Start bit has been detected last (this bit is â€˜0â€™ on Reset)
 	//	0 = Start bit was not detected last
 	// bit 2 R/W: Read/Write bit information (I2C mode only)
 	//	This bit holds the R/W bit information following the last address match. This bit is only valid from the address match to
@@ -827,7 +827,7 @@ void InitDevice()
 	//	 0 = Data transmit complete (does not include the ACK and Stop bits), SSPBUF is empty
 	SSPSTAT = 0b10000000; 
 
-	// SSPƒ}ƒXƒN
+	// SSPãƒã‚¹ã‚¯
 	// bit 7-1 MSK<7:1>: Mask bits
 	//	1 = The received address bit n is compared to SSPADD<n> to detect I2C address match
 	//	0 = The received address bit n is not used to detect I2C address match
@@ -841,26 +841,26 @@ void InitDevice()
 	// 2: In all other SSP modes, this bit has no effect.
 	SSPMSK = 0b00000000;
 		
-	// ‚»‚Ì‘¼SSPŠÖ˜A
-	SSPADD = I2C_CLOCK_DEVIDE_VAL; // I2Cƒ}ƒXƒ^[‚Å‚ÍƒNƒƒbƒN•ªü‚Ì’l‚Æ‚È‚é
+	// ãã®ä»–SSPé–¢é€£
+	SSPADD = I2C_CLOCK_DEVIDE_VAL; // I2Cãƒã‚¹ã‚¿ãƒ¼ã§ã¯ã‚¯ãƒ­ãƒƒã‚¯åˆ†å‘¨ã®å€¤ã¨ãªã‚‹
 
-	SSPBUF = 0b00000000; // ƒNƒŠƒA
+	SSPBUF = 0b00000000; // ã‚¯ãƒªã‚¢
 
-	// ƒ|[ƒg“üo—Íİ’è
+	// ãƒãƒ¼ãƒˆå…¥å‡ºåŠ›è¨­å®š
 	TRISA  = PIO_A;
 	TRISB  = PIO_B;
 	TRISC  = PIO_C;
 	TRISE  = PIO_E;
-	PORTA  = 0b00000000; // PORTA ƒNƒŠƒA
-	PORTB  = 0b00000000; // PORTB ƒNƒŠƒA   
-	PORTC  = 0b00000000; // PORTC ƒNƒŠƒA 
-	PORTE  = 0b00001000; // PORTE ƒNƒŠƒA 
-	ANSEL  = PIO_ANSEL;	 // AN4-2‚ÍƒfƒWƒ^ƒ‹,AN0-1‚ÍƒAƒiƒƒO
-	ANSELH = PIO_ANSELH; // AN13-8ƒsƒ“‚ÍƒfƒWƒ^ƒ‹‚Åg—p
-	//ULPWUE = 0; //‚»‚à‚»‚à‰Šú’l‚OŞÌ«˜H‚Æ‚æ‚­‚í‚©‚ç‚È‚¢‚¯‚ÇAD—p‚Éİ’è‚µ‚È‚¢‚Æ‚¾‚ßH
+	PORTA  = 0b00000000; // PORTA ã‚¯ãƒªã‚¢
+	PORTB  = 0b00000000; // PORTB ã‚¯ãƒªã‚¢   
+	PORTC  = 0b00000000; // PORTC ã‚¯ãƒªã‚¢ 
+	PORTE  = 0b00001000; // PORTE ã‚¯ãƒªã‚¢ 
+	ANSEL  = PIO_ANSEL;	 // AN4-2ã¯ãƒ‡ã‚¸ã‚¿ãƒ«,AN0-1ã¯ã‚¢ãƒŠãƒ­ã‚°
+	ANSELH = PIO_ANSELH; // AN13-8ãƒ”ãƒ³ã¯ãƒ‡ã‚¸ã‚¿ãƒ«ã§ä½¿ç”¨
+	//ULPWUE = 0; //ãã‚‚ãã‚‚åˆæœŸå€¤ï¼ï¾ï¾Œï½«è·¯ã¨ã‚ˆãã‚ã‹ã‚‰ãªã„ã‘ã©ADç”¨ã«è¨­å®šã—ãªã„ã¨ã ã‚ï¼Ÿ
 	//CM1CON0 = 1;
 
-	// ƒIƒvƒVƒ‡ƒ“‹@”\İ’è
+	// ã‚ªãƒ—ã‚·ãƒ§ãƒ³æ©Ÿèƒ½è¨­å®š
 	// bit 7 RBPU: PORTB Pull-up Enable bit
 	//	1 = PORTB pull-ups are disabled
 	//	0 = PORTB pull-ups are enabled by individual PORT latch values
@@ -886,10 +886,10 @@ void InitDevice()
 	//	101		  | 1 : 64		| 1 : 32
 	//	110		  | 1 : 128		| 1 : 64
 	//	111		  | 1 : 256		| 1 : 128
-	TMR0 = TMR0_OFFSET; // ‚Æ‚è‚ ‚¦‚¸ƒ^ƒCƒ}[‚ğƒNƒŠƒA‚µ‚Ä‚¨‚­
-	OPTION_REG = 0b10000000 | TIMER0_PRESCALER; // ƒ^ƒCƒ}[0‚ğFOSC/4A•ªüŠí‚ğ2•ªüİ’è
+	TMR0 = TMR0_OFFSET; // ã¨ã‚Šã‚ãˆãšã‚¿ã‚¤ãƒãƒ¼ã‚’ã‚¯ãƒªã‚¢ã—ã¦ãŠã
+	OPTION_REG = 0b10000000 | TIMER0_PRESCALER; // ã‚¿ã‚¤ãƒãƒ¼0ã‚’FOSC/4ã€åˆ†å‘¨å™¨ã‚’2åˆ†å‘¨è¨­å®š
 	
-	// ƒ^ƒCƒ}[1İ’è
+	// ã‚¿ã‚¤ãƒãƒ¼1è¨­å®š
 	// bit 7 T1GINV: Timer1 Gate Invert bit(1)
 	//	1 = Timer1 gate is active-high (Timer1 counts when gate is high)
 	//	0 = Timer1 gate is active-low (Timer1 counts when gate is low)
@@ -909,22 +909,22 @@ void InitDevice()
 	//	0 = LP oscillator is off
 	// bit 2 T1SYNC: Timer1 External Clock Input Synchronization Control bit
 	//	TMR1CS = 1:
-	//	@1 = Do not synchronize external clock input
-	//	@0 = Synchronize external clock input
-	// @TMR1CS = 0:
-	// @@This bit is ignored. Timer1 uses the internal clock
+	//	ã€€1 = Do not synchronize external clock input
+	//	ã€€0 = Synchronize external clock input
+	// ã€€TMR1CS = 0:
+	// ã€€ã€€This bit is ignored. Timer1 uses the internal clock
 	// bit 1 TMR1CS: Timer1 Clock Source Select bit
 	//	1 = External clock from T1CKI pin (on the rising edge)
 	//	0 = Internal clock (FOSC/4)
 	// bit 0 TMR1ON: Timer1 On bit
 	//	1 = Enables Timer1
 	//	0 = Stops Timer1
-	T1CON = 0b00000001 | (TIMER1_PRESCALER << 4); // ƒQ[ƒg‚Íg—p‚µ‚È‚¢A“à‘ŸƒNƒƒbƒNFOSC/4A8•ªüA‹N“®
+	T1CON = 0b00000001 | (TIMER1_PRESCALER << 4); // ã‚²ãƒ¼ãƒˆã¯ä½¿ç”¨ã—ãªã„ã€å†…è‡“ã‚¯ãƒ­ãƒƒã‚¯FOSC/4ã€8åˆ†å‘¨ã€èµ·å‹•
 	TMR1L = 0;
 	TMR1H = 0;
 
-	// ƒyƒŠƒtƒFƒ‰ƒ‹ƒCƒ“ƒ^ƒ‰ƒvƒgƒCƒl[ƒuƒ‹İ’è
-	// bit 7 Unimplemented: Read as e0f
+	// ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«ã‚¤ãƒ³ã‚¿ãƒ©ãƒ—ãƒˆã‚¤ãƒãƒ¼ãƒ–ãƒ«è¨­å®š
+	// bit 7 Unimplemented: Read as â€˜0â€™
 	// bit 6 ADIE: A/D Converter (ADC) Interrupt Enable bit
 	//	1 = Enables the ADC interrupt
 	//	0 = Disables the ADC interrupt
@@ -946,10 +946,10 @@ void InitDevice()
 	// bit 0 TMR1IE: Timer1 Overflow Interrupt Enable bit
 	//	1 = Enables the Timer1 overflow interrupt
 	//	0 = Disables the Timer1 overflow interrupt
-	PIE1 = 0b00000001; // SSP‚Íƒ|[ƒŠƒ“ƒO‚·‚é‚Ì‚ÅŠ„‚è‚İ‚Í–³ŒøAƒ^ƒCƒ}[‚P—LŒø
+	PIE1 = 0b00000001; // SSPã¯ãƒãƒ¼ãƒªãƒ³ã‚°ã™ã‚‹ã®ã§å‰²ã‚Šè¾¼ã¿ã¯ç„¡åŠ¹ã€ã‚¿ã‚¤ãƒãƒ¼ï¼‘æœ‰åŠ¹
 
-	// ƒyƒŠƒtƒFƒ‰ƒ‹ƒCƒ“ƒ^ƒ‰ƒvƒgƒŠƒNƒGƒXƒg
-	// bit 7 Unimplemented: Read as e0f
+	// ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«ã‚¤ãƒ³ã‚¿ãƒ©ãƒ—ãƒˆãƒªã‚¯ã‚¨ã‚¹ãƒˆ
+	// bit 7 Unimplemented: Read as â€˜0â€™
 	// bit 6 ADIF: A/D Converter Interrupt Flag bit
 	//	1 = A/D conversion complete (must be cleared in software)
 	//	0 = A/D conversion has not completed or has not been started
@@ -989,9 +989,9 @@ void InitDevice()
 	// bit 0 TMR1IF: Timer1 Overflow Interrupt Flag bit
 	//	1 = The TMR1 register overflowed (must be cleared in software)
 	//	0 = The TMR1 register did not overflow
-	PIR1 &= 0b11110110; // TMR1Š„‚è‚İƒNƒŠƒA,SSPIFƒNƒŠƒA
+	PIR1 &= 0b11110110; // TMR1å‰²ã‚Šè¾¼ã¿ã‚¯ãƒªã‚¢,SSPIFã‚¯ãƒªã‚¢
 
-	// Š„‚è‚İİ’è
+	// å‰²ã‚Šè¾¼ã¿è¨­å®š
 	// bit 7 GIE: Global Interrupt Enable bit
 	//	1 = Enables all unmasked interrupts
 	//	0 = Disables all interrupts
@@ -1017,14 +1017,14 @@ void InitDevice()
 	//	1 = When at least one of the PORTB general purpose I/O pins changed state (must be cleared in
 	//		software)
 	//	0 = None of the PORTB general purpose I/O pins have changed state
-	INTCON = 0b11100000; // ƒOƒ[ƒoƒ‹EƒyƒŠƒtƒFƒ‰ƒ‹Š„‚è‚İ—LŒø‰»Aƒ^ƒCƒ}[0‚ÌƒI[ƒo[ƒtƒ[Š„‚è‚İ‚ğ—LŒø‰»
+	INTCON = 0b11100000; // ã‚°ãƒ­ãƒ¼ãƒãƒ«ãƒ»ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–ã€ã‚¿ã‚¤ãƒãƒ¼0ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼å‰²ã‚Šè¾¼ã¿ã‚’æœ‰åŠ¹åŒ–
 
 }
 
 //--------------
-/// ƒtƒŒ[ƒ€ƒ[ƒN
+/// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯
 //--------------
-/// ƒR[ƒ‹ƒoƒbƒNˆ—ƒ`ƒFƒCƒ“‚ÌÀs
+/// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‡¦ç†ãƒã‚§ã‚¤ãƒ³ã®å®Ÿè¡Œ
 //void DoCallbackChain(t_callback_chain* root_)
 //{
 //	t_callback_chain* callback = root_;
@@ -1057,17 +1057,17 @@ void InitDevice()
 }
 	
 //--------------
-/// ƒjƒLƒV[ŠÇ§Œä
+/// ãƒ‹ã‚­ã‚·ãƒ¼ç®¡åˆ¶å¾¡
 /// 
-/// Nixie_ChangeDigit‚Å•\¦Œ…(•\¦‚È‚µ‚à‚ ‚è)‚ğ‘I‘ğ
-/// Nixie_ChangeNumber‚Å•\¦‚·‚é”š‚ğ‘I‘ği‚½‚¾‚µ•\¦Œ…‚ª2,5‚Ìê‡‚ÍƒRƒƒ“‚È‚Ì‚Å•\¦‚É‰e‹¿‚Í‚µ‚È‚¢j
-/// Nixie_ChangeColon‚ÅƒRƒƒ“(2,5Œ…‚Ìê‡)‚¨‚æ‚ÑAƒhƒbƒg(2,5Œ…ˆÈŠO‚Ìê‡)‚ğ§Œä
+/// Nixie_ChangeDigitã§è¡¨ç¤ºæ¡(è¡¨ç¤ºãªã—ã‚‚ã‚ã‚Š)ã‚’é¸æŠ
+/// Nixie_ChangeNumberã§è¡¨ç¤ºã™ã‚‹æ•°å­—ã‚’é¸æŠï¼ˆãŸã ã—è¡¨ç¤ºæ¡ãŒ2,5ã®å ´åˆã¯ã‚³ãƒ­ãƒ³ãªã®ã§è¡¨ç¤ºã«å½±éŸ¿ã¯ã—ãªã„ï¼‰
+/// Nixie_ChangeColonã§ã‚³ãƒ­ãƒ³(2,5æ¡ã®å ´åˆ)ãŠã‚ˆã³ã€ãƒ‰ãƒƒãƒˆ(2,5æ¡ä»¥å¤–ã®å ´åˆ)ã‚’åˆ¶å¾¡
 //--------------
 
-/// Œ»İŒ…‚ğ•ÏX‚·‚é
+/// ç¾åœ¨æ¡ã‚’å¤‰æ›´ã™ã‚‹
 void Nixie_ChangeDigit(e_digit digit_)
 {
-	// •\¦‚ğON
+	// è¡¨ç¤ºã‚’ON
 	switch (digit_)
 	{
 		case DIGIT_OFF:
@@ -1165,7 +1165,7 @@ void Nixie_ChangeDigit(e_digit digit_)
 	}
 }
 
-/// ”š‘I‘ğ—pƒ‰ƒCƒ“o—Í‚ğ•ÏX
+/// æ•°å­—é¸æŠç”¨ãƒ©ã‚¤ãƒ³å‡ºåŠ›ã‚’å¤‰æ›´
 void Nixie_ChangeNumber(unsigned char number_)
 {
 	if (number_ > sizeof(NUM_2_LINE)/sizeof(NUM_2_LINE[0]))
@@ -1177,7 +1177,7 @@ void Nixie_ChangeNumber(unsigned char number_)
 		unsigned char line_hex;
 		line_hex = NUM_2_LINE[number_];
 		
-		// ”š‚ğ•ÏX
+		// æ•°å­—ã‚’å¤‰æ›´
 		PIN_LINDECODER_0 = ((line_hex >> 0) & 1);
 		PIN_LINDECODER_1 = ((line_hex >> 1) & 1);
 		PIN_LINDECODER_2 = ((line_hex >> 2) & 1);
@@ -1185,7 +1185,7 @@ void Nixie_ChangeNumber(unsigned char number_)
 	}
 }
 
-/// ƒRƒƒ“•\¦—p‚Ìƒgƒ‰ƒ“ƒWƒXƒ^ON/OFF
+/// ã‚³ãƒ­ãƒ³è¡¨ç¤ºç”¨ã®ãƒˆãƒ©ãƒ³ã‚¸ã‚¹ã‚¿ON/OFF
 void Nixie_ChangeColon( unsigned char colon_flag_)
 {
 	PIN_TRANSISTOR_0 = colon_flag_ & 0x1;
@@ -1193,118 +1193,118 @@ void Nixie_ChangeColon( unsigned char colon_flag_)
 }
 
 //--------------
-/// RTCˆ—
+/// RTCå‡¦ç†
 ///
-/// Œv‚ğƒZƒbƒg‚·‚éè‡
-/// 1) Rtc_UpdatePicTimerByRtc();@// Rtcã‚Ì³Šm‚ÈŠÔ‚ğæ“¾
-/// 2) // ƒOƒ[ƒoƒ‹•Ï”•ÏX
-/// 3) Rtc_UpdateRtcByPicTimer(); // Rtc‚ÉXV‚µ‚½ŠÔî•ñ‚ğ‘—M
+/// æ™‚è¨ˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹æ‰‹é †
+/// 1) Rtc_UpdatePicTimerByRtc();ã€€// Rtcä¸Šã®æ­£ç¢ºãªæ™‚é–“ã‚’å–å¾—
+/// 2) // ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°å¤‰æ›´
+/// 3) Rtc_UpdateRtcByPicTimer(); // Rtcã«æ›´æ–°ã—ãŸæ™‚é–“æƒ…å ±ã‚’é€ä¿¡
 //--------------
 
 
-// ƒOƒ[ƒoƒ‹•Ï”‚ÅŠÇ—‚µ‚Ä‚¢‚éPICã‚ÌŠÔî•ñ‚ğRtc‚É”½‰f
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã§ç®¡ç†ã—ã¦ã„ã‚‹PICä¸Šã®æ™‚é–“æƒ…å ±ã‚’Rtcã«åæ˜ 
 void Rtc_UpdateRtcByPicTimer()
 {
-	// stop bit‚ğ0
-	// RTC‘‚«‚İ
-	// stop bit‚ğ1
+	// stop bitã‚’0
+	// RTCæ›¸ãè¾¼ã¿
+	// stop bitã‚’1
 	// 
-	// ’²‚×‚½”ÍˆÍ‚¾‚ÆStopƒrƒbƒg‚ğ•ÏX‚ª‚¢‚Â—LŒø‰»‚³‚ê‚é‚©‚í‚©‚ç‚È‚©‚Á‚½‚Ì‚ÅA
-	// RTC‘‚«‚İ‚ÍStopCondition‚ğ‘—M‚µ‚Ä‚©‚çÄ“x’ÊM‚ğ‚µ‚Äs‚¤‚±‚Æ‚É‚µ‚½B
+	// èª¿ã¹ãŸç¯„å›²ã ã¨Stopãƒ“ãƒƒãƒˆã‚’å¤‰æ›´ãŒã„ã¤æœ‰åŠ¹åŒ–ã•ã‚Œã‚‹ã‹ã‚ã‹ã‚‰ãªã‹ã£ãŸã®ã§ã€
+	// RTCæ›¸ãè¾¼ã¿ã¯StopConditionã‚’é€ä¿¡ã—ã¦ã‹ã‚‰å†åº¦é€šä¿¡ã‚’ã—ã¦è¡Œã†ã“ã¨ã«ã—ãŸã€‚
  
 	// stop
 	I2c_Start();
-	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
-	I2c_Write(0x00); // configƒAƒhƒŒƒX
+	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+	I2c_Write(0x00); // configã‚¢ãƒ‰ãƒ¬ã‚¹
 	I2c_Write(0x20); // STOP=1
 	I2c_Write(0x00); // 
 	I2c_Stop();
 	
 	// write
 	I2c_Start();
-	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
+	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
 	I2c_Write(0x02);
-	I2c_Write(g_second); // •b‚Ì’l 0-59
-	I2c_Write(g_minute); // •ª‚Ì’l 0-59
-	I2c_Write(g_hour);	 // ‚Ì’l 0-23
-	//I2c_Write(g_date);	 // “ú‚Ì’l 1-31
-	//I2c_Write(g_week);	 // —j‚Ì’l “úŒ‰Î…–Ø‹à“y 0123456
-	//I2c_Write(0x80|g_month);  // Œ‚Ì’l (C:MSB)1-12	  C‚Í1‚Ì‚Æ‚«21¢‹I
-	//I2c_Write(g_year);	 // ”N‚Ì’l 00-99
+	I2c_Write(g_second); // ç§’ã®å€¤ 0-59
+	I2c_Write(g_minute); // åˆ†ã®å€¤ 0-59
+	I2c_Write(g_hour);	 // æ™‚ã®å€¤ 0-23
+	//I2c_Write(g_date);	 // æ—¥ã®å€¤ 1-31
+	//I2c_Write(g_week);	 // æ›œã®å€¤ æ—¥æœˆç«æ°´æœ¨é‡‘åœŸ 0123456
+	//I2c_Write(0x80|g_month);  // æœˆã®å€¤ (C:MSB)1-12	  Cã¯1ã®ã¨ã21ä¸–ç´€
+	//I2c_Write(g_year);	 // å¹´ã®å€¤ 00-99
 	//I2c_Write(0x80); // AE=1
 	//I2c_Write(0x80); // AE=1
 	//I2c_Write(0x80); // AE=1
 	//I2c_Write(0x80); // AE=1
 	I2c_Stop();
 
-	// STOP=0 ‚ÅŒv‚ğŠJn‚·‚é
+	// STOP=0 ã§æ™‚è¨ˆã‚’é–‹å§‹ã™ã‚‹
 	I2c_Start();
-	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
-	I2c_Write(0x00); // configƒAƒhƒŒƒX
+	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+	I2c_Write(0x00); // configã‚¢ãƒ‰ãƒ¬ã‚¹
 	I2c_Write(0x00); // STOP=0
 	I2c_Stop();
 }
 
-// RTC‚ÌƒNƒƒbƒN’l‚ğ“Ç‚İo‚·
+// RTCã®ã‚¯ãƒ­ãƒƒã‚¯å€¤ã‚’èª­ã¿å‡ºã™
 void Rtc_UpdatePicTimerByRtc()
 {
 	I2c_Start();
 	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE);
-	I2c_Write(0x02); // •b‚ÌƒAƒhƒŒƒX
+	I2c_Write(0x02); // ç§’ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 	I2c_RepeatStart();
 	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_READ);
-	g_second = I2c_Read(1); // •b‚Ì’l 0-59
-	g_minute = I2c_Read(1); // •ª‚Ì’l 0-59
-	g_hour	 = I2c_Read(1); // ‚Ì’l 0-23
-	g_date	 = I2c_Read(1); // “ú‚Ì’l 1-31
-	g_week	 = I2c_Read(1); // —j‚Ì’l “úŒ‰Î…–Ø‹à“y 0123456
-	g_month	 = I2c_Read(1); // Œ‚Ì’l (C:MSB)1-12	C‚Í1‚Ì‚Æ‚«21¢‹I
-	g_year	 = I2c_Read(1); // ”N‚Ì’l 00-99
-	g_alarm_minute = I2c_Read(1); // ƒAƒ‰[ƒ€
-	g_alarm_hour   = I2c_Read(0); // ƒAƒ‰[ƒ€
+	g_second = I2c_Read(1); // ç§’ã®å€¤ 0-59
+	g_minute = I2c_Read(1); // åˆ†ã®å€¤ 0-59
+	g_hour	 = I2c_Read(1); // æ™‚ã®å€¤ 0-23
+	g_date	 = I2c_Read(1); // æ—¥ã®å€¤ 1-31
+	g_week	 = I2c_Read(1); // æ›œã®å€¤ æ—¥æœˆç«æ°´æœ¨é‡‘åœŸ 0123456
+	g_month	 = I2c_Read(1); // æœˆã®å€¤ (C:MSB)1-12	Cã¯1ã®ã¨ã21ä¸–ç´€
+	g_year	 = I2c_Read(1); // å¹´ã®å€¤ 00-99
+	g_alarm_minute = I2c_Read(1); // ã‚¢ãƒ©ãƒ¼ãƒ 
+	g_alarm_hour   = I2c_Read(0); // ã‚¢ãƒ©ãƒ¼ãƒ 
 	I2c_Stop();
 
-	// —LŒøƒrƒbƒg‚Ìæ‚èo‚µ
+	// æœ‰åŠ¹ãƒ“ãƒƒãƒˆã®å–ã‚Šå‡ºã—
 	g_second  &= 0x7f;
 	g_minute  &= 0x7f;
 	g_hour	  &= 0x3f;
 	g_date	  &= 0x3f;
 	g_week	  &= 0x07;
 	g_month	  &= 0x1f;
-	// g_year	  &= 0xff; ”N‚Í‘Sƒrƒbƒg—LŒø‚È‚Ì‚Åƒ}ƒXƒN‚µ‚È‚¢
+	// g_year	  &= 0xff; å¹´ã¯å…¨ãƒ“ãƒƒãƒˆæœ‰åŠ¹ãªã®ã§ãƒã‚¹ã‚¯ã—ãªã„
 	// g_century = g_month & 0x80 ? 21 : 20;
 	g_alarm_minute &= 0x7f;
 	g_alarm_hour &= 0x3f;
 }
 
-/// ‰Šú‰»A‹N“®‚Éˆê“x‚¾‚¯ƒR[ƒ‹‚µ‚ÄRtc‚ÌƒRƒ“ƒtƒBƒO‚ğİ’è‚·‚éB
-/// Rtc‚Ì—§‚¿ã‚ª‚è‚É700ms•K—v‚È‚Ì‚Å“à•”‚Åwait‚·‚é
+/// åˆæœŸåŒ–ã€èµ·å‹•æ™‚ã«ä¸€åº¦ã ã‘ã‚³ãƒ¼ãƒ«ã—ã¦Rtcã®ã‚³ãƒ³ãƒ•ã‚£ã‚°ã‚’è¨­å®šã™ã‚‹ã€‚
+/// Rtcã®ç«‹ã¡ä¸ŠãŒã‚Šã«700mså¿…è¦ãªã®ã§å†…éƒ¨ã§waitã™ã‚‹
 void Rtc_Init()
 {	  
 	unsigned char vl_bit;
 
-	// —§‚¿ã‚ª‚è‚ğ1000ms‘Ò‚Â•K—v‚ª‚ ‚é
+	// ç«‹ã¡ä¸ŠãŒã‚Šã‚’1000mså¾…ã¤å¿…è¦ãŒã‚ã‚‹
 	Wait10ms(100);
 
-	// VLƒrƒbƒg‚ğƒ`ƒFƒbƒN
+	// VLãƒ“ãƒƒãƒˆã‚’ãƒã‚§ãƒƒã‚¯
 	I2c_Start();
 	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE);
-	I2c_Write(0x02); // •b‚ÌƒAƒhƒŒƒX
-	I2c_RepeatStart(); // “Ç‚İo‚µ‚Ìê‡‚Írepeat‚·‚é
+	I2c_Write(0x02); // ç§’ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
+	I2c_RepeatStart(); // èª­ã¿å‡ºã—ã®å ´åˆã¯repeatã™ã‚‹
 	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_READ);
-	vl_bit = (I2c_Read(0) >> 7) & 1; // ƒoƒbƒNƒAƒbƒvˆÙíŒŸoVL
+	vl_bit = (I2c_Read(0) >> 7) & 1; // ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ç•°å¸¸æ¤œå‡ºVL
 	I2c_Stop();
 
-	// ˆÙí‚ª‚ ‚ê‚Î‰Šú‰»‚·‚é
+	// ç•°å¸¸ãŒã‚ã‚Œã°åˆæœŸåŒ–ã™ã‚‹
 	if (vl_bit)
 	{
-		// ƒGƒ‰[’Ê’m‚ÌŒãA‰Šú‰»
+		// ã‚¨ãƒ©ãƒ¼é€šçŸ¥ã®å¾Œã€åˆæœŸåŒ–
 		Beep(1);
 
-		// ‰Šú‰»
+		// åˆæœŸåŒ–
 		I2c_Start();
-		I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE);	 // ‘‚«‚İƒ‚[ƒh
-		I2c_Write(0x00); // control0‚ÌƒAƒhƒŒƒX
+		I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE);	 // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+		I2c_Write(0x00); // control0ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		I2c_Write(0x0); // test=0, STOP=0
 		I2c_Write(0x0); // AIE=TIE=0
 		I2c_Stop();
@@ -1312,99 +1312,99 @@ void Rtc_Init()
 	}
 }
 
-// b’è
+// æš«å®š
 void Rtc_UpdateRtcCalendar()
 {
-	// stop bit‚ğ0
-	// RTC‘‚«‚İ
-	// stop bit‚ğ1
+	// stop bitã‚’0
+	// RTCæ›¸ãè¾¼ã¿
+	// stop bitã‚’1
 	// 
-	// ’²‚×‚½”ÍˆÍ‚¾‚ÆStopƒrƒbƒg‚ğ•ÏX‚ª‚¢‚Â—LŒø‰»‚³‚ê‚é‚©‚í‚©‚ç‚È‚©‚Á‚½‚Ì‚ÅA
-	// RTC‘‚«‚İ‚ÍStopCondition‚ğ‘—M‚µ‚Ä‚©‚çÄ“x’ÊM‚ğ‚µ‚Äs‚¤‚±‚Æ‚É‚µ‚½B
+	// èª¿ã¹ãŸç¯„å›²ã ã¨Stopãƒ“ãƒƒãƒˆã‚’å¤‰æ›´ãŒã„ã¤æœ‰åŠ¹åŒ–ã•ã‚Œã‚‹ã‹ã‚ã‹ã‚‰ãªã‹ã£ãŸã®ã§ã€
+	// RTCæ›¸ãè¾¼ã¿ã¯StopConditionã‚’é€ä¿¡ã—ã¦ã‹ã‚‰å†åº¦é€šä¿¡ã‚’ã—ã¦è¡Œã†ã“ã¨ã«ã—ãŸã€‚
  
 	// stop
 	//I2c_Start();
-	//I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
-	//I2c_Write(0x00); // configƒAƒhƒŒƒX
+	//I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+	//I2c_Write(0x00); // configã‚¢ãƒ‰ãƒ¬ã‚¹
 	//I2c_Write(0x20); // STOP=1
 	//I2c_Write(0x00);
 	//I2c_Stop();
 	
 	// write
 	I2c_Start();
-	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
+	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
 	I2c_Write(0x05);
-	I2c_Write(g_date);	 // “ú‚Ì’l 1-31
-	I2c_Write(g_week);	 // —j‚Ì’l “úŒ‰Î…–Ø‹à“y 0123456
-	I2c_Write(0x80|g_month);  // Œ‚Ì’l (C:MSB)1-12	  C‚Í1‚Ì‚Æ‚«21¢‹I
-	I2c_Write(g_year);	 // ”N‚Ì’l 00-99
+	I2c_Write(g_date);	 // æ—¥ã®å€¤ 1-31
+	I2c_Write(g_week);	 // æ›œã®å€¤ æ—¥æœˆç«æ°´æœ¨é‡‘åœŸ 0123456
+	I2c_Write(0x80|g_month);  // æœˆã®å€¤ (C:MSB)1-12	  Cã¯1ã®ã¨ã21ä¸–ç´€
+	I2c_Write(g_year);	 // å¹´ã®å€¤ 00-99
 	I2c_Stop();
 
-	// STOP=0 ‚ÅŒv‚ğŠJn‚·‚é
+	// STOP=0 ã§æ™‚è¨ˆã‚’é–‹å§‹ã™ã‚‹
 	//I2c_Start();
-	//I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
-	//I2c_Write(0x00); // configƒAƒhƒŒƒX
+	//I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+	//I2c_Write(0x00); // configã‚¢ãƒ‰ãƒ¬ã‚¹
 	//I2c_Write(0x00); // STOP=0
 	//I2c_Stop();
 
 }
 
-// b’è
+// æš«å®š
 Rtc_UpdateRtcAlarm()
 {
-	// stop bit‚ğ0
-	// RTC‘‚«‚İ
-	// stop bit‚ğ1
+	// stop bitã‚’0
+	// RTCæ›¸ãè¾¼ã¿
+	// stop bitã‚’1
 	// 
-	// ’²‚×‚½”ÍˆÍ‚¾‚ÆStopƒrƒbƒg‚ğ•ÏX‚ª‚¢‚Â—LŒø‰»‚³‚ê‚é‚©‚í‚©‚ç‚È‚©‚Á‚½‚Ì‚ÅA
-	// RTC‘‚«‚İ‚ÍStopCondition‚ğ‘—M‚µ‚Ä‚©‚çÄ“x’ÊM‚ğ‚µ‚Äs‚¤‚±‚Æ‚É‚µ‚½B
+	// èª¿ã¹ãŸç¯„å›²ã ã¨Stopãƒ“ãƒƒãƒˆã‚’å¤‰æ›´ãŒã„ã¤æœ‰åŠ¹åŒ–ã•ã‚Œã‚‹ã‹ã‚ã‹ã‚‰ãªã‹ã£ãŸã®ã§ã€
+	// RTCæ›¸ãè¾¼ã¿ã¯StopConditionã‚’é€ä¿¡ã—ã¦ã‹ã‚‰å†åº¦é€šä¿¡ã‚’ã—ã¦è¡Œã†ã“ã¨ã«ã—ãŸã€‚
  
 	// stop
 	//I2c_Start();
-	//I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
-	//I2c_Write(0x00); // configƒAƒhƒŒƒX
+	//I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+	//I2c_Write(0x00); // configã‚¢ãƒ‰ãƒ¬ã‚¹
 	//I2c_Write(0x20); // STOP=1
 	//I2c_Write(0x00);
 	//I2c_Stop();
 	
 	// write
 	I2c_Start();
-	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
+	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
 	I2c_Write(0x09);
-	I2c_Write(0x80 | g_alarm_minute); // ƒAƒ‰[ƒ€‚Í‹L‰¯‚³‚¹‚é‚¾‚¯AÅãˆÊƒrƒbƒg‚ğ‚O‚É‚·‚ê‚ÎƒAƒ‰[ƒ€M†‚ào‚È‚¢İ’è‚¯‚Ç‚Ç‚Á‚¿‚É‚µ‚ëg‚í‚È‚¢‚Ì‚Å“K“–
-	I2c_Write(0x80 | g_alarm_hour);   // ƒAƒ‰[ƒ€‚Í‹L‰¯‚³‚¹‚é‚¾‚¯
+	I2c_Write(0x80 | g_alarm_minute); // ã‚¢ãƒ©ãƒ¼ãƒ ã¯è¨˜æ†¶ã•ã›ã‚‹ã ã‘ã€æœ€ä¸Šä½ãƒ“ãƒƒãƒˆã‚’ï¼ã«ã™ã‚Œã°ã‚¢ãƒ©ãƒ¼ãƒ ä¿¡å·ã‚‚å‡ºãªã„è¨­å®šã‘ã©ã©ã£ã¡ã«ã—ã‚ä½¿ã‚ãªã„ã®ã§é©å½“
+	I2c_Write(0x80 | g_alarm_hour);   // ã‚¢ãƒ©ãƒ¼ãƒ ã¯è¨˜æ†¶ã•ã›ã‚‹ã ã‘
 	I2c_Write(0x80); // AE=1
 	I2c_Write(0x80); // AE=1
 	I2c_Stop();
 
-	// STOP=0 ‚ÅŒv‚ğŠJn‚·‚é
+	// STOP=0 ã§æ™‚è¨ˆã‚’é–‹å§‹ã™ã‚‹
 	//I2c_Start();
-	//I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // ‘‚«‚İƒ‚[ƒh
-	//I2c_Write(0x00); // configƒAƒhƒŒƒX
+	//I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE); // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+	//I2c_Write(0x00); // configã‚¢ãƒ‰ãƒ¬ã‚¹
 	//I2c_Write(0x00); // STOP=0
 	//I2c_Stop();
 }
 
-// b’è
-// RTC‚ÌƒNƒƒbƒN’l‚ğ“Ç‚İo‚·
+// æš«å®š
+// RTCã®ã‚¯ãƒ­ãƒƒã‚¯å€¤ã‚’èª­ã¿å‡ºã™
 unsigned char Rtc_GetSecond()
 {
 	unsigned char second;
 
 	I2c_Start();
 	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_WRITE);
-	I2c_Write(0x02); // •b‚ÌƒAƒhƒŒƒX
+	I2c_Write(0x02); // ç§’ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 	I2c_RepeatStart();
 	I2c_Write(I2C_SLAVE_ADDRESS_RTC|I2C_READ);
-	second = I2c_Read(0); // •b‚Ì’l 0-59
+	second = I2c_Read(0); // ç§’ã®å€¤ 0-59
 	I2c_Stop();
 
-	// —LŒøƒrƒbƒg‚Ìæ‚èo‚µ
+	// æœ‰åŠ¹ãƒ“ãƒƒãƒˆã®å–ã‚Šå‡ºã—
 	return second & 0x7f;
 }
 
 //--------------
-// •Ö—˜ŠÖ”
+// ä¾¿åˆ©é–¢æ•°
 //--------------
 
 //
@@ -1422,7 +1422,7 @@ void ClearColon()
 
 
 //--------------
-// •\¦ˆ—
+// è¡¨ç¤ºå‡¦ç†
 //--------------
 e_bool Disp_CallbackOff()
 {
@@ -1437,34 +1437,34 @@ e_bool Disp_CallbackNormal()
 	unsigned char brightness_threshold;
 	unsigned char brightness_max;
 
-	// “_“”§Œä
+	// ç‚¹ç¯åˆ¶å¾¡
 	switch (state)
 	{
 		case 0:
-			// Á“”‹æŠÔ
+			// æ¶ˆç¯åŒºé–“
 			Nixie_ChangeDigit(DIGIT_OFF);
 		
-			// Ÿ‚Ì•\¦‚Ö
+			// æ¬¡ã®è¡¨ç¤ºã¸
 			++digit;
 			if (digit >= DIGIT_OFF)
 				digit = DIGIT_0;
 	
-			// ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚Ì’²®
+			// ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã®èª¿æ•´
 			if (0xff-TRANSITION_RATE > g_disp_transition[digit])
 				g_disp_transition[digit] += TRANSITION_RATE;
 			else
 				g_disp_transition[digit] = 0xff;
 
-			// Ÿ‰ñƒR[ƒ‹ƒoƒbƒN‚Ü‚Å‚ÌŠÔ‚ğ’²®
+			// æ¬¡å›ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã¾ã§ã®æ™‚é–“ã‚’èª¿æ•´
 			TMR0 = g_cds_adval > 32 ? g_cds_adval - 32 : g_cds_adval;
 			// TMR0 = DYNAMIC_OFF_TIMER;
 
-			// ŸƒXƒe[ƒg
+			// æ¬¡ã‚¹ãƒ†ãƒ¼ãƒˆ
 			state = 1;
 
 			break;
 		case 1:
-			// h¡h‚Ì”š‚ğ“_“”
+			// â€ä»Šâ€ã®æ•°å­—ã‚’ç‚¹ç¯
 			Nixie_ChangeNumber(g_disp[digit]);
 			Nixie_ChangeColon(g_disp_colon[digit]);
 
@@ -1474,13 +1474,13 @@ e_bool Disp_CallbackNormal()
 				Nixie_ChangeDigit(DIGIT_OFF);
 				
 
-			// –¾‚é‚³‚Ì‰ºŒÀ‚ğŒˆ’è‚·‚é
+			// æ˜ã‚‹ã•ã®ä¸‹é™ã‚’æ±ºå®šã™ã‚‹
 			if ((digit == 2)
 			||  (digit == 5))
 			{
 				brightness_threshold = BRIGHTNESS_LOWER_THRESHOLD_NEON;
 
-				// todo ƒRƒƒ“‚Ìê‡‚Í‚Æ‚è‚ ‚¦‚¸“_–Å‚·‚é‚¾‚¯B
+				// todo ã‚³ãƒ­ãƒ³ã®å ´åˆã¯ã¨ã‚Šã‚ãˆãšç‚¹æ»…ã™ã‚‹ã ã‘ã€‚
 				// TMR0 = 0x0;
 				state = 0;
 				break;
@@ -1499,8 +1499,8 @@ e_bool Disp_CallbackNormal()
 			}
 
 
-			// –¾‚é‚³‚ğŒˆ’è‚·‚é
-			// ãŒÀ‚Ìê‡‚Íƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“I—¹‚µ‚Ä‚¢‚é
+			// æ˜ã‚‹ã•ã‚’æ±ºå®šã™ã‚‹
+			// ä¸Šé™ã®å ´åˆã¯ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³çµ‚äº†ã—ã¦ã„ã‚‹
 			if (brightness_max > g_disp_transition[digit])
 			{
 				TMR0 = 0xff - g_disp_transition[digit];
@@ -1515,11 +1515,11 @@ e_bool Disp_CallbackNormal()
 
 			break;
 		case 2:
-			// hˆÈ‘Oh‚Ì”š‚ğ“_“”
+			// â€ä»¥å‰â€ã®æ•°å­—ã‚’ç‚¹ç¯
 			Nixie_ChangeNumber(g_disp_prev[digit]);
 			Nixie_ChangeColon(g_disp_colon_prev[digit]);
 
-			// –¾‚é‚³‚Ì‰ºŒÀ‚ğŒˆ’è‚·‚é
+			// æ˜ã‚‹ã•ã®ä¸‹é™ã‚’æ±ºå®šã™ã‚‹
 			if ((digit == 2)
 			||  (digit == 5))
 			{
@@ -1530,7 +1530,7 @@ e_bool Disp_CallbackNormal()
 				brightness_threshold = BRIGHTNESS_LOWER_THRESHOLD_NIXIE;
 			}
 
-			// –¾‚é‚³‚ÌãŒÀ‚ğŒˆ’è‚·‚é
+			// æ˜ã‚‹ã•ã®ä¸Šé™ã‚’æ±ºå®šã™ã‚‹
 			if (brightness_threshold > g_cds_adval)
 			{
 				brightness_max = brightness_threshold;
@@ -1540,8 +1540,8 @@ e_bool Disp_CallbackNormal()
 				brightness_max = g_cds_adval;
 			}
 
-			// –¾‚é‚³‚ğŒˆ’è‚·‚é
-			// ãŒÀ‚Ìê‡‚Íƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“I—¹‚µ‚Ä‚¢‚é
+			// æ˜ã‚‹ã•ã‚’æ±ºå®šã™ã‚‹
+			// ä¸Šé™ã®å ´åˆã¯ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³çµ‚äº†ã—ã¦ã„ã‚‹
 			if (brightness_max > g_disp_transition[digit])
 			{
 				TMR0 = 0xff - (brightness_max - g_disp_transition[digit]);
@@ -1557,7 +1557,7 @@ e_bool Disp_CallbackNormal()
 	return TRUE;
 }
 
-// g_disp_flag —‡‚í‚¹‚Ä“_–Å‚·‚é
+// g_disp_flag ä¼¼åˆã‚ã›ã¦ç‚¹æ»…ã™ã‚‹
 e_bool State_CallbackBlink(unsigned char button_no_)
 {
 	static unsigned char devide_counter = 0;
@@ -1580,12 +1580,12 @@ e_bool State_CallbackBlink(unsigned char button_no_)
 	return TRUE;
 }
 
-// ˆê•bŠÔƒ‰ƒ“ƒ_ƒ€•\¦‚µ‚ÄFALSE‚ğ•Ô‚·
+// ä¸€ç§’é–“ãƒ©ãƒ³ãƒ€ãƒ è¡¨ç¤ºã—ã¦FALSEã‚’è¿”ã™
 e_bool State_CallbackRandomDisp(unsigned char button_no_)
 {
 	static unsigned char counter = 0;
 	
-	// ‚»‚ê‚Á‚Û‚­
+	// ãã‚Œã£ã½ã
 	unsigned char val = (unsigned char)rand() % 10;
 
 	g_disp_flag = 0b11111111;
@@ -1612,7 +1612,7 @@ e_bool State_CallbackRandomDisp(unsigned char button_no_)
 	return TRUE;
 }
 
-// ”ñ•\¦ƒ‚[ƒh
+// éè¡¨ç¤ºãƒ¢ãƒ¼ãƒ‰
 e_bool State_CallbackDispoff(unsigned char button_no_)
 {
 	unsigned char i;
@@ -1630,7 +1630,7 @@ e_bool State_CallbackDispoff(unsigned char button_no_)
 	return TRUE;
 }
 
-// Ÿ‚Ì•\¦‚É‰EˆÚ“®‚·‚é
+// æ¬¡ã®è¡¨ç¤ºã«å³ç§»å‹•ã™ã‚‹
 e_bool State_CallbackRightChange(unsigned char button_no_)
 {
 	const unsigned char NUM_COLON = 6;
@@ -1690,7 +1690,7 @@ e_bool State_CallbackRightChange(unsigned char button_no_)
 	return TRUE;
 }
 
-// Ÿ‚Ì•\¦‚É¶ˆÚ“®‚·‚é
+// æ¬¡ã®è¡¨ç¤ºã«å·¦ç§»å‹•ã™ã‚‹
 e_bool State_CallbackLeftChange(unsigned char button_no_)
 {
 	const unsigned char NUM_COLON = 6;
@@ -1768,7 +1768,7 @@ e_bool State_CallbackClock(unsigned char button_no_)
 	{
 		devide_counter = 0;
 		
-		// BCDŒ`®‚ÅŠÔXV
+		// BCDå½¢å¼ã§æ™‚é–“æ›´æ–°
 		g_disp_prev[0] = LO(g_second);
 		g_disp_transition[0] = 0;
 		g_second += 0x01;
@@ -1811,12 +1811,12 @@ e_bool State_CallbackClock(unsigned char button_no_)
 						}
 					}
 				}
-				// 1•ª‚Éˆê“xƒ^ƒCƒ}[‘¬“x’²®‚ğs‚¤
+				// 1åˆ†ã«ä¸€åº¦ã‚¿ã‚¤ãƒãƒ¼é€Ÿåº¦èª¿æ•´ã‚’è¡Œã†
 				g_next_timer1_ajustment = 1;
 			}
 		}
 		
-		// Œv’²®‚ÌƒfƒoƒbƒO
+		// æ™‚è¨ˆèª¿æ•´ã®ãƒ‡ãƒãƒƒã‚°
 		//g_disp[4] = timer1l_1sec_offset % 10;
 		//g_disp[6] = (timer1l_1sec_offset / 10) % 10;
 		//g_disp[7] = (timer1l_1sec_offset / 100) % 10;
@@ -1827,7 +1827,7 @@ e_bool State_CallbackClock(unsigned char button_no_)
 		//g_disp[1] =  (g_auto_off_count/ 10) % 10;
 		//g_disp[3] =(g_auto_off_count / 100) % 10;
 		
-		// •\¦ƒf[ƒ^ƒZƒbƒg
+		// è¡¨ç¤ºãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ
 		g_disp[4] = (g_minute>>4) & 0xf;
 		g_disp[6] = g_hour & 0xf;
 		g_disp[7] = (g_hour>>4) & 0xf;
@@ -1837,7 +1837,7 @@ e_bool State_CallbackClock(unsigned char button_no_)
 	}
 	else if (devide_counter == CLOCK_COLON_BLINK_OFFSET)
 	{
-		// ƒRƒƒ“‚Ì“_–Å
+		// ã‚³ãƒ­ãƒ³ã®ç‚¹æ»…
 		g_disp_colon_prev[2] = colon_on;
 		g_disp_colon_prev[5] = colon_on;
 		colon_on = colon_on == 0 ? 0b11 : 0;
@@ -1933,7 +1933,7 @@ e_bool State_CallbackSetClock(unsigned char button_no_)
 	return TRUE;
 }
 
-// ƒJƒŒƒ“ƒ_[ƒ‚[ƒh
+// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ¢ãƒ¼ãƒ‰
 e_bool State_CallbackCalendar(unsigned char button_no_)
 {
 	g_disp_flag = 0b11111111;
@@ -2142,7 +2142,7 @@ e_bool State_CallbackSetAlarm(unsigned char button_no_)
 }
 
 
-// ‰·“xŒvƒ‚[ƒh
+// æ¸©åº¦è¨ˆãƒ¢ãƒ¼ãƒ‰
 e_bool State_CallbackTemparature(unsigned char button_no_)
 {
 	g_disp_flag = 0b11111111;
@@ -2162,7 +2162,7 @@ e_bool State_CallbackTemparature(unsigned char button_no_)
 	g_disp_colon[6] = 0b11;
 	g_disp_colon[7] = 0b11;
 
-	// Ÿ‚ÌƒR[ƒ‹ƒoƒbƒN‚Ü‚Å‚ÌŠÔ‚ğ’²®
+	// æ¬¡ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã¾ã§ã®æ™‚é–“ã‚’èª¿æ•´
 	//TMR1L = TMR1L_1SEC_OFFSET;
 	//TMR1H = TMR1H_1SEC_OFFSET;
 
@@ -2235,7 +2235,7 @@ e_bool State_CallbackConfig(unsigned char button_no_)
 	}
 
 
-	// Ÿ‚ÌƒR[ƒ‹ƒoƒbƒN‚Ü‚Å‚ÌŠÔ‚ğ’²®
+	// æ¬¡ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã¾ã§ã®æ™‚é–“ã‚’èª¿æ•´
 	//TMR1L = TMR1L_1SEC_OFFSET;
 	//TMR1H = TMR1H_1SEC_OFFSET;
 
@@ -2339,7 +2339,7 @@ e_bool Mainloop_CallbackNormal(unsigned char button_no_)
 	static unsigned char auto_off_devide_count = 0;
 	static unsigned char alarm_loop_limit = 0;
 
-	// •ªü
+	// åˆ†å‘¨
 	++devide_count;
 	if (devide_count < 10)
 	{
@@ -2347,7 +2347,7 @@ e_bool Mainloop_CallbackNormal(unsigned char button_no_)
 	}
 	devide_count = 0;
 
-	// ‰·“x
+	// æ¸©åº¦
 	{
 		unsigned char adval = Pic_GetAd(0);
 		unsigned char adval_i = adval/(100/ADVAL_2_TMPARATURE);
@@ -2356,12 +2356,12 @@ e_bool Mainloop_CallbackNormal(unsigned char button_no_)
 		g_temparature_fractional = (((adval_f / 10) % 10) << 4);// | (adval_f % 10);
 	}
 	
-	// ADƒRƒ“ƒo[ƒ^•ú“d‘Ò‚¿‚µ‚Ä‚İ‚é
+	// ADã‚³ãƒ³ãƒãƒ¼ã‚¿æ”¾é›»å¾…ã¡ã—ã¦ã¿ã‚‹
 	Wait10ms(1);
 
-	// b’è@Œv‚Ì’²®
-	// ©•ª‚Ìƒ^ƒCƒ}[‚Åi‚ß‚½ŠÔ‚ª‘‚¯‚ê‚Îƒ^ƒCƒ}[Š„‚è‚İ‚ÌŠÔŠu‚ğL‚Î‚·
-	// ŒÂX‚É‚­‚é‚Æ‚«‚Í‚Ù‚Ú•K‚¸g_second==0
+	// æš«å®šã€€æ™‚è¨ˆã®èª¿æ•´
+	// è‡ªåˆ†ã®ã‚¿ã‚¤ãƒãƒ¼ã§é€²ã‚ãŸæ™‚é–“ãŒæ—©ã‘ã‚Œã°ã‚¿ã‚¤ãƒãƒ¼å‰²ã‚Šè¾¼ã¿ã®é–“éš”ã‚’ä¼¸ã°ã™
+	// å€‹ã€…ã«ãã‚‹ã¨ãã¯ã»ã¼å¿…ãšg_second==0
 	if (g_next_timer1_ajustment != 0)
 	{
 		g_next_timer1_ajustment = 0;
@@ -2386,8 +2386,8 @@ e_bool Mainloop_CallbackNormal(unsigned char button_no_)
 	}
 
  
-	// ƒAƒ‰[ƒ€
-	// ‚±‚Ì•Ó‚à“K“–
+	// ã‚¢ãƒ©ãƒ¼ãƒ 
+	// ã“ã®è¾ºã‚‚é©å½“
 	if ((g_hour == g_alarm_hour)
 	&&  (g_minute == g_alarm_minute)
 	&&  (g_second == 0))
@@ -2406,7 +2406,7 @@ e_bool Mainloop_CallbackNormal(unsigned char button_no_)
 		}
 	}
 
-	// –¾‚é‚³
+	// æ˜ã‚‹ã•
 	{
 		if (g_config_auto_brightness)
 		{
@@ -2419,8 +2419,8 @@ e_bool Mainloop_CallbackNormal(unsigned char button_no_)
 			g_cds_adval = g_config_max_brightness;
 		}
 
-		// •\¦—p‚Ì’l‚ğƒƒCƒ“ƒ‹[ƒ`ƒ“ã‚ÅŒvZ
-		// Config—p‚Émax’l‚ğ•\¦‚·‚éƒ‚[ƒh‚à—pˆÓ
+		// è¡¨ç¤ºç”¨ã®å€¤ã‚’ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒãƒ³ä¸Šã§è¨ˆç®—
+		// Configç”¨ã«maxå€¤ã‚’è¡¨ç¤ºã™ã‚‹ãƒ¢ãƒ¼ãƒ‰ã‚‚ç”¨æ„
 		if (g_state_current == &g_state_set_config)
 		{
 			g_cds_adval = g_config_max_brightness;
@@ -2429,7 +2429,7 @@ e_bool Mainloop_CallbackNormal(unsigned char button_no_)
 		g_cds_10th_place  = (g_cds_adval / 10) % 10;
 		g_cds_1th_place   = g_cds_adval % 10;
 				
-		// ˆÃ‚¢ŠÔ‚ª‘±‚¢‚½‚ç•\¦‚ğÁ‚·—p
+		// æš—ã„æ™‚é–“ãŒç¶šã„ãŸã‚‰è¡¨ç¤ºã‚’æ¶ˆã™ç”¨
 		if (g_config_auto_off_enable)
 		{
 			if (g_cds_adval < AUTO_OFF_THRESHOLD)
@@ -2460,7 +2460,7 @@ e_bool Mainloop_CallbackNormal(unsigned char button_no_)
 }
 
 //---------------
-// ƒXƒe[ƒgƒnƒ“ƒhƒ‰
+// ã‚¹ãƒ†ãƒ¼ãƒˆãƒãƒ³ãƒ‰ãƒ©
 //---------------
 void SelectTimer1Callback(unsigned char button_no_)
 {
@@ -2673,12 +2673,12 @@ e_bool TargetBcdDown(unsigned char arg_)
 	return TRUE;
 }
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void InitApplication()
 {
 	unsigned char config;
 	
-	// Rtc‰Šú‰»‚¨‚æ‚ÑAŠÔæ“¾
+	// RtcåˆæœŸåŒ–ãŠã‚ˆã³ã€æ™‚é–“å–å¾—
 	Rtc_Init();
 	Rtc_UpdatePicTimerByRtc();
 
@@ -2689,8 +2689,8 @@ void InitApplication()
 	g_config_auto_brightness = config & CONFIG_AUTO_BRIGHTNESS ? 1:0;
 	g_config_max_brightness = Eeprom_Read(EEPROM_ADR_MAX_BRIGHTNESS);
 
-	// ƒXƒe[ƒgƒ}ƒVƒ“‚ğ‰Šú‰»
-	//Å‰‚ÍŒvƒXƒe[ƒg
+	// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ã‚’åˆæœŸåŒ–
+	//æœ€åˆã¯æ™‚è¨ˆã‚¹ãƒ†ãƒ¼ãƒˆ
 	g_state_clock.on_button0			= State_ChangeCalendar;
 	g_state_clock.on_button1			= State_ChangeDispOff;
 	g_state_clock.on_button2			= State_ChangeSetClock;
@@ -2722,22 +2722,22 @@ void InitApplication()
 	g_state_set_config.on_button1 	    = TargetDown;
 	g_state_set_config.on_button2 	    = NIL;
 
-	// ƒR[ƒ‹ƒoƒbƒN‚ğ“o˜^
+	// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’ç™»éŒ²
 	g_timer1_callback[0] = State_CallbackClock;
 	g_timer1_callback[1] = NIL;
 	g_mainloop_callback[0]	 = Mainloop_CallbackNormal;
 	g_state_current = &g_state_clock;
 }
 
-// Š„‚è‚İ
+// å‰²ã‚Šè¾¼ã¿
 void interrupt intr(void)
 {
 	if (T0IF)
 	{
-		// —vˆöƒNƒŠƒA
+		// è¦å› ã‚¯ãƒªã‚¢
 		T0IF = 0;
 
-		// ƒR[ƒ‹ƒoƒbƒN
+		// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 		//DoCallbackChain(g_timer0_callback);
 		if (g_auto_off_count == 0xff)
 			Disp_CallbackOff();
@@ -2746,38 +2746,38 @@ void interrupt intr(void)
 	}
 	else if (TMR1IF)
 	{
-		// ˆê’Uƒ^ƒCƒ}[‚ğ’â~
+		// ä¸€æ—¦ã‚¿ã‚¤ãƒãƒ¼ã‚’åœæ­¢
 		//T1CONbits.TMR1ON = 0;
 		
-		// —vˆöƒNƒŠƒA
+		// è¦å› ã‚¯ãƒªã‚¢
 		TMR1IF = 0;
 
-		// ƒR[ƒ‹ƒoƒbƒN
+		// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 		DoCallbackChain(g_timer1_callback);
 		
-		// ˆê’Uƒ^ƒCƒ}[‚ğÄŠJ
+		// ä¸€æ—¦ã‚¿ã‚¤ãƒãƒ¼ã‚’å†é–‹
 		//T1CONbits.TMR1ON = 1;
 	}
 	else if (SSPIF)
 	{
-		// Š„‚è‚İ‚Å—vˆöƒNƒŠƒA‚Í‚µ‚È‚¢
+		// å‰²ã‚Šè¾¼ã¿ã§è¦å› ã‚¯ãƒªã‚¢ã¯ã—ãªã„
 		// SSPIF = 0; 
 	}
 }
 
 
-// ƒƒCƒ“
+// ãƒ¡ã‚¤ãƒ³
 void main(void)
 {
 	static unsigned char alarm_count = 0;
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	InitDevice();
 	InitApplication();
 
 	while (1)
 	{
-		// ƒ{ƒ^ƒ“æ“¾
+		// ãƒœã‚¿ãƒ³å–å¾—
 		if (!PIN_BUTTON_0)
 		{
 			if (g_button0_press == 0)
@@ -2835,7 +2835,7 @@ void main(void)
 			g_button2_push = 0;
 		}
 
-		// ƒ{ƒ^ƒ“ƒvƒbƒVƒ…ƒR[ƒ‹ƒoƒbƒN
+		// ãƒœã‚¿ãƒ³ãƒ—ãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 		if ((g_state_current->on_button0 != NIL)
 		&&  (g_button0_push))
 		{
@@ -2854,7 +2854,7 @@ void main(void)
 			(*(g_state_current->on_button2))(2);		
 		}
 
-		// “K“–ƒXƒs[ƒJ[ƒAƒ‰[ƒ€—Dæ
+		// é©å½“ã‚¹ãƒ”ãƒ¼ã‚«ãƒ¼ã‚¢ãƒ©ãƒ¼ãƒ å„ªå…ˆ
 		if (g_alarm_trigger != 0)
 		{
 			++alarm_count;
@@ -2873,7 +2873,7 @@ void main(void)
 			PIN_SPEAKER = 0;
 		}
 
-		// ƒƒCƒ“ƒR[ƒ‹ƒoƒbƒN
+		// ãƒ¡ã‚¤ãƒ³ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 		DoCallbackChain(g_mainloop_callback);
 
 		Wait10ms(1);

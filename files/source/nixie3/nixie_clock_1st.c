@@ -7,13 +7,13 @@
 #define HI(c_) ((c_>>4)&0x0f)
 
 
-// iicƒ^ƒCƒ€ƒAƒEƒg
+// iicã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ
 #define IDLE_LOOP	  (1000)
 #define TX_END_LOOP	  (1000)
 #define RX_END_LOOP	  (1000)
 #define BUSBUSY_LOOP  (1000)
 
-// •\¦Œ…”
+// è¡¨ç¤ºæ¡æ•°
 #define DIGITS (8)
 #define DIGITS_OFF_ALL (DIGITS)
 
@@ -22,11 +22,11 @@
 #define MSEC_TO_TIMERV (2)
 #define MAX_TRANSITION (40)
 
-// •\¦ƒtƒ‰ƒO
-// ƒfƒoƒCƒX‚É‚ ‚í‚¹‚éB
+// è¡¨ç¤ºãƒ•ãƒ©ã‚°
+// ãƒ‡ãƒã‚¤ã‚¹ã«ã‚ã‚ã›ã‚‹ã€‚
 unsigned char NUM2REG_TABLE[] = 
 {
-	0, //”š
+	0, //æ•°å­—
 	9,
 	8,
 	7,
@@ -40,13 +40,13 @@ unsigned char NUM2REG_TABLE[] =
 #define DISP_DOT (sizeof(NUM2REG_TABLE))
 #define DISP_OFF (DISP_DOT+1)
 
-// ƒ{ƒ^ƒ“ƒR[ƒ‹ƒoƒbƒN
+// ãƒœã‚¿ãƒ³ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 typedef void (*t_callback)(void);
 t_callback g_timer_v_callback = NULL;
 t_callback g_timer_a_callback = NULL;
 static unsigned long g_timer_v_callback_time_left = 0;
 
-// ƒXƒe[ƒgƒ}ƒVƒ“
+// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³
 typedef struct {
 	t_callback on_button0;
 	t_callback on_button1;
@@ -76,7 +76,7 @@ unsigned short g_blink_timer = 0;
 static const unsigned short BLINK_INTERVAL = 500*MSEC_TO_TIMERV;
 
 
-// •\¦ƒf[ƒ^
+// è¡¨ç¤ºãƒ‡ãƒ¼ã‚¿
 static unsigned char g_disp[DIGITS] = {0,0,0,0,0,0,0,0};
 static unsigned char g_disp_prev[DIGITS] = {0,0,DISP_DOT,0,0,DISP_DOT,0,0};
 static unsigned short g_transition[DIGITS] = {0,0,0,0,0,0,0,0};
@@ -89,7 +89,7 @@ static unsigned char g_year	  = 0x00;
 static unsigned char g_month  = 0x00;
 static unsigned char g_date	  = 0x00;
 static unsigned char g_week	  = 0x00;
-static unsigned char g_dot    = 0x00; // 0Á“”A1“_“”
+static unsigned char g_dot    = 0x00; // 0æ¶ˆç¯ã€1ç‚¹ç¯
 //static unsigned char hour_h	= 0;
 //static unsigned char hour_l	= 0;
 //static unsigned char minute_h = 0;
@@ -105,27 +105,27 @@ static unsigned char g_dot    = 0x00; // 0Á“”A1“_“”
 
 
 
-// ‚Æ‚è‚ ‚¦‚¸ƒvƒƒgƒ^ƒCƒv
+// ã¨ã‚Šã‚ãˆãšãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—
 void ChangeDiap(unsigned char ch_, unsigned char num_);
 void StateChangeRandomDisp();
 
 //-----------------------------------------------
-// Šî–{ŠÖ”
+// åŸºæœ¬é–¢æ•°
 //-----------------------------------------------
 
-// msec’PˆÊ‚Åwait
+// msecå˜ä½ã§wait
 void wait_msec(int msec_)
 {
 	volatile int i,j;
 	for (i=0;i<msec_;i++)
 	{
-		for (j=0;j<1588;j++); /*1588‚Í–ñ1ms*/
+		for (j=0;j<1588;j++); /*1588ã¯ç´„1ms*/
 	}
 }
 
 short iic_init(void)
 {
-	// “]‘—ƒŒ[ƒg
+	// è»¢é€ãƒ¬ãƒ¼ãƒˆ
 	IIC2.ICCR1.BIT.CKS = 0x0f;
 	IIC2.ICCR1.BIT.ICE = 1;
 	
@@ -153,14 +153,14 @@ short iic_start(void)
 {
 	volatile short	i = 0;
 
-	// ƒrƒW[ó‘Ô‰ğœ‘Ò‚¿
+	// ãƒ“ã‚¸ãƒ¼çŠ¶æ…‹è§£é™¤å¾…ã¡
 	iic_busbusy();
 	
-	// ƒ}ƒXƒ^‘—Mƒ‚[ƒh‚ğw’è
+	// ãƒã‚¹ã‚¿é€ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’æŒ‡å®š
 	IIC2.ICCR1.BYTE = (IIC2.ICCR1.BYTE & 0xcf) | 0x30; 
 	
-	// ŠJn
-	//BBSY=1,SCP=0 / ƒXƒ^[ƒgƒRƒ“ƒfƒBƒVƒ‡ƒ“A”­s
+	// é–‹å§‹
+	//BBSY=1,SCP=0 / ã‚¹ã‚¿ãƒ¼ãƒˆã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³ã€ç™ºè¡Œ
 	IIC2.ICCR2.BYTE = (IIC2.ICCR2.BYTE & 0xbe) | 0x80;
 	//do 
 	//{
@@ -169,7 +169,7 @@ short iic_start(void)
 	//	
 	//}while(IIC2.ICIER.BIT.ACKBR)
 
-	// DRT/DRR‚ª‹ó‚É‚È‚é‚Ü‚Å‘Ò‚¿
+	// DRT/DRRãŒç©ºã«ãªã‚‹ã¾ã§å¾…ã¡
 	while (IIC2.ICSR.BIT.TDRE == 0);
 	{
 		if (i++ > TX_END_LOOP)
@@ -187,19 +187,19 @@ short iic_stop(void)
 	volatile short	i = 0;
 	_BYTE			result;
 
-	// ƒ_ƒ~[ƒŠ[ƒh
+	// ãƒ€ãƒŸãƒ¼ãƒªãƒ¼ãƒ‰
 	result = IIC2.ICSR.BYTE;
 	
-	// TENDƒtƒ‰ƒOƒNƒŠƒA
+	// TENDãƒ•ãƒ©ã‚°ã‚¯ãƒªã‚¢
 	IIC2.ICSR.BIT.TEND = 0;
 
-	// ƒ}ƒXƒ^‘—Mƒ‚[ƒh‚ğw’è
+	// ãƒã‚¹ã‚¿é€ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’æŒ‡å®š
 	IIC2.ICCR1.BYTE = (IIC2.ICCR1.BYTE & 0xcf) | 0x30;
 	
-	// ’â~ğŒ¶¬(BBSY=0, SCP=0/ƒXƒgƒbƒvƒRƒ“ƒfƒBƒVƒ‡ƒ“A”­s)
+	// åœæ­¢æ¡ä»¶ç”Ÿæˆ(BBSY=0, SCP=0/ã‚¹ãƒˆãƒƒãƒ—ã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³ã€ç™ºè¡Œ)
 	IIC2.ICCR2.BYTE &= 0x3f;
 
-	// ’â~ğŒ¶¬‘Ò‚¿
+	// åœæ­¢æ¡ä»¶ç”Ÿæˆå¾…ã¡
 	while (IIC2.ICSR.BIT.STOP == 0)
 	{
 		if (i++ > TX_END_LOOP)
@@ -213,16 +213,16 @@ short iic_put(_BYTE data)
 {
 	volatile short	i = 0;
 
-	// ƒ}ƒXƒ^‘—Mƒ‚[ƒh‚ğw’è
+	// ãƒã‚¹ã‚¿é€ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’æŒ‡å®š
 	IIC2.ICCR1.BYTE = (IIC2.ICCR1.BYTE & 0xcf) | 0x30; 
 
-	// ƒf[ƒ^‘‚«‚İ
+	// ãƒ‡ãƒ¼ã‚¿æ›¸ãè¾¼ã¿
 	IIC2.ICDRT = data;
 
-	// ‘—M‘Ò‚¿
+	// é€ä¿¡å¾…ã¡
 	while (IIC2.ICSR.BIT.TEND == 0)
 	{
-		// ƒ^ƒCƒ€ƒAƒEƒg
+		// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ
 		if (i++ > TX_END_LOOP)
 			return 0;
 	}
@@ -230,7 +230,7 @@ short iic_put(_BYTE data)
 	// ACK?
 	if (IIC2.ICIER.BIT.ACKBR != 0)
 	{
-		// ’â~ğŒ”­s
+		// åœæ­¢æ¡ä»¶ç™ºè¡Œ
 		iic_stop();
 		return 0;
 	}
@@ -242,27 +242,27 @@ char iic_get(int ack_)
 	volatile short	i = 0;
 	_BYTE data = 0;
 	
-	// ƒ}ƒXƒ^‘—Mƒ‚[ƒh‚ğw’è
+	// ãƒã‚¹ã‚¿é€ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’æŒ‡å®š
 	IIC2.ICCR1.BYTE = (IIC2.ICCR1.BYTE & 0xcf) | 0x20; 
 	
-	// ƒ_ƒ~[ƒŠ[ƒh‚·‚é‚ÆóM‚ğŠJn
+	// ãƒ€ãƒŸãƒ¼ãƒªãƒ¼ãƒ‰ã™ã‚‹ã¨å—ä¿¡ã‚’é–‹å§‹
 	data = IIC2.ICDRR;
 
-	// ƒŒƒV[ƒuƒf[ƒ^ƒtƒ‹‘Ò‚¿
+	// ãƒ¬ã‚·ãƒ¼ãƒ–ãƒ‡ãƒ¼ã‚¿ãƒ•ãƒ«å¾…ã¡
 	while (IIC2.ICSR.BIT.RDRF == 0)
 	{
-		// ƒ^ƒCƒ€ƒAƒEƒg
+		// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ
 		if (i++ > RX_END_LOOP)
 			return 0;
 	}
 
-	// “Ç‚İ‚İ
+	// èª­ã¿è¾¼ã¿
 	data = IIC2.ICDRR;
 
 	// ACK?
 	if (IIC2.ICIER.BIT.ACKBR != 0)
 	{
-		// ’â~ğŒ”­s
+		// åœæ­¢æ¡ä»¶ç™ºè¡Œ
 		iic_stop();
 		return data;
 	}
@@ -270,64 +270,64 @@ char iic_get(int ack_)
 	return data;
 }
 
-// H8‰Šú‰»
+// H8åˆæœŸåŒ–
 void InitH8(void)
 {
-	// ƒ^ƒCƒ}Vİ’è
-	TV.TCRV0.BIT.CCLR = 1;	// ƒRƒ“ƒyƒAƒ}ƒbƒ`A‚ÅTCNVƒNƒŠƒA
-	TV.TCRV0.BIT.CKS = 0;	// ’â~
-	TV.TCRV1.BIT.ICKS = 1;	// ã‹LCKS=3‚Æ•¹—p‚Å /128=156.25kHƒÓ z
-	TV.TCSRV.BIT.CMFA = 0;	// ƒtƒ‰ƒOƒNƒŠƒA
-	TV.TCNTV = 0;			// ƒ^ƒCƒ}ƒJƒEƒ“ƒ^ƒNƒŠƒA
-	TV.TCORA = 80;			// –ñ500us
-	TV.TCRV0.BIT.CMIEA = 1; // ƒRƒ“ƒyƒAƒ}ƒbƒ`‚ÅŠ„‚è‚İ
-	TV.TCRV0.BIT.CKS = 3;	// ƒ^ƒCƒ}VƒXƒ^[ƒg
+	// ã‚¿ã‚¤ãƒVè¨­å®š
+	TV.TCRV0.BIT.CCLR = 1;	// ã‚³ãƒ³ãƒšã‚¢ãƒãƒƒãƒAã§TCNVã‚¯ãƒªã‚¢
+	TV.TCRV0.BIT.CKS = 0;	// åœæ­¢
+	TV.TCRV1.BIT.ICKS = 1;	// ä¸Šè¨˜CKS=3ã¨ä½µç”¨ã§ /128=156.25kHÏ† z
+	TV.TCSRV.BIT.CMFA = 0;	// ãƒ•ãƒ©ã‚°ã‚¯ãƒªã‚¢
+	TV.TCNTV = 0;			// ã‚¿ã‚¤ãƒã‚«ã‚¦ãƒ³ã‚¿ã‚¯ãƒªã‚¢
+	TV.TCORA = 80;			// ç´„500us
+	TV.TCRV0.BIT.CMIEA = 1; // ã‚³ãƒ³ãƒšã‚¢ãƒãƒƒãƒã§å‰²ã‚Šè¾¼ã¿
+	TV.TCRV0.BIT.CKS = 3;	// ã‚¿ã‚¤ãƒVã‚¹ã‚¿ãƒ¼ãƒˆ
 
 	// IIC
 	iic_init();
 
-	// ƒ^ƒCƒ}Aİ’è
-	TA.TMA.BIT.CKSI = 8;	// ƒvƒŠƒXƒP[ƒ‰W/Œv—p‘I‘ğ ƒÓ=1Hz
-	IENR1.BIT.IENTA = 1;	// ƒ^ƒCƒ}AŠ„‚è‚İ—v‹‹–‰Â
+	// ã‚¿ã‚¤ãƒAè¨­å®š
+	TA.TMA.BIT.CKSI = 8;	// ãƒ—ãƒªã‚¹ã‚±ãƒ¼ãƒ©W/æ™‚è¨ˆç”¨é¸æŠ Ï†=1Hz
+	IENR1.BIT.IENTA = 1;	// ã‚¿ã‚¤ãƒAå‰²ã‚Šè¾¼ã¿è¦æ±‚è¨±å¯
 
-	// IOƒ|[ƒgPCR8 İ’è
-	IO.PCR8 = 0xFF;			// PCR8 = o—Í
+	// IOãƒãƒ¼ãƒˆPCR8 è¨­å®š
+	IO.PCR8 = 0xFF;			// PCR8 = å‡ºåŠ›
 	
-	// IOƒ|[ƒgPCR5 İ’è
-	IO.PCR5 = 0xFF;			// PCR5 = o—Í
+	// IOãƒãƒ¼ãƒˆPCR5 è¨­å®š
+	IO.PCR5 = 0xFF;			// PCR5 = å‡ºåŠ›
 	
-	// IOƒ|[ƒgPCR1 İ’è
-	IO.PCR1 = 0xe9;			// PIO10 = o—ÍAPIO11,PIO12,PIO14 = “ü—Í
+	// IOãƒãƒ¼ãƒˆPCR1 è¨­å®š
+	IO.PCR1 = 0xe9;			// PIO10 = å‡ºåŠ›ã€PIO11,PIO12,PIO14 = å…¥åŠ›
 }
 
 void RtcInit()
 {	  
 	wait_msec(1700);
 	iic_start();
-	iic_put(0xa2);	// ‘‚«‚İƒ‚[ƒh
-	iic_put(0x00);	// control0‚ÌƒAƒhƒŒƒX
+	iic_put(0xa2);	// æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+	iic_put(0x00);	// control0ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 	iic_put(0x0);	// test=0	
 	iic_put(0x0);	//AIE=TIE=0
 	iic_stop(); 
 }
 
-// “ñi‰»\i–@‚Å“ú•t‚ğİ’è
+// äºŒé€²åŒ–åé€²æ³•ã§æ—¥ä»˜ã‚’è¨­å®š
 void RtcDateSetBcdInDirect(short year_, char month_, char week_, char date_, char hour_, char minute_, char second_)
 {
 	iic_start();
-	iic_put(0xa2);	   // ‘‚«‚İƒ‚[ƒh
-	iic_put(0x02);	   // •b‚ÌƒAƒhƒŒƒX
-	iic_put(second_);  // •b‚Ì’l 0-59
-	iic_put(minute_);  // •ª‚Ì’l 0-59
-	iic_put(hour_);	   // ‚Ì’l 0-23
-	iic_put(date_);	   // “ú‚Ì’l 1-31
-	iic_put(week_);	   // —j‚Ì’l “úŒ‰Î…–Ø‹à“y 0123456
-	iic_put(year_>0x2000 ? 0x80|month_ : month_); // Œ‚Ì’l (C:MSB)1-12	  C‚Í1‚Ì‚Æ‚«21¢‹I
-	iic_put((char)(year_&0x00ff)); // ”N‚Ì’l 00-99
+	iic_put(0xa2);	   // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+	iic_put(0x02);	   // ç§’ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
+	iic_put(second_);  // ç§’ã®å€¤ 0-59
+	iic_put(minute_);  // åˆ†ã®å€¤ 0-59
+	iic_put(hour_);	   // æ™‚ã®å€¤ 0-23
+	iic_put(date_);	   // æ—¥ã®å€¤ 1-31
+	iic_put(week_);	   // æ›œã®å€¤ æ—¥æœˆç«æ°´æœ¨é‡‘åœŸ 0123456
+	iic_put(year_>0x2000 ? 0x80|month_ : month_); // æœˆã®å€¤ (C:MSB)1-12	  Cã¯1ã®ã¨ã21ä¸–ç´€
+	iic_put((char)(year_&0x00ff)); // å¹´ã®å€¤ 00-99
 	iic_stop();
 }
 
-// ƒOƒ[ƒoƒ‹‚Ì’l‚ğg‚Á‚ÄRTC‚ÌŠÔ‚ğİ’è
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«ã®å€¤ã‚’ä½¿ã£ã¦RTCã®æ™‚é–“ã‚’è¨­å®š
 void RtcDateSetBcd()
 {
 	RtcDateSetBcdInDirect(
@@ -340,32 +340,32 @@ void RtcDateSetBcd()
 		(HI(g_second) << 4) | LO(g_second));
 }
 
-// RTC‚ÌƒNƒƒbƒN’l‚ğ“Ç‚İo‚·
+// RTCã®ã‚¯ãƒ­ãƒƒã‚¯å€¤ã‚’èª­ã¿å‡ºã™
 void RtcDateGetBcd()
 {
-	//char sec	 = 0; // •b‚Ì’l
-	//char min	 = 0; // •ª‚Ì’l
-	//char hour	 = 0; // ‚Ì’l
-	//char day	 = 0; // “ú‚Ì’l
-	//char week	 = 0; // —j‚Ì’l
-	//char month = 0; // Œ‚Ì’l
-	//char year	 = 0; // ”N‚Ì’l
+	//char sec	 = 0; // ç§’ã®å€¤
+	//char min	 = 0; // åˆ†ã®å€¤
+	//char hour	 = 0; // æ™‚ã®å€¤
+	//char day	 = 0; // æ—¥ã®å€¤
+	//char week	 = 0; // æ›œã®å€¤
+	//char month = 0; // æœˆã®å€¤
+	//char year	 = 0; // å¹´ã®å€¤
 	
-	// ’ÊM
+	// é€šä¿¡
 	#if 1
 		iic_start();
-		iic_put(0xa2);	 // ‘‚«‚İƒ‚[ƒh
-		iic_put(0x02);	 // •b‚ÌƒAƒhƒŒƒX
+		iic_put(0xa2);	 // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+		iic_put(0x02);	 // ç§’ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		wait_msec(100);
 		iic_start();
-		iic_put(0xa3);	 // “Ç‚İ‚İƒ‚[ƒh
-		g_second = iic_get(1); // •b‚Ì’l
-		g_minute = iic_get(1); // •ª‚Ì’l
-		g_hour	 = iic_get(1); // ‚Ì’l
-		g_date	 = iic_get(1); // “ú‚Ì’l
-		g_week	 = iic_get(1); // —j‚Ì’l
-		g_month	 = iic_get(1); // Œ‚Ì’l
-		g_year	 = iic_get(0); // ”N‚Ì’l
+		iic_put(0xa3);	 // èª­ã¿è¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+		g_second = iic_get(1); // ç§’ã®å€¤
+		g_minute = iic_get(1); // åˆ†ã®å€¤
+		g_hour	 = iic_get(1); // æ™‚ã®å€¤
+		g_date	 = iic_get(1); // æ—¥ã®å€¤
+		g_week	 = iic_get(1); // æ›œã®å€¤
+		g_month	 = iic_get(1); // æœˆã®å€¤
+		g_year	 = iic_get(0); // å¹´ã®å€¤
 		iic_stop();
 		g_second &= 0x7f;
 		g_minute &= 0x7f;
@@ -376,20 +376,20 @@ void RtcDateGetBcd()
 		g_year	 &= 0x7f;
 	#else
 		iic_start();
-		iic_put(0xa2);	 // ‘‚«‚İƒ‚[ƒh
-		iic_put(0x02);	 // •b‚ÌƒAƒhƒŒƒX
+		iic_put(0xa2);	 // æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+		iic_put(0x02);	 // ç§’ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		wait_msec(100);
 		iic_start();
-		iic_put(0xa3);	 // “Ç‚İ‚İƒ‚[ƒh
-		sec	  = iic_get(1); // •b‚Ì’l
-		min	  = iic_get(1); // •ª‚Ì’l
-		hour  = iic_get(1); // ‚Ì’l
-		day	  = iic_get(1); // “ú‚Ì’l
-		week  = iic_get(1); // —j‚Ì’l
-		month = iic_get(1); // Œ‚Ì’l
-		year  = iic_get(0); // ”N‚Ì’l
+		iic_put(0xa3);	 // èª­ã¿è¾¼ã¿ãƒ¢ãƒ¼ãƒ‰
+		sec	  = iic_get(1); // ç§’ã®å€¤
+		min	  = iic_get(1); // åˆ†ã®å€¤
+		hour  = iic_get(1); // æ™‚ã®å€¤
+		day	  = iic_get(1); // æ—¥ã®å€¤
+		week  = iic_get(1); // æ›œã®å€¤
+		month = iic_get(1); // æœˆã®å€¤
+		year  = iic_get(0); // å¹´ã®å€¤
 		iic_stop();
-		// “ñi‰»\i¨\i
+		// äºŒé€²åŒ–åé€²â†’åé€²
 		sec	  &= 0x7f;
 		min	  &= 0x7f;
 		hour  &= 0x3f;
@@ -397,7 +397,7 @@ void RtcDateGetBcd()
 		week  &= 0x07;
 		month &= 0x1f;
 		year  &= 0x7f;
-		// •\¦’l‚É•ÏŠ·
+		// è¡¨ç¤ºå€¤ã«å¤‰æ›
 		hour_h	 = (hour >> 4)& 0xf;
 		hour_l	 = (hour) & 0xf;
 		minute_h = (min >> 4) & 0xf;
@@ -413,39 +413,39 @@ void RtcDateGetBcd()
 	#endif
 }
 
-// •\¦İ’è
+// è¡¨ç¤ºè¨­å®š
 void ChangeDigit(unsigned char ch_, unsigned char num_)
 {
-	// short‚Í2ƒoƒCƒg?
+	// shortã¯2ãƒã‚¤ãƒˆ?
 	STATIC_ASSERT(sizeof(short) != 2)
 	
 	if ((ch_ >= DIGITS)
 	||	(num_ == DISP_OFF))
 	{
-		IO.PDR8.BYTE = 0xFF; // •\¦Œ…‚ª16‚Í”zü‚µ‚Ä‚¢‚È‚¢‚Ì‚Å”ñ•\¦‚Æ‚È‚é
-		IO.PDR1.BYTE = 0x01; // ƒhƒbƒg‚È‚µ
+		IO.PDR8.BYTE = 0xFF; // è¡¨ç¤ºæ¡ãŒ16ã¯é…ç·šã—ã¦ã„ãªã„ã®ã§éè¡¨ç¤ºã¨ãªã‚‹
+		IO.PDR1.BYTE = 0x01; // ãƒ‰ãƒƒãƒˆãªã—
 	}
 
-	// •\¦ƒ`ƒƒƒ“ƒlƒ‹
+	// è¡¨ç¤ºãƒãƒ£ãƒ³ãƒãƒ«
 	if (num_ < sizeof(NUM2REG_TABLE))
 	{
 		IO.PDR8.BYTE = (ch_<<4) & 0xf0;
 	
-		//”š
+		//æ•°å­—
 		IO.PDR8.BYTE |= NUM2REG_TABLE[num_] & 0x0f;
 
-		//ƒhƒbƒg‚È‚µ
+		//ãƒ‰ãƒƒãƒˆãªã—
 		IO.PDR1.BYTE = 0x01;
 	}
 	else if (num_ == DISP_DOT)
 	{
-		// G‚ç‚È‚¯‚ê‚Î”š‚È‚µ
-		// num = All Hi‚Í”ñ•\¦‚Æ‚È‚é
-		// ”š•”‚Í”ñ•\¦
+		// è§¦ã‚‰ãªã‘ã‚Œã°æ•°å­—ãªã—
+		// num = All Hiã¯éè¡¨ç¤ºã¨ãªã‚‹
+		// æ•°å­—éƒ¨ã¯éè¡¨ç¤º
 		IO.PDR8.BYTE = (ch_<<4) & 0xf0; 
 		IO.PDR8.BYTE |= 0x0f;
 		
-		//ƒhƒbƒg‚ ‚è
+		//ãƒ‰ãƒƒãƒˆã‚ã‚Š
 		IO.PDR1.BYTE = 0x00;
 	}
 	else
@@ -454,22 +454,22 @@ void ChangeDigit(unsigned char ch_, unsigned char num_)
 	}
 }
 
-// ’Êí•\¦
-// ”’l‚É•Ï‰»‚ª‚ ‚Á‚½ê‡‚ÍƒNƒƒXƒtƒF[ƒh‚·‚éB
+// é€šå¸¸è¡¨ç¤º
+// æ•°å€¤ã«å¤‰åŒ–ãŒã‚ã£ãŸå ´åˆã¯ã‚¯ãƒ­ã‚¹ãƒ•ã‚§ãƒ¼ãƒ‰ã™ã‚‹ã€‚
 void DynamicDispCallbackNormal()
 {
 	static unsigned char digits= 0;
 	static unsigned char flag = 0;
 	
-	// “_–ÅƒJƒEƒ“ƒgƒAƒbƒv
+	// ç‚¹æ»…ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—
 	++g_blink_timer;
 	if (g_blink_timer >= BLINK_INTERVAL)
 	{
 		g_blink_timer = 0;
 	}
 	
-	// Á“”‹æŠÔ
-	// “_“”‹æŠÔ
+	// æ¶ˆç¯åŒºé–“
+	// ç‚¹ç¯åŒºé–“
 	if( flag == 0)
 	{
 		ChangeDigit(DIGITS_OFF_ALL, DISP_OFF);
@@ -521,14 +521,14 @@ void DynamicDispCallbackNormal()
 	}
 }
 
-// ƒKƒ`ƒƒƒKƒ`ƒƒ‚µ‚½•\¦
+// ã‚¬ãƒãƒ£ã‚¬ãƒãƒ£ã—ãŸè¡¨ç¤º
 void DynamicDispCallbackRandom()
 {
 	static unsigned char digits= 0;
 	static unsigned char flag = 0;
 	
-	// Á“”‹æŠÔ
-	// “_“”‹æŠÔ
+	// æ¶ˆç¯åŒºé–“
+	// ç‚¹ç¯åŒºé–“
 	if( flag == 0)
 	{
 		ChangeDigit(DIGITS_OFF_ALL, DISP_OFF);
@@ -550,19 +550,19 @@ void DynamicDispCallbackRandom()
 	}
 }
 
-// ƒNƒƒbƒNƒ‚[ƒh
+// ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰
 void ModeCallbackClock()
 {
 	if (g_next_random == 1)
 	{
 		g_next_random = 0;
 		
-		// ‚È‚ñ‚Æ‚È‚­10•ª‚Éˆê“xƒ‰ƒ“ƒ_ƒ€•\¦‚·‚é
+		// ãªã‚“ã¨ãªã10åˆ†ã«ä¸€åº¦ãƒ©ãƒ³ãƒ€ãƒ è¡¨ç¤ºã™ã‚‹
 		StateChangeRandomDisp();
 		g_timer_v_callback_time_left = MSEC_TO_TIMERV * 6000L;
 	}
 
-	// •b ‰ºˆÊ
+	// ç§’ ä¸‹ä½
 	g_disp_prev[2] = (g_dot&0x01)==0 ? DISP_OFF : DISP_DOT;
 	g_disp_prev[5] = (g_dot&0x01)==0 ? DISP_OFF : DISP_DOT;
 	++g_dot;
@@ -575,7 +575,7 @@ void ModeCallbackClock()
 
 	if( LO(g_second) >= 10)
 	{
-		// •b ãˆÊ
+		// ç§’ ä¸Šä½
 		g_disp_prev[1] = HI(g_second);
 		g_transition[1] = 0;
 		g_second &= 0xf0;
@@ -583,7 +583,7 @@ void ModeCallbackClock()
 
 		if (HI(g_second) >= 6)
 		{
-			// •ª ‰ºˆÊ
+			// åˆ† ä¸‹ä½
 			g_disp_prev[3] = LO(g_minute);
 			g_transition[3] = 0;
 			g_second = 0x00;
@@ -591,10 +591,10 @@ void ModeCallbackClock()
 
 			if (LO(g_minute) >= 10)
 			{
-				// ‚È‚ñ‚Æ‚È‚­10•ª‚Éˆê“xƒ‰ƒ“ƒ_ƒ€•\¦‚·‚é
+				// ãªã‚“ã¨ãªã10åˆ†ã«ä¸€åº¦ãƒ©ãƒ³ãƒ€ãƒ è¡¨ç¤ºã™ã‚‹
 				g_next_random = 1;
 				
-				// •ª ãˆÊ
+				// åˆ† ä¸Šä½
 				g_disp_prev[4] = HI(g_minute);
 				g_transition[4] = 0;
 				g_minute &= 0xf0;
@@ -602,7 +602,7 @@ void ModeCallbackClock()
 
 				if (HI(g_minute)  >= 6)
 				{
-					// ŠÔ ‰ºˆÊ
+					// æ™‚é–“ ä¸‹ä½
 					g_disp_prev[6] = LO(g_hour);
 					g_transition[6] = 0;
 					g_minute = 0x00;
@@ -610,7 +610,7 @@ void ModeCallbackClock()
 
 					if(HI(g_hour) < 2 && LO(g_hour) >= 10)
 					{
-						// ŠÔãˆÊ
+						// æ™‚é–“ä¸Šä½
 						g_disp_prev[6] = HI(g_hour);
 						g_disp_prev[6] = LO(g_hour);
 						g_transition[7] = 0;
@@ -623,24 +623,24 @@ void ModeCallbackClock()
 						g_disp_prev[6] = 4;
 						g_transition[7] = 0;
 						#if 1
-							// Œ»İ‚æ‚è‘O‚Å2359•ª‚Æ‚©‚Ìê‡A‚±‚±‚ğŒJ‚è•Ô‚·‚æ‚¤‚É‚È‚é‚Ì‚Åwait‚Å‚¿‚å‚Á‚Æ—]—T‚ğ‚½‚¹‚éB
+							// ç¾åœ¨æ™‚åˆ»ã‚ˆã‚Šå‰ã§23æ™‚59åˆ†ã¨ã‹ã®å ´åˆã€ã“ã“ã‚’ç¹°ã‚Šè¿”ã™ã‚ˆã†ã«ãªã‚‹ã®ã§waitã§ã¡ã‚‡ã£ã¨ä½™è£•ã‚’æŒãŸã›ã‚‹ã€‚
 							wait_msec(1000);
 							RtcDateGetBcd();
 						#else
-							//// ŠÔ ãˆÊ + “ú•t ‰ºˆÊ
+							//// æ™‚é–“ ä¸Šä½ + æ—¥ä»˜ ä¸‹ä½
 							//g_hour = 0x00;
 							//g_date += 1;
 							//g_disp_prev[7] = 0;
 							//g_transition[7] = 0;
-							// –Ê“|‚È‚Ì‚Å‚â‚ß
+							// é¢å€’ãªã®ã§ã‚„ã‚
 							//if (LO(g_date) >= 10)
 							//{
-							//	// “ú•t ãˆÊ
+							//	// æ—¥ä»˜ ä¸Šä½
 							//	g_date &= 0xf0;
 							//	  g_date += 0x10;
 							//	if (month_l == 2 || month_l == 4 || month_l == 6 || month_l == 9 || month == 11 )
 							//	{
-							//		// ¼Œü‚­˜¬‚ÌŒ
+							//		// è¥¿å‘ãä¾å°ã®æœˆ
 							//
 							//	}
 							//	else (date_h >= 3 && date_l >= 1)
@@ -668,7 +668,7 @@ void ModeCallbackClock()
 		}
 	}
 	
-	// •\¦ƒf[ƒ^ƒZƒbƒg
+	// è¡¨ç¤ºãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ
 	g_disp[0] = LO(g_second);
 	g_disp[1] = HI(g_second);
 	g_disp[2] = (g_dot&0x01)==0 ? DISP_OFF : DISP_DOT;
@@ -679,7 +679,7 @@ void ModeCallbackClock()
 	g_disp[7] = HI(g_hour);
 }
 
-// ƒJƒŒƒ“ƒ_[ƒ‚[ƒh
+// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ¢ãƒ¼ãƒ‰
 void ModeCallbackCalendar()
 {
 	g_disp[0] = LO(g_date);
@@ -692,7 +692,7 @@ void ModeCallbackCalendar()
 	g_disp[7] = 2;
 }
 
-// ”ñ•\¦ƒ‚[ƒh
+// éè¡¨ç¤ºãƒ¢ãƒ¼ãƒ‰
 void ModeCallbackDispoff()
 {
 	g_disp[0] = DISP_OFF;
@@ -706,19 +706,19 @@ void ModeCallbackDispoff()
 }
 
 //--------------------------------------------------
-// Š„‚è‚İ
+// å‰²ã‚Šè¾¼ã¿
 //--------------------------------------------------
 
-// ƒ^ƒCƒ}VŠ„‚è‚İ
+// ã‚¿ã‚¤ãƒVå‰²ã‚Šè¾¼ã¿
 void int_timerv(void)
 {
-	// ’â~
+	// åœæ­¢
 	TV.TCRV0.BIT.CKS = 0;
 
-	// ƒtƒ‰ƒOƒNƒŠƒA
+	// ãƒ•ãƒ©ã‚°ã‚¯ãƒªã‚¢
 	TV.TCSRV.BIT.CMFA = 0;
 	
-	// •\¦•Ï‰»I—¹
+	// è¡¨ç¤ºå¤‰åŒ–çµ‚äº†
 	if (g_timer_v_callback_time_left == 0)
 	{
 		g_timer_v_callback = DynamicDispCallbackNormal;
@@ -728,35 +728,35 @@ void int_timerv(void)
 		--g_timer_v_callback_time_left;
 	}
 	
-	// ƒR[ƒ‹ƒoƒbƒN
+	// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	if (g_timer_v_callback != NULL)
 	{
 		(*g_timer_v_callback)();
 	}
 
-	// ƒ^ƒCƒ}VƒXƒ^[ƒg
+	// ã‚¿ã‚¤ãƒVã‚¹ã‚¿ãƒ¼ãƒˆ
 	TV.TCRV0.BIT.CKS = 3; 
 }
 
-// ƒ^ƒCƒ}AŠ„‚è‚İ
+// ã‚¿ã‚¤ãƒAå‰²ã‚Šè¾¼ã¿
 void int_timera(void)
 {
-	// •\¦
+	// è¡¨ç¤º
 	if (g_timer_a_callback != NULL)
 	{
 		(*g_timer_a_callback)();
 	}
 
-	// ƒ^ƒCƒ}AŠ„‚è‚İ—v‹ƒtƒ‰ƒOƒNƒŠƒA
+	// ã‚¿ã‚¤ãƒAå‰²ã‚Šè¾¼ã¿è¦æ±‚ãƒ•ãƒ©ã‚°ã‚¯ãƒªã‚¢
 	IRR1.BIT.IRRTA = 0;
 }
 
 //--------------------------------------------------
-// ƒAƒvƒŠ
+// ã‚¢ãƒ—ãƒª
 //--------------------------------------------------
 
 ///
-/// ƒXƒe[ƒg‚²‚Æ‚Ìˆ—
+/// ã‚¹ãƒ†ãƒ¼ãƒˆã”ã¨ã®å‡¦ç†
 ///
 
 void StateChangeClock()
@@ -1116,15 +1116,15 @@ void DateLUp()
 
 
 
-// ƒƒCƒ“
+// ãƒ¡ã‚¤ãƒ³
 void main(void)
 {
-	// •\¦ƒR[ƒ‹ƒoƒbƒN‚ğİ’è
+	// è¡¨ç¤ºã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’è¨­å®š
 	g_timer_v_callback = DynamicDispCallbackRandom;
 	g_timer_a_callback = ModeCallbackClock;
 	g_timer_v_callback_time_left = MSEC_TO_TIMERV * 2000L;
 
-	// ƒ}ƒCƒRƒ“‚ğ‰Šú‰»
+	// ãƒã‚¤ã‚³ãƒ³ã‚’åˆæœŸåŒ–
 	InitH8();
 	ChangeDigit(DIGITS_OFF_ALL, DISP_OFF);
 
@@ -1132,8 +1132,8 @@ void main(void)
 	//RtcDateSetBcd();
 	RtcDateGetBcd();
 
-	// ƒXƒe[ƒgƒ}ƒVƒ“‚ğ‰Šú‰»
-	//Å‰‚ÍŒvƒXƒe[ƒg
+	// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ã‚’åˆæœŸåŒ–
+	//æœ€åˆã¯æ™‚è¨ˆã‚¹ãƒ†ãƒ¼ãƒˆ
 	g_state_clock.on_button0		= StateChangeDispoff;
 	g_state_clock.on_button1		= StateChangeCalendar;
 	g_state_clock.on_button2		= StateChangeHourHSet;
@@ -1185,13 +1185,13 @@ void main(void)
 	
 	//main loop
 	{
-		// ƒXƒe[ƒg
+		// ã‚¹ãƒ†ãƒ¼ãƒˆ
 		static int prev_button0_pressed = 0;
 		static int prev_button1_pressed = 0;
 		static int prev_button2_pressed = 0;
 		while (1)
 		{
-			// ƒ{ƒ^ƒ“‚P
+			// ãƒœã‚¿ãƒ³ï¼‘
 			if (IO.PDR1.BIT.B1 == 0)
 			{	
 				if ((g_state_current->on_button0 != NULL)
@@ -1207,7 +1207,7 @@ void main(void)
 				prev_button0_pressed = 0;
 			}
 			
-			// ƒ{ƒ^ƒ“‚Q
+			// ãƒœã‚¿ãƒ³ï¼’
 			if (IO.PDR1.BIT.B2 == 0)
 			{	
 				if ((g_state_current->on_button1 != NULL)
@@ -1223,7 +1223,7 @@ void main(void)
 				prev_button1_pressed = 0;
 			}
 					
-			// ƒ{ƒ^ƒ“‚R
+			// ãƒœã‚¿ãƒ³ï¼“
 			if (IO.PDR1.BIT.B4 == 0)
 			{	
 				if ((g_state_current->on_button2 != NULL)
@@ -1239,7 +1239,7 @@ void main(void)
 				prev_button2_pressed = 0;
 			}
 
-			//ƒ`ƒƒƒ^ƒŠƒ“ƒO–h~
+			//ãƒãƒ£ã‚¿ãƒªãƒ³ã‚°é˜²æ­¢
 			wait_msec(20);
 		}
 	}

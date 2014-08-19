@@ -17,30 +17,35 @@
 //----------------------------
 #include <avr/io.h>
 
-// “à‘ ƒNƒƒbƒN8MHz‚»‚Ì‚Ü‚Ü‚Å“®‚©‚·‚È‚ç,
-// Fuse‚Ì•ªüİ’è‚ğOFF‚É‚·‚é(CKDIV8=0)
+// å†…è”µã‚¯ãƒ­ãƒƒã‚¯8MHzãã®ã¾ã¾ã§å‹•ã‹ã™ãªã‚‰,
+// Fuseã®åˆ†å‘¨è¨­å®šã‚’OFFã«ã™ã‚‹(CKDIV8=0)
 #ifndef F_CPU
 	#define F_CPU 8000000UL
 #endif
 #include <util/delay.h>
 #include <stdbool.h>
 
-// ƒ^ƒCƒ}Š„‚è‚İ
+// ã‚¿ã‚¤ãƒå‰²ã‚Šè¾¼ã¿
 #include <avr/interrupt.h>
 
 //----------------------------
 // macros/defines
 //----------------------------
+#define cbi(addr,bit) do{addr &= ~(1<<bit)}while(0)
+#define sbi(addr,bit) do{addr |=  (1<<bit)}while(0)
 #define setbits(reg, mask, offset, dat) \
-	do{reg = ((reg & ~mask)|((dat)<<offset)); }while(0)
+	do{reg = ((reg & ~mask)|((dat)<<offset));}while(0)
 #define chkbit(reg, mask) (reg & (1<<mask))
 #define lo(c) ((c)&0x0f)
 #define hi(c) (((c)>>4)&0x0f)
 
 #define IIC_READ_BIT  1
 #define IIC_WRITE_BIT 0
-#define RTC_SLAVE_ADDRESS 0xa2
 #define IIC_SCL_CLOCK 100000L
+
+#define RTC8564NB_SLAVE_ADDRESS 0xa2
+#define LP3331_SLAVE_ADDRESS 0xba
+#define AM2321_SLAVE_ADDRESS 0xb8
 
 //----------------------------
 // enum
@@ -128,6 +133,7 @@ typedef struct BIT_FOELD_PORTD
 #define BIT_FIELD_RTC_CLKOE  BIT_FOELD_PORTD
 #define BIT_FIELD_RTC_CLKOUT BIT_FOELD_PORTD
 
+#define ADC_ILLUMINANCE_SENSOR 6
 
 //----------------------------
 // globals
@@ -137,7 +143,10 @@ volatile bool clkout_flag = false;
 volatile bool num_up   = false;
 volatile bool num_down = false;
 
-// ŠÔ‹L‰¯—Ìˆæ
+//
+volatile static unsigned char g_illuminance  = 0x00; 
+
+// æ™‚é–“è¨˜æ†¶é ˜åŸŸ
 volatile static unsigned char g_hour	     = 0x00;
 volatile static unsigned char g_minute	     = 0x00;
 volatile static unsigned char g_second	     = 0x00;
@@ -149,32 +158,68 @@ volatile static unsigned char g_alarm_hour	 = 0x12;
 volatile static unsigned char g_alarm_minute = 0x00;
 
 
-// ‚æ‚­g‚¤‚Ì‚Åƒvƒƒgƒ^ƒCƒv
+// ã‚ˆãä½¿ã†ã®ã§ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—
 void led(bool on_);
-void beep(int num_beep_);
+void beep(unsigned char num_);
+void beep_hex(unsigned char hex_);
 
 //----------------------------
 // util
 //----------------------------
 
 //------
+// ADC
+
+ISR(ADC_vect)
+{
+}
+
+// ADã‚³ãƒ³ãƒãƒ¼ã‚¿ã®å€¤ã‚’å–å¾—ã™ã‚‹
+unsigned char adc_get(unsigned char ch_)
+{
+	// ä¸Šä½ãƒ“ãƒƒãƒˆæ›¸ãè¾¼ã¿ã—ãªã„ã‚ˆã†ã«ãƒã‚§ãƒƒã‚¯
+	if (ch_ > 7)
+		return 0;
+
+	// å¤–éƒ¨ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹AREFã€left adjustã€channelè¨­å®š
+	ADMUX  = (0<<REFS0) | (0<<REFS1) | (1<<ADLAR) | ch_;
+		   
+	// ADIF=1ã§ä¸€æ—¦ã‚¯ãƒªã‚¢
+	// ADIEã‚’ç«‹ã¦ã‚‹ã¨å‰²ã‚Šè¾¼ã¿å¾Œã«ADIFãŒã‚¯ãƒªã‚¢ã•ã‚Œã‚‹ã®ã§waitã§ããªã„
+	// åˆ†å‘¨ã¯200kHzã¾ã§ï¼Ÿ
+	ADCSRA = (1<<ADEN)  | (0<<ADATE) | (1<<ADIF)  | (0<<ADIE)
+	       | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
+
+	// Free run
+	ADCSRB = 0;
+
+	// start ADC
+	ADCSRA |= (1<<ADSC);
+	
+	// wait ADC completion
+	while (!(ADCSRA & (1<<ADIF)));
+	return ADCH;
+};
+
+
+//------
 // IIC
-// ƒGƒ‰[ƒ`ƒFƒbƒN‚Æ‚©‚È‚µ‚Å‚Æ‚è‚ ‚¦‚¸“®‚¢‚Ä‚¢‚é‚¾‚¯‚È‚Ì‚Å’ˆÓ
+// ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã¨ã‹ãªã—ã§ã¨ã‚Šã‚ãˆãšå‹•ã„ã¦ã„ã‚‹ã ã‘ãªã®ã§æ³¨æ„
 //
-// start  : ƒ}ƒXƒ^[‘¤‚©‚çSCL_H’†‚ÉSDA_L (ƒXƒŒ[ƒuƒAƒhƒŒƒX+R/~W‚ğ‘—‚èack‚ğ‘Ò‚Â)
-// stop   : ƒ}ƒXƒ^[‘¤‚©‚çSCL_H’†‚ÉSDA_H
-// repeat : Šî–{“I‚Éstart‚Æ“¯‚¶APIC‚Å‚ÍŒÂ•Ê‚ÌƒŒƒWƒXƒ^‚ª‚ ‚Á‚½‚Ì‚Å•ª‚¯‚½
-// write  : ‘‚«‚ñ‚Åack‚ğ‘Ò‚Â
-// read   : “Ç‚İ‚ñ‚Åack/nack‚ğ•Ô‚·
-// ack    : óM‘¤‚©‚ç9bit–Ú‚ÉSDA_L, 
-// nack   : óM‘¤‚©‚ç9bit–Ú‚ÉSDA_H (ƒ}ƒXƒ^[‚©‚ç‚Ìƒf[ƒ^“]‘—I—¹—v‹“™‚Ég‚¤)
+// start  : ãƒã‚¹ã‚¿ãƒ¼å´ã‹ã‚‰SCL_Hä¸­ã«SDA_L (ã‚¹ãƒ¬ãƒ¼ãƒ–ã‚¢ãƒ‰ãƒ¬ã‚¹+R/~Wã‚’é€ã‚Šackã‚’å¾…ã¤)
+// stop   : ãƒã‚¹ã‚¿ãƒ¼å´ã‹ã‚‰SCL_Hä¸­ã«SDA_H
+// repeat : åŸºæœ¬çš„ã«startã¨åŒã˜ã€PICã§ã¯å€‹åˆ¥ã®ãƒ¬ã‚¸ã‚¹ã‚¿ãŒã‚ã£ãŸã®ã§åˆ†ã‘ãŸ
+// write  : æ›¸ãè¾¼ã‚“ã§ackã‚’å¾…ã¤
+// read   : èª­ã¿è¾¼ã‚“ã§ack/nackã‚’è¿”ã™
+// ack    : å—ä¿¡å´ã‹ã‚‰9bitç›®ã«SDA_L, 
+// nack   : å—ä¿¡å´ã‹ã‚‰9bitç›®ã«SDA_H (ãƒã‚¹ã‚¿ãƒ¼ã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿è»¢é€çµ‚äº†è¦æ±‚ç­‰ã«ä½¿ã†)
 
 ISR(TWI_vect)
 {
 	// none
 }
 
-// TWIŠ„‚è‚İŠ®—¹‘Ò‚¿
+// TWIå‰²ã‚Šè¾¼ã¿å®Œäº†å¾…ã¡
 bool iic_wait_job()
 {
 	#if 0
@@ -183,22 +228,23 @@ bool iic_wait_job()
 		{
 			if ((TWCR & (1<<TWINT)) == 0)
 				return true;
-	}
-	return false;
+			_delay_ms(1);
+		}
+		return false;
 	#else
 		while(!(TWCR & (1<<TWINT)));
 		return true;
 	#endif
 }
 
-// IICƒXƒ^[ƒgƒRƒ“ƒfƒBƒVƒ‡ƒ“
+// IICã‚¹ã‚¿ãƒ¼ãƒˆã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³
 bool iic_start(unsigned char sla_rw_)
 {
-	// ƒXƒ^[ƒgƒRƒ“ƒfƒBƒVƒ‡ƒ“‘—M
+	// ã‚¹ã‚¿ãƒ¼ãƒˆã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³é€ä¿¡
 	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);// | (1<<TWIE);
 	iic_wait_job();
 	
-	// ƒXƒŒ[ƒuƒAƒhƒŒƒX‚ÆRW‚ğ‘—M
+	// ã‚¹ãƒ¬ãƒ¼ãƒ–ã‚¢ãƒ‰ãƒ¬ã‚¹ã¨RWã‚’é€ä¿¡
 	TWDR = sla_rw_;
 	TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);
 	iic_wait_job();
@@ -206,36 +252,36 @@ bool iic_start(unsigned char sla_rw_)
 	return true;
 }
 
-// IICƒŠƒs[ƒgƒXƒ^[ƒgƒRƒ“ƒfƒBƒVƒ‡ƒ“
+// IICãƒªãƒ”ãƒ¼ãƒˆã‚¹ã‚¿ãƒ¼ãƒˆã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³
 bool iic_repeat(unsigned char sla_rw_)
 {
 	return iic_start(sla_rw_);
 }
 
-// IICƒXƒgƒbƒvƒRƒ“ƒfƒBƒVƒ‡ƒ“
+// IICã‚¹ãƒˆãƒƒãƒ—ã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³
 void iic_stop()
 {
-	// ƒXƒgƒbƒvƒRƒ“ƒfƒBƒVƒ‡ƒ“‘—M
+	// ã‚¹ãƒˆãƒƒãƒ—ã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³é€ä¿¡
 	TWCR = (1<<TWINT) | (1<<TWSTO) | (1<<TWEN);// | (1<<TWIE);
 
-	// stopƒRƒ“ƒfƒBƒVƒ‡ƒ“‚É‚Â‚¢‚Ä‚ÍŠ„‚è‚İ‚ª”­¶‚µ‚È‚¢H
-	// iic_wait_job();‚Å‚«‚È‚¢
+	// stopã‚³ãƒ³ãƒ‡ã‚£ã‚·ãƒ§ãƒ³ã«ã¤ã„ã¦ã¯å‰²ã‚Šè¾¼ã¿ãŒç™ºç”Ÿã—ãªã„ï¼Ÿ
+	// iic_wait_job();ã§ããªã„
 	while(TWCR & (1<<TWSTO));
 }
 
-// IIC‘—M
+// IICé€ä¿¡
 bool iic_write(unsigned char data_)
 {
 	TWDR = data_;
 	TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);
 	iic_wait_job();
 	
-	// ƒXƒe[ƒ^ƒXƒŒƒWƒXƒ^Šm”FiACK 0x28)
+	// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿ç¢ºèªï¼ˆACK 0x28)
 	//return (TWSR & 0xF8 ) == 0x28;
 	return true;
 }
 
-// IICóM
+// IICå—ä¿¡
 unsigned char iic_read(bool ack_)
 {
 	//TWDR = 0;
@@ -271,69 +317,189 @@ void led(bool on_)
 	return;
 }
 
+//--------
 // BEEP
-void beep(int num_beep_)
-{	
-	int i = 0;
-
-	for (i = 0; i < num_beep_; ++i)
+void beep(unsigned char num_)
+{
+	int i=0;
+	for (i=0; i<num_; ++i)
 	{
 		PORT_BEEP |= MASK_BEEP;
 		_delay_ms(50);
 		PORT_BEEP &= ~MASK_BEEP;
 		_delay_ms(50);
 	}
+}
 
-	// ˜A‘±Às‚Ì”»•Ê‚Ì‚½‚ßˆê’Uwait‚³‚¹‚é
-	_delay_ms(50);
+// 8bitå€¤ã§éŸ³ã‚’å¤‰ãˆã‚‹
+// 1 ãƒ”ãƒƒ
+// 0 ãƒ”ãƒ¼
+void beep_hex(unsigned char hex_)
+{	
+	int i_bit = 0;
+	for (; i_bit < 8; ++i_bit)
+	{
+		if (i_bit==4)
+		{
+			_delay_ms(200);
+		}
+
+		if (hex_ & (0x80>>i_bit))
+		{
+			PORT_BEEP |= MASK_BEEP;
+			_delay_ms(50);
+			PORT_BEEP &= ~MASK_BEEP;
+			_delay_ms(100);
+		}
+		else
+		{
+			PORT_BEEP |= MASK_BEEP;
+			_delay_ms(200);
+			PORT_BEEP &= ~MASK_BEEP;
+			_delay_ms(100);
+		}
+	}
+
+	// é€£ç¶šå®Ÿè¡Œã®åˆ¤åˆ¥ã®ãŸã‚ä¸€æ—¦waitã•ã›ã‚‹
+	_delay_ms(200);
 
 	return;
 }
 
-// –¾‚é‚³ƒZƒ“ƒT / brightness sensor
+// æ˜ã‚‹ã•ã‚»ãƒ³ã‚µ / brightness sensor
 static void update_brightness()
 {
 	return;
 }
 
-// ‹Cˆ³ƒZƒ“ƒT / atmospheric pressure sensor
-static void update_atmospheric_pressure()
+
+//-----------------
+// æ°—åœ§ã‚»ãƒ³ã‚µ / atmospheric pressure sensor
+// update_atmospheric_pressureã‹ã‚‰å‘¼ã³å‡ºã™ï¼‘ãƒã‚¤ãƒˆèª­ã¿å‡ºã—
+// é€£ç¶šã‚ˆã¿ã‚‚ã§ãã‚‹ã‚ˆã†ã ãŒã€é¢å€’ãªã®ã§ãƒãƒƒãƒˆã§è¦‹ã¤ã‘ãŸæ–¹æ³•ã®ã¾ã¾ã«ã™ã‚‹
+unsigned char LPS331_read(unsigned char address_)
 {
-	return;
+	unsigned char data;
+	
+	iic_start(LP3331_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_write(address_);
+	iic_repeat(LP3331_SLAVE_ADDRESS|IIC_READ_BIT);
+	data = iic_read(false);
+	iic_stop();
+	
+	return data;
 }
 
-// ¼“xƒZƒ“ƒT / temparature and humidity sensor
-static void update_humidity()
+bool LPS331_write(unsigned char address_, unsigned char data_)
 {
-	return;
+	iic_start(LP3331_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_write(address_);
+	iic_write(data_);
+	iic_stop();
+	
+	return true;
 }
 
-// lŠ´ƒZƒ“ƒT / motion sensor
-static void update_mosion_sensor()
+// åˆæœŸåŒ–
+unsigned char LPS331_init()
 {
-	return;
+	unsigned char data;
+
+	data = LPS331_read(0x20);
+	data &= 0x7F;                // PDãƒ“ãƒƒãƒˆã‚¯ãƒªã‚¢
+	LPS331_write(0x20, data);
+
+	LPS331_write(0x10, 0x7A);		// ã‚¢ãƒ™ãƒ¬ãƒ¼ã‚¸ãƒ³ã‚°å›æ•°è¨­å®šï¼šæ°—åœ§512å›ã€æ¸©åº¦128å›
+	//  LPS331_write(0x10, 0x00);	// ã‚¢ãƒ™ãƒ¬ãƒ¼ã‚¸ãƒ³ã‚°å›æ•°è¨­å®šï¼šæ°—åœ§1å›ã€æ¸©åº¦1å›
+	LPS331_write(0x20, 0x04);		// ãƒ¯ãƒ³ã‚·ãƒ§ãƒƒãƒˆã€BDUæœ‰åŠ¹ã€
+	LPS331_write(0x20, 0x84);		// PDãƒ“ãƒƒãƒˆONï¼ˆãƒ‘ãƒ¯ãƒ¼ON)
+
+	_delay_ms(10);					// å‹•ä½œé–‹å§‹ã¾ã§å¾…ã¤
+}
+
+// æ›´æ–°
+static void LPS331_load()
+{
+	long tmp;
+	float pressure;
+	float temparature; 
+	
+	tmp = LPS331_read(0x2A);
+	tmp = LPS331_read(0x29) | (tmp << 8);
+	tmp = LPS331_read(0x28) | (tmp << 8);
+	pressure = (float) tmp / 4096.0f;
+	
+	tmp = LPS331_read(0x2C);
+	tmp = LPS331_read(0x2B) | (tmp << 8);
+	temparature = ((float)tmp / 480.0f) + 42.5f;
 }
 
 
-
-// RTC / real time clock
-static void rtc_load()
+//--------------------
+// æ¹¿åº¦ã‚»ãƒ³ã‚µ / temparature and humidity sensor
+static void AM2321_load()
 {
-	iic_start(RTC_SLAVE_ADDRESS|IIC_WRITE_BIT);
-	iic_write(0x02); // •b‚ÌƒAƒhƒŒƒX
-	iic_repeat(RTC_SLAVE_ADDRESS|IIC_READ_BIT);
-	g_second       = iic_read(true); // •b‚Ì’l 0-59
-	g_minute       = iic_read(true); // •ª‚Ì’l 0-59
-	g_hour	       = iic_read(true); // ‚Ì’l 0-23
-	g_date	       = iic_read(true); // “ú‚Ì’l 1-31
-	g_week	       = iic_read(true); // —j‚Ì’l “úŒ‰Î…–Ø‹à“y 0123456
-	g_month	       = iic_read(true); // Œ‚Ì’l (C:MSB)1-12	C‚Í1‚Ì‚Æ‚«21¢‹I
-	g_year         = iic_read(true); // ”N‚Ì’l 00-99
-	g_alarm_minute = iic_read(true); // ƒAƒ‰[ƒ€
-	g_alarm_hour   = iic_read(false); // ƒAƒ‰[ƒ€
+	// æ¹¿åº¦ã¯ï¼ˆï¼“ãƒã‚¤ãƒˆç›®Ã—256)+4ãƒã‚¤ãƒˆç›® / 10ã§è¨ˆç®—å‡ºæ¥ã¾ã™ã€‚
+	// æ¸©åº¦ã¯ï¼ˆ5ãƒã‚¤ãƒˆç›®Ã—256)+6ãƒã‚¤ãƒˆç›® / 10ã§è¨ˆç®—å‡ºæ¥ã¾ã™ãŒ
+	static unsigned char data[8] = {0};
+
+	// wakeup
+	iic_start(AM2321_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	_delay_ms(2);  // 800us~3000us
 	iic_stop();
 
-	// —LŒøƒrƒbƒg‚Ìæ‚èo‚µ
+	// set read bytes
+	iic_start(AM2321_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_write(0x03); // register read
+	iic_write(0x00); // register address
+	iic_write(0x04); // register size
+	iic_stop();
+	
+	// ã‚»ãƒ³ã‚µã®jobå¾…ã¡
+	_delay_ms(3); // 1500us
+
+	iic_start(AM2321_SLAVE_ADDRESS|IIC_READ_BIT);
+	_delay_us(100);
+	data[0] = iic_read(true);  // æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ [03]ã€€æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã®è¿”ã—
+	data[1] = iic_read(true);  // è¿”é€ã™ã‚‹ãƒã‚¤ãƒˆæ•°ã€€ï¼ˆã“ã®ä¾‹ã§ã¯æ¹¿åº¦ã¨æ¸©åº¦ã®4ãƒã‚¤ãƒˆï¼‰
+	data[2] = iic_read(true);  // ã‚¢ãƒ‰ãƒ¬ã‚¹[00]ã®å†…å®¹ã€€ï¼ˆæ¹¿åº¦ã®ä¸Šä½ãƒã‚¤ãƒˆï¼‰
+	data[3] = iic_read(true);  // ã‚¢ãƒ‰ãƒ¬ã‚¹[01]ã®å†…å®¹ã€€ï¼ˆæ¹¿åº¦ã®ä¸‹ä½ãƒã‚¤ãƒˆï¼‰
+	data[4] = iic_read(true);  // ã‚¢ãƒ‰ãƒ¬ã‚¹[02]ã®å†…å®¹ã€€ï¼ˆæ¸©åº¦ã®ä¸Šä½ãƒã‚¤ãƒˆï¼‰
+	data[5] = iic_read(true);  // ã‚¢ãƒ‰ãƒ¬ã‚¹[03]ã®å†…å®¹ã€€ï¼ˆæ¸©åº¦ã®ä¸‹ä½ãƒã‚¤ãƒˆï¼‰
+	data[6] = iic_read(true);  // 16ãƒ“ãƒƒãƒˆã®CRCï¼ˆå·¡å›å†—é•·ç¬¦å·ï¼‰ã€€ï¼ˆä¸‹ä½ãƒã‚¤ãƒˆãŒå…ˆï¼‰
+	data[7] = iic_read(false); // 16ãƒ“ãƒƒãƒˆã®CRCï¼ˆå·¡å›å†—é•·ç¬¦å·ï¼‰ã€€ï¼ˆä¸Šä½ãƒã‚¤ãƒˆï¼‰
+	iic_stop();
+	
+	return;
+}
+
+//----------
+// äººæ„Ÿã‚»ãƒ³ã‚µ / motion sensor
+static void Napion_update()
+{
+	return;
+}
+
+
+//---------------
+// RTC / real time clock
+static void RTC8564NB_load()
+{
+	iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_write(0x02); // ç§’ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
+	iic_repeat(RTC8564NB_SLAVE_ADDRESS|IIC_READ_BIT);
+	g_second       = iic_read(true); // ç§’ã®å€¤ 0-59
+	g_minute       = iic_read(true); // åˆ†ã®å€¤ 0-59
+	g_hour	       = iic_read(true); // æ™‚ã®å€¤ 0-23
+	g_date	       = iic_read(true); // æ—¥ã®å€¤ 1-31
+	g_week	       = iic_read(true); // æ›œã®å€¤ æ—¥æœˆç«æ°´æœ¨é‡‘åœŸ 0123456
+	g_month	       = iic_read(true); // æœˆã®å€¤ (C:MSB)1-12	Cã¯1ã®ã¨ã21ä¸–ç´€
+	g_year         = iic_read(true); // å¹´ã®å€¤ 00-99
+	g_alarm_minute = iic_read(true); // ã‚¢ãƒ©ãƒ¼ãƒ 
+	g_alarm_hour   = iic_read(false); // ã‚¢ãƒ©ãƒ¼ãƒ 
+	iic_stop();
+
+	// æœ‰åŠ¹ãƒ“ãƒƒãƒˆã®å–ã‚Šå‡ºã—
 	g_second  &= 0x7f;
 	g_minute  &= 0x7f;
 	g_hour	  &= 0x3f;
@@ -341,41 +507,41 @@ static void rtc_load()
 	g_week	  &= 0x07;
 	g_month	  &= 0x1f;
 		
-	// g_year	  &= 0xff; ”N‚Í‘Sƒrƒbƒg—LŒø‚È‚Ì‚Åƒ}ƒXƒN‚µ‚È‚¢
+	// g_year	  &= 0xff; å¹´ã¯å…¨ãƒ“ãƒƒãƒˆæœ‰åŠ¹ãªã®ã§ãƒã‚¹ã‚¯ã—ãªã„
 	// g_century = g_month & 0x80 ? 21 : 20;
 	g_alarm_minute &= 0x7f;
 	g_alarm_hour &= 0x3f;
 }
 
-static void rtc_save()
+static void RTC8564NB_save()
 {
 	return;
 }
 
-static void rtc_init()
+static void RTC8564NB_init()
 {
 	unsigned char vl_bit;
 	
-	// Rtc‚Ì—§‚¿ã‚ª‚è‚É700ms•K—v‚È‚Ì‚Å“à•”‚Åwait‚·‚é
+	// Rtcã®ç«‹ã¡ä¸ŠãŒã‚Šã«700mså¿…è¦ãªã®ã§å†…éƒ¨ã§waitã™ã‚‹
 	_delay_ms(250);
 	_delay_ms(250);
 	_delay_ms(200);
 	
-	// VLƒrƒbƒg‚ğƒ`ƒFƒbƒN
-	// “Ç‚İo‚µ‚Ìê‡‚Írepeat‚·‚é
-	// •b‚ÌƒAƒhƒŒƒX‚Ìæ“ªƒrƒbƒg‚ªƒoƒbƒNƒAƒbƒvˆÙíŒŸoVL
-	iic_start(RTC_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	// VLãƒ“ãƒƒãƒˆã‚’ãƒã‚§ãƒƒã‚¯
+	// èª­ã¿å‡ºã—ã®å ´åˆã¯repeatã™ã‚‹
+	// ç§’ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å…ˆé ­ãƒ“ãƒƒãƒˆãŒãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ç•°å¸¸æ¤œå‡ºVL
+	iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
 	iic_write(0x02);
-	iic_repeat(RTC_SLAVE_ADDRESS|IIC_READ_BIT);
+	iic_repeat(RTC8564NB_SLAVE_ADDRESS|IIC_READ_BIT);
 	vl_bit = iic_read(false) & 0x80; 
 	iic_stop();
 
-	// VLƒrƒbƒgˆÙí‚ª‚ ‚ê‚Î‰Šú‰»‚·‚é
+	// VLãƒ“ãƒƒãƒˆç•°å¸¸ãŒã‚ã‚Œã°åˆæœŸåŒ–ã™ã‚‹
 	if (vl_bit)
 	{
-		// ‰Šú‰»
-		iic_start(RTC_SLAVE_ADDRESS|IIC_WRITE_BIT);
-		iic_write(0x00); // control0‚ÌƒAƒhƒŒƒX
+		// åˆæœŸåŒ–
+		iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+		iic_write(0x00); // control0ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		iic_write(0x0);  // control0 -> test=0, STOP=0
 		iic_write(0x0);  // control1 -> AIE=TIE=0
 		iic_write(0x0);  // seconds
@@ -393,18 +559,18 @@ static void rtc_init()
 		iic_write(0x0);  // timer control
 		iic_write(0x0);  // timer
 		iic_stop();
-		beep(5);
+		beep(1);
 	}
 	else
 	{
-		iic_start(RTC_SLAVE_ADDRESS|IIC_WRITE_BIT);
-		iic_write(0x00); // control0‚ÌƒAƒhƒŒƒX
+		iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+		iic_write(0x00); // control0ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		iic_write(0x0);  // control0 -> test=0, STOP=1
 		iic_write(0x0);  // control1 -> AIE=TIE=0
 		iic_stop();
 		
-		iic_start(RTC_SLAVE_ADDRESS|IIC_WRITE_BIT);
-		iic_write(0x0d); // clkout‚ÌƒAƒhƒŒƒX
+		iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+		iic_write(0x0d); // clkoutã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		iic_write(0x83); // clkout -> enable,1Hz
 		iic_stop();
 	}
@@ -412,18 +578,18 @@ static void rtc_init()
 	return;
 }
 
-// ƒjƒLƒV[ŠÇ / Nixie tube
-// Œ»İ•\¦Œ…‚Ì•ÏX
-// ŒJ‚è•Ô‚µƒR[ƒ‹‚µ‚Äƒ_ƒCƒiƒ~ƒbƒN“_“”‚ğs‚¤
+// ãƒ‹ã‚­ã‚·ãƒ¼ç®¡ / Nixie tube
+// ç¾åœ¨è¡¨ç¤ºæ¡ã®å¤‰æ›´
+// ç¹°ã‚Šè¿”ã—ã‚³ãƒ¼ãƒ«ã—ã¦ãƒ€ã‚¤ãƒŠãƒŸãƒƒã‚¯ç‚¹ç¯ã‚’è¡Œã†
 static void ChangeDigit(e_digit digit_)
 {
 	setbits(PORT_NIXIE_DIGIT, MASK_NIXIE_DIGIT, OFFSET_NIXIE_DIGIT, (char)digit_);
 	return;
 }
 
-// ƒjƒLƒV[ŠÇ / Nixie tube
-// Œ»İ•\¦Œ…‚ğw’è‚µ‚½’l‚É•ÏX
-// 10~15‚Í“_“”‚¹‚¸
+// ãƒ‹ã‚­ã‚·ãƒ¼ç®¡ / Nixie tube
+// ç¾åœ¨è¡¨ç¤ºæ¡ã‚’æŒ‡å®šã—ãŸå€¤ã«å¤‰æ›´
+// 10~15ã¯ç‚¹ç¯ã›ãš
 static void ChangeNumber(unsigned char num_)
 {
 	static const unsigned char num2bit[] = {3, 4, 6, 9, 8, 1, 5, 0, 2, 7, 10};
@@ -435,22 +601,22 @@ static void ChangeNumber(unsigned char num_)
 //----------------------------
 // interrupts
 //----------------------------
-// ƒ^ƒCƒ}Š„‚è‚İ
+// ã‚¿ã‚¤ãƒå‰²ã‚Šè¾¼ã¿
 ISR(TIMER0_COMPA_vect)
 {
 	static unsigned char digit = 0;
 	static unsigned char blank = 0;
 
-	// blankŠúŠÔ‚È‚ç‘SLED‚ğOFF
+	// blankæœŸé–“ãªã‚‰å…¨LEDã‚’OFF
 	blank = blank == 0 ? 1 : 0;
 	if (blank)
 	{
-		ChangeNumber(10); // 10‚Í“_“”‚¹‚¸
+		ChangeNumber(10); // 10ã¯ç‚¹ç¯ã›ãš
 
 		return;
 	}
 	
-	// •\¦LED‚ğØ‚è‘Ö‚¦
+	// è¡¨ç¤ºLEDã‚’åˆ‡ã‚Šæ›¿ãˆ
 	digit++;
 	digit &= 0x7;
 	switch (digit)
@@ -514,7 +680,7 @@ ISR(INT1_vect)
 // PIN change interrupt
 ISR(PCINT2_vect)
 {
-	// PCINT‚Åƒ[ƒ^ƒŠ[ƒGƒ“ƒR[ƒ_ŒŸo‚·‚é‚Æ‚«
+	// PCINTã§ãƒ­ãƒ¼ã‚¿ãƒªãƒ¼ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€æ¤œå‡ºã™ã‚‹ã¨ã
 	#if 0
 	if (((PIND & 0b10000000) == 0)
 	||  ((PIND & 0b01000000) == 1))
@@ -552,12 +718,12 @@ static void setup()
 	// PIN (I/O, interrupt)
 	{
 		// port config
-		DDRB   = 0b11111111; // 0~5‚ª—LŒø 0134:line direct(012:line decoder), 6:beep
-		DDRC   = 0b10001111; // 0~7‚ª—LŒø 0123:nixie_driver, 45:IIC, 6:reset
-		DDRD   = 0b00010010; // 0~7‚ª—LŒø 0:rtc_out, 1:rtc_oe, 23:sw_AB, 5:remote, 6:Å“dƒZƒ“ƒT(ƒvƒ‹ƒ_ƒEƒ““à‘Ÿ), 7:sw_push
+		DDRB   = 0b11111111; // 0~5ãŒæœ‰åŠ¹ 0134:line direct(012:line decoder), 6:beep
+		DDRC   = 0b10001111; // 0~7ãŒæœ‰åŠ¹ 0123:nixie_driver, 45:IIC, 6:reset
+		DDRD   = 0b00010010; // 0~7ãŒæœ‰åŠ¹ 0:rtc_out, 1:rtc_oe, 23:sw_AB, 5:remote, 6:ç„¦é›»ã‚»ãƒ³ã‚µ(ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³å†…è‡“), 7:sw_push
 		PORTB  = 0b00000000;
-		PORTC  = 0b00110000; // 45:IICƒvƒ‹ƒAƒbƒv, 6:resetƒvƒ‹ƒAƒbƒv
-		PORTD  = 0b10101111; // 6‚ÍƒZƒ“ƒT‚ª“à‘Ÿƒvƒ‹ƒ_ƒEƒ“‚È‚Ì‚ÅHiZ
+		PORTC  = 0b00110000; // 45:IICãƒ—ãƒ«ã‚¢ãƒƒãƒ—, 6:resetãƒ—ãƒ«ã‚¢ãƒƒãƒ—
+		PORTD  = 0b10101111; // 6ã¯ã‚»ãƒ³ã‚µãŒå†…è‡“ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãªã®ã§HiZ
 
 		// pin change interrupt
 		PCMSK0 = 0b00000000;
@@ -566,23 +732,23 @@ static void setup()
 		PCICR  = 0b00000100; // PCINT2 enable
 		
 		// interrupt
-		EICRA  = 0b00001010; // INT0, INT1—§‚¿‰º‚ª‚èŒŸo
-		EIMSK  = 0b00000011; // INT0, INT1—LŒø‰»
+		EICRA  = 0b00001010; // INT0, INT1ç«‹ã¡ä¸‹ãŒã‚Šæ¤œå‡º
+		EIMSK  = 0b00000011; // INT0, INT1æœ‰åŠ¹åŒ–
 	}
 
 	// Timer
-	// 8Œ…ƒjƒLƒV[‚ğ30Hz•\¦‚µ‚½‚¢Aƒuƒ‰ƒ“ƒNŠÔ‚ğ”¼•ª‚Æ‚·‚é
-	// ƒ}ƒXƒ^ƒNƒƒbƒN8Mhz / 8 / 30 / 2 = 166666 (16.3 * 1024)‰ñ‚Éˆê“xŠ„‚è‚İ‚ÅOK
-	// –ñ2ms‚ÅŠ„‚è‚İ‚³‚¹‚é
+	// 8æ¡ãƒ‹ã‚­ã‚·ãƒ¼ã‚’30Hzè¡¨ç¤ºã—ãŸã„ã€ãƒ–ãƒ©ãƒ³ã‚¯æ™‚é–“ã‚’åŠåˆ†ã¨ã™ã‚‹
+	// ãƒã‚¹ã‚¿ã‚¯ãƒ­ãƒƒã‚¯8Mhz / 8 / 30 / 2 = 166666 (16.3 * 1024)å›ã«ä¸€åº¦å‰²ã‚Šè¾¼ã¿ã§OK
+	// ç´„2msã§å‰²ã‚Šè¾¼ã¿ã•ã›ã‚‹
 	{
 		TIMSK0 = 0b0000010; // output compare A
 
-		// CTC, 1024•ªüprescaler“ü—Í
+		// CTC, 1024åˆ†å‘¨prescalerå…¥åŠ›
 		TCCR0A = 0b00000010;
 		TCCR0B = 0b00000101;
 		
-		// 16‚ÅƒŠƒZƒbƒg
-		OCR0A  = 8; // b’è‚Å16¨8
+		// 16ã§ãƒªã‚»ãƒƒãƒˆ
+		OCR0A  = 8; // æš«å®šã§16â†’8
 		
 		// Compare Match A Interrupt Enable
 		TIMSK0 = 0b00000010;
@@ -590,34 +756,32 @@ static void setup()
 	
 	// IIC
 	{
-		// ‰·“x¼“xƒZƒ“ƒTEAM2321‚Æ’ÊM‚·‚éI2CƒoƒX‚Ìƒf[ƒ^“]‘—‘¬“x‚ÍAÅ‘å100KHz‚Å‚·B
+		// æ¸©åº¦æ¹¿åº¦ã‚»ãƒ³ã‚µãƒ»AM2321ã¨é€šä¿¡ã™ã‚‹I2Cãƒã‚¹ã®ãƒ‡ãƒ¼ã‚¿è»¢é€é€Ÿåº¦ã¯ã€æœ€å¤§100KHzã§ã™ã€‚
 		// F_SCL = (F_CPU / ((16 + 2(TWBR)) * prescaler)
 		// TWBR = (F_CPU / (F_SCL * prescaler) -16) / 2
-		// 20kHz’ÊMA4•ªü‚Æ‚·‚é‚Æ
+		// 20kHzé€šä¿¡ã€4åˆ†å‘¨ã¨ã™ã‚‹ã¨
 		setbits(TWSR, 0x0, 0, 2); // 0, 1, 2, 3 -> 1, 4, 16, 64
-		TWBR = ((F_CPU/100000UL) - 16) / 2;
+		TWBR = ((F_CPU/20000UL) - 16) / 2;
 		TWCR = 1<<TWEN;
 	}
 	
 	// ADC
 	{
-		// ADMUX    ŠO•”Šî€“dˆ³‘I‘ğAch1‘I‘ğ
-		// ADCSRA   BV(ADEN)|_BV(ADIE)|0b110;
-		// ADEN     A/D‹–‰Â (ADC Enable
-		// ADSC     A/D•ÏŠ·ŠJn
-		// ADATE    A/D•ÏŠ·©“®‹N“®‹–‰Â
-		// ADIE     A/D•ÏŠ·Š®—¹Š„‚è‚İ‹–‰Â
-		// ADPS2`0 A/D•ÏŠ·¸Û¯¸‘I‘ğ
+		// ãƒ‡ã‚¸ã‚¿ãƒ«ãƒ”ãƒ³disable
+		DIDR0 = 0b00000000;
 	}
 
-	// Š„‚è‚İ—LŒø‰»ƒAƒZƒ“ƒuƒ‰–½—ßƒR[ƒ‹
+	// å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–ã‚¢ã‚»ãƒ³ãƒ–ãƒ©å‘½ä»¤ã‚³ãƒ¼ãƒ«
 	sei();
 	
-	/// RTC ‰Šú‰»
-	rtc_init();
-	rtc_load();
+	///// å¤–éƒ¨ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–
+	RTC8564NB_init();
+	RTC8564NB_load();
+	LPS331_init();
+	LPS331_load();
+	AM2321_load();
 	
-	// ‰Šú‰»Š®—¹A‹N“®ˆê“x‚¾‚¯
+	// åˆæœŸåŒ–å®Œäº†ã€èµ·å‹•æ™‚ä¸€åº¦ã ã‘
 	beep(1);
 }
 
@@ -631,8 +795,11 @@ static void loop()
 	if ((PIND & 0b10000000) == 0)
 	{
 		number = 0;
-		rtc_load();
-		beep(lo(g_second));
+		//RTC8564NB_load();
+		//beep(g_second);
+		
+		g_illuminance = adc_get(ADC_ILLUMINANCE_SENSOR);
+		beep_hex(g_illuminance);
 		led(true);
 	}	
 	
@@ -657,7 +824,7 @@ static void loop()
 	num_up = false;
 	num_down = false;
 	
-	////lŠ´ƒZƒ“ƒT
+	////äººæ„Ÿã‚»ãƒ³ã‚µ
 	//if (chkbit(PIND, PIND6))
 	//{
 	//	led(true);
