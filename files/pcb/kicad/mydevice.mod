@@ -1,0 +1,80 @@
+PCBNEW-LibModule-V1  2014/08/21 1:33:21
+# encoding utf-8
+Units mm
+$INDEX
+ICM7555CD
+$EndINDEX
+$MODULE ICM7555CD
+Po 0 0 0 15 53F4CDCD 00000000 ~~
+Li ICM7555CD
+Sc 0
+AR 
+Op 0 0 0
+T0 0 3.5 1 1 0 0.15 N V 21 N "ICM7555CD"
+T1 0 -3.5 1 1 0 0.15 N V 21 N ""
+DS 1.5 2.5 1.5 -2.5 0.15 21
+DS 1 -2.5 4.5 -2.5 0.15 21
+DS -1 -2.5 -4.5 -2.5 0.15 21
+DA 0 -2.5 0 -1.5 900 0.15 21
+DA 0 -2.5 1 -2.5 900 0.15 21
+DS -4.5 -2.5 -4.5 2.5 0.15 21
+DS -4.5 2.5 4.5 2.5 0.15 21
+DS 4.5 2.5 4.5 -2.5 0.15 21
+$PAD
+Sh "1" R 2 0.6 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -3.175 -1.905
+$EndPAD
+$PAD
+Sh "2" R 2 0.6 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -3.175 -0.635
+$EndPAD
+$PAD
+Sh "3" R 2 0.6 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -3.175 0.635
+$EndPAD
+$PAD
+Sh "4" R 2 0.6 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -3.175 1.905
+$EndPAD
+$PAD
+Sh "5" R 2 0.6 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 3.175 1.905
+$EndPAD
+$PAD
+Sh "6" R 2 0.6 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 3.175 0.635
+$EndPAD
+$PAD
+Sh "7" R 2 0.6 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 3.175 -0.635
+$EndPAD
+$PAD
+Sh "8" R 2 0.6 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 3.175 -1.905
+$EndPAD
+$EndMODULE ICM7555CD
+$EndLIBRARY

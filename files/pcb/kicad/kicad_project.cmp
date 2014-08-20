@@ -1,0 +1,17 @@
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/21 2:27:01
+
+BeginCmp
+TimeStamp = /53F4D256;
+Reference = IC1;
+ValeurCmp = ICM7555CD;
+IdModule  = ICM7555CD;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F4D4E3;
+Reference = IC2;
+ValeurCmp = ICM7555CD;
+IdModule  = ICM7555CD;
+EndCmp
+
+EndListe
