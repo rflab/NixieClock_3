@@ -35,7 +35,7 @@ EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 12
+Sheet 3 12
 Title ""
 Date "23 aug 2014"
 Rev ""
@@ -45,4 +45,59 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
+Text HLabel 5950 3750 2    60   Input ~ 0
+out
+$Comp
+L DIODE PD
+U 1 1 53F8E30F
+P 5700 3450
+F 0 "PD" H 5700 3550 40  0000 C CNN
+F 1 "DIODE" H 5700 3350 40  0000 C CNN
+F 2 "~" H 5700 3450 60  0000 C CNN
+F 3 "~" H 5700 3450 60  0000 C CNN
+	1    5700 3450
+	0    1    1    0   
+$EndComp
+$Comp
+L R R?
+U 1 1 53F8E31E
+P 5700 4100
+F 0 "R?" V 5780 4100 40  0000 C CNN
+F 1 "10k" V 5707 4101 40  0000 C CNN
+F 2 "~" V 5630 4100 30  0000 C CNN
+F 3 "~" H 5700 4100 30  0000 C CNN
+	1    5700 4100
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 53F8E33E
+P 5700 4450
+F 0 "#PWR?" H 5700 4450 30  0001 C CNN
+F 1 "GND" H 5700 4380 30  0001 C CNN
+F 2 "" H 5700 4450 60  0000 C CNN
+F 3 "" H 5700 4450 60  0000 C CNN
+	1    5700 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR?
+U 1 1 53F8E34D
+P 5700 3150
+F 0 "#PWR?" H 5700 3240 20  0001 C CNN
+F 1 "+5V" H 5700 3240 30  0000 C CNN
+F 2 "" H 5700 3150 60  0000 C CNN
+F 3 "" H 5700 3150 60  0000 C CNN
+	1    5700 3150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 3250 5700 3150
+Wire Wire Line
+	5700 3650 5700 3850
+Wire Wire Line
+	5700 4350 5700 4450
+Wire Wire Line
+	5950 3750 5700 3750
+Connection ~ 5700 3750
 $EndSCHEMATC

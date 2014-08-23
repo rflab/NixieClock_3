@@ -123,9 +123,7 @@ F 3 "~" H 5650 4200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5000 3200 5000 2450
-Wire Wire Line
-	5000 2450 5050 2400
+	4850 3200 4850 2450
 Wire Wire Line
 	2650 2450 2800 2450
 Wire Wire Line
@@ -133,9 +131,9 @@ Wire Wire Line
 Wire Wire Line
 	3150 2450 3950 2450
 Wire Wire Line
-	3950 2450 5000 2450
+	3950 2450 4850 2450
 Wire Wire Line
-	5000 2450 5800 2450
+	4850 2450 5800 2450
 Wire Wire Line
 	5800 2450 7500 2450
 Wire Wire Line
@@ -171,7 +169,7 @@ Wire Wire Line
 Wire Wire Line
 	4800 3200 4850 3200
 Wire Wire Line
-	4850 3200 5000 3200
+	4850 3200 4850 3200
 Wire Wire Line
 	4850 3800 4800 3800
 Wire Wire Line
@@ -358,7 +356,6 @@ Wire Wire Line
 	5450 3000 5450 3400
 Wire Wire Line
 	5450 3400 4800 3400
-Connection ~ 4850 3200
 $Comp
 L 2SC T?
 U 1 1 53F89ABA
@@ -510,7 +507,7 @@ F 3 "~" H 6600 3650 30  0000 C CNN
 	1    6600 3650
 	0    -1   -1   0   
 $EndComp
-Connection ~ 5000 2450
+Connection ~ 4850 2450
 Wire Wire Line
 	6350 3650 6200 3650
 Wire Wire Line
@@ -710,4 +707,5 @@ Wire Wire Line
 	3950 3800 3950 2450
 Connection ~ 3950 2450
 Connection ~ 5650 4400
+Connection ~ 4850 2950
 $EndSCHEMATC
