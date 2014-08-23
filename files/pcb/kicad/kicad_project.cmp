@@ -1,17 +1,136 @@
-Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/21 2:27:01
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/23 4:38:01
 
 BeginCmp
-TimeStamp = /53F4D256;
-Reference = IC1;
-ValeurCmp = ICM7555CD;
-IdModule  = ICM7555CD;
+TimeStamp = /53F61C7B;
+Reference = C1;
+ValeurCmp = 0.1u;
+IdModule  = SM0603_Capa;
 EndCmp
 
 BeginCmp
-TimeStamp = /53F4D4E3;
-Reference = IC2;
+TimeStamp = /53F6288B;
+Reference = C2;
+ValeurCmp = 1000p;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62F24;
+Reference = C3;
+ValeurCmp = 350V 1u;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62E9A;
+Reference = D1;
+ValeurCmp = DIODE;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F627A5;
+Reference = IC1;
 ValeurCmp = ICM7555CD;
-IdModule  = ICM7555CD;
+IdModule  = so-8;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F7A025;
+Reference = IC2;
+ValeurCmp = FET;
+IdModule  = sot428;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62DE4;
+Reference = L1;
+ValeurCmp = 220uH;
+IdModule  = smd10x10;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F61CD7;
+Reference = R1;
+ValeurCmp = 10k;
+IdModule  = SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F61CFD;
+Reference = R2;
+ValeurCmp = 10k;
+IdModule  = SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62C6B;
+Reference = R3;
+ValeurCmp = 10K;
+IdModule  = SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62C5C;
+Reference = R4;
+ValeurCmp = 4.7k;
+IdModule  = SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62F6A;
+Reference = R5;
+ValeurCmp = 500k;
+IdModule  = SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62F79;
+Reference = R6;
+ValeurCmp = 500k;
+IdModule  = SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62F88;
+Reference = R7;
+ValeurCmp = 10k;
+IdModule  = SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F790A5;
+Reference = T1;
+ValeurCmp = 2SC;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F790D0;
+Reference = T2;
+ValeurCmp = 2SA;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62047;
+Reference = VR1;
+ValeurCmp = 100k;
+IdModule  = SMD_VOLUME;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F62F97;
+Reference = VR2;
+ValeurCmp = 10k;
+IdModule  = SMD_VOLUME;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F77746/53F77DC4;
+Reference = VR3;
+ValeurCmp = VOLUME;
+IdModule  = SMD_VOLUME;
 EndCmp
 
 EndListe
