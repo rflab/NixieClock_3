@@ -43,9 +43,10 @@
 #define IIC_WRITE_BIT 0
 #define IIC_SCL_CLOCK 100000L
 
-#define RTC8564NB_SLAVE_ADDRESS 0xa2
-#define LP3331_SLAVE_ADDRESS 0xba
-#define AM2321_SLAVE_ADDRESS 0xb8
+#define RTC8564NB_SLAVE_ADDRESS_8BIT (0x51<<1)
+#define LP3331_SLAVE_ADDRESS_8BIT (0x5d<<1)
+#define AM2321_SLAVE_ADDRESS_8BIT (0x5c<<1)
+#define DS1307_SLAVE_ADDRESS_8BIT (0x68<<1)
 
 //----------------------------
 // enum
@@ -347,14 +348,14 @@ void beep_hex(unsigned char hex_)
 		if (hex_ & (0x80>>i_bit))
 		{
 			PORT_BEEP |= MASK_BEEP;
-			_delay_ms(50);
+			_delay_ms(200);
 			PORT_BEEP &= ~MASK_BEEP;
 			_delay_ms(100);
 		}
 		else
 		{
 			PORT_BEEP |= MASK_BEEP;
-			_delay_ms(200);
+			_delay_ms(50);
 			PORT_BEEP &= ~MASK_BEEP;
 			_delay_ms(100);
 		}
@@ -381,9 +382,9 @@ unsigned char LPS331_read(unsigned char address_)
 {
 	unsigned char data;
 	
-	iic_start(LP3331_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_start(LP3331_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 	iic_write(address_);
-	iic_repeat(LP3331_SLAVE_ADDRESS|IIC_READ_BIT);
+	iic_repeat(LP3331_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
 	data = iic_read(false);
 	iic_stop();
 	
@@ -392,7 +393,7 @@ unsigned char LPS331_read(unsigned char address_)
 
 bool LPS331_write(unsigned char address_, unsigned char data_)
 {
-	iic_start(LP3331_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_start(LP3331_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 	iic_write(address_);
 	iic_write(data_);
 	iic_stop();
@@ -444,12 +445,12 @@ static void AM2321_load()
 	static unsigned char data[8] = {0};
 
 	// wakeup
-	iic_start(AM2321_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_start(AM2321_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 	_delay_ms(2);  // 800us~3000us
 	iic_stop();
 
 	// set read bytes
-	iic_start(AM2321_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_start(AM2321_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 	iic_write(0x03); // register read
 	iic_write(0x00); // register address
 	iic_write(0x04); // register size
@@ -458,7 +459,7 @@ static void AM2321_load()
 	// センサのjob待ち
 	_delay_ms(3); // 1500us
 
-	iic_start(AM2321_SLAVE_ADDRESS|IIC_READ_BIT);
+	iic_start(AM2321_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
 	_delay_us(100);
 	data[0] = iic_read(true);  // 機能コード [03]　機能コードの返し
 	data[1] = iic_read(true);  // 返送するバイト数　（この例では湿度と温度の4バイト）
@@ -485,9 +486,9 @@ static void Napion_update()
 // RTC / real time clock
 static void RTC8564NB_load()
 {
-	iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_start(RTC8564NB_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 	iic_write(0x02); // 秒のアドレス
-	iic_repeat(RTC8564NB_SLAVE_ADDRESS|IIC_READ_BIT);
+	iic_repeat(RTC8564NB_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
 	g_second       = iic_read(true); // 秒の値 0-59
 	g_minute       = iic_read(true); // 分の値 0-59
 	g_hour	       = iic_read(true); // 時の値 0-23
@@ -530,9 +531,9 @@ static void RTC8564NB_init()
 	// VLビットをチェック
 	// 読み出しの場合はrepeatする
 	// 秒のアドレスの先頭ビットがバックアップ異常検出VL
-	iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+	iic_start(RTC8564NB_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 	iic_write(0x02);
-	iic_repeat(RTC8564NB_SLAVE_ADDRESS|IIC_READ_BIT);
+	iic_repeat(RTC8564NB_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
 	vl_bit = iic_read(false) & 0x80; 
 	iic_stop();
 
@@ -540,7 +541,7 @@ static void RTC8564NB_init()
 	if (vl_bit)
 	{
 		// 初期化
-		iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+		iic_start(RTC8564NB_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 		iic_write(0x00); // control0のアドレス
 		iic_write(0x0);  // control0 -> test=0, STOP=0
 		iic_write(0x0);  // control1 -> AIE=TIE=0
@@ -563,19 +564,91 @@ static void RTC8564NB_init()
 	}
 	else
 	{
-		iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+		iic_start(RTC8564NB_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 		iic_write(0x00); // control0のアドレス
 		iic_write(0x0);  // control0 -> test=0, STOP=1
 		iic_write(0x0);  // control1 -> AIE=TIE=0
 		iic_stop();
 		
-		iic_start(RTC8564NB_SLAVE_ADDRESS|IIC_WRITE_BIT);
+		iic_start(RTC8564NB_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 		iic_write(0x0d); // clkoutのアドレス
 		iic_write(0x83); // clkout -> enable,1Hz
 		iic_stop();
 	}
 		
 	return;
+}
+
+//---------------
+// RTC / real time clock
+static void DS1307_read()
+{
+	#if 0
+		iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+		iic_write(0x00); // word address
+		iic_stop();
+	
+		iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
+		g_second = iic_read(true);  // 0x00 seconds
+		g_minute = iic_read(true);  // 0x01 minutes
+		g_hour	 = iic_read(true);  // 0x02 hours
+		g_week	 = iic_read(true);  // 0x03 week
+		g_date	 = iic_read(true);  // 0x04 date
+		g_month	 = iic_read(true);  // 0x05 month
+		g_year	 = iic_read(false);  // 0x06 year
+		iic_stop();
+	#else
+		// repeat start による連続リード
+		iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+		iic_write(0x00); // word address
+		iic_repeat(DS1307_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
+		g_second = iic_read(true);  // 0x00 seconds
+		g_minute = iic_read(true);  // 0x01 minutes
+		g_hour	 = iic_read(true);  // 0x02 hours
+		g_week	 = iic_read(true);  // 0x03 week
+		g_date	 = iic_read(true);  // 0x04 date
+		g_month	 = iic_read(true);  // 0x05 month
+		g_year	 = iic_read(false);  // 0x06 year
+		iic_stop();
+	#endif
+
+	// 有効ビットの取り出し
+	g_second  &= 0x7f; // 最上位ビットは休止可能情報 CH
+	g_minute  &= 0x7f;
+	g_hour	  &= 0x3f;
+	g_week	  &= 0x07;
+	g_date	  &= 0x3f;
+	g_month	  &= 0x1f;
+	g_year	  &= 0xff; // 0~99
+}
+
+static void DS1307_write()
+{
+	return;
+}
+
+
+static void DS1307_init()
+{
+	// VLビットをチェック
+	// 読み出しの場合はrepeatする
+	// 秒のアドレスの先頭ビットがバックアップ異常検出VL
+	iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+	iic_write(0x00);  // word address
+	//static const unsigned char CH  = 7;
+	iic_write(0x0); // 0x00 seconds
+	iic_write(0x0); // 0x01 minutes
+	iic_write(0x0); // 0x02 hours, bit6=1:24 hour mode
+	iic_write(0x0); // 0x03 week
+	iic_write(0x0); // 0x04 date
+	iic_write(0x0); // 0x05 month
+	iic_write(0x0); // 0x06 year
+	static const unsigned char OUT  = 7;
+	static const unsigned char SQWE = 4;
+	static const unsigned char RS1  = 1;
+	static const unsigned char RS0  = 0;
+	iic_write((1<<OUT) | (1<<SQWE) | (0<<RS1) | (0<<RS0));  // 0x07 control 1kHz 
+	iic_stop();
 }
 
 // ニキシー管 / Nixie tube
@@ -775,11 +848,13 @@ static void setup()
 	sei();
 	
 	///// 外部デバイス初期化
-	RTC8564NB_init();
-	RTC8564NB_load();
+	_delay_ms(200); // DS1307の電源充電を待つ
+	//RTC8564NB_init();
+	//RTC8564NB_load();
 	LPS331_init();
 	LPS331_load();
 	AM2321_load();
+	DS1307_init();
 	
 	// 初期化完了、起動時一度だけ
 	beep(1);
@@ -797,9 +872,12 @@ static void loop()
 		number = 0;
 		//RTC8564NB_load();
 		//beep(g_second);
+
+		DS1307_read();
+		beep_hex(g_second);
 		
-		g_illuminance = adc_get(ADC_ILLUMINANCE_SENSOR);
-		beep_hex(g_illuminance);
+		//g_illuminance = adc_get(ADC_ILLUMINANCE_SENSOR);
+		//beep_hex(g_illuminance);
 		led(true);
 	}	
 	
