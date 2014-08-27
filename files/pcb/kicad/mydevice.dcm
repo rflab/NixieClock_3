@@ -1,4 +1,4 @@
-EESchema-DOCLIB  Version 2.0  Date: 2014/08/26 23:24:39
+EESchema-DOCLIB  Version 2.0  Date: 2014/08/27 23:49:08
 #
 $CMP 2SA
 D 2SA sot23
@@ -21,6 +21,10 @@ $CMP ATMEGA328P
 D ATMEGA328P, TQFP32, 32k Flash, 2kB SRAM, 1kB EEPROM
 K AVR 8bit Microcontroller MegaAVR
 F http://www.atmel.com/dyn/resources/prod_documents/doc8271.pdf
+$ENDCMP
+#
+$CMP CP1
+D Condensateur polarise
 $ENDCMP
 #
 #End Doc Library

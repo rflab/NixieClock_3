@@ -1,6 +1,6 @@
-update=2014/08/24 1:06:41
+update=2014/08/27 2:18:39
 version=1
-last_client=eeschema
+last_client=cvpcb
 [general]
 version=1
 [pcbnew]
@@ -41,11 +41,6 @@ LibName15=pga_sockets
 LibName16=valves
 LibName17=mydevice
 LibDir=../kicad_nixie_clock_3
-[cvpcb]
-version=1
-NetIExt=net
-[cvpcb/libraries]
-EquName1=devcms
 [eeschema]
 version=1
 LibDir=
@@ -86,3 +81,8 @@ LibName28=atmel
 LibName29=contrib
 LibName30=valves
 LibName31=mydevice
+[cvpcb]
+version=1
+NetIExt=net
+[cvpcb/libraries]
+EquName1=devcms
