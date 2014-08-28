@@ -1,4 +1,4 @@
-PCBNEW-LibModule-V1  2014/08/28 2:45:17
+PCBNEW-LibModule-V1  2014/08/29 1:47:24
 # encoding utf-8
 Units mm
 $INDEX
@@ -7,15 +7,24 @@ USB_MINI_B
 my_3pin
 my_SMD5750
 my_SMD_VR
+my_SOT223
 my_TQFP32
 my_am2321
 my_connector_6
+my_crystal
+my_crystal_32p768
 my_dcjack
+my_dip16
 my_dip4
+my_dip8
 my_double_layer_capacitor
 my_inductor
+my_napion
 my_neon
+my_nixie
 my_photo_diode
+my_remocon
+my_rotary_switch
 my_smd10x10
 my_so16
 my_sot428
@@ -277,6 +286,60 @@ Of 0 0 0
 Ro 0 0 0
 $EndSHAPE3D
 $EndMODULE my_SMD_VR
+$MODULE my_SOT223
+Po 0.07 0.26 0 15 53FF5720 00000000 ~~
+Li my_SOT223
+Cd module CMS SOT223 4 pins
+Kw CMS SOT
+Sc 0
+AR 
+Op 0 0 0
+At SMD
+T0 0 -0.762 1.016 1.016 0 0.2032 N V 21 N "SOT223"
+T1 0 0.762 1.016 1.016 0 0.2032 N V 21 N "Val**"
+DS -3.556 1.524 -3.556 4.572 0.2032 21
+DS -3.556 4.572 3.556 4.572 0.2032 21
+DS 3.556 4.572 3.556 1.524 0.2032 21
+DS -3.556 -1.524 -3.556 -2.286 0.2032 21
+DS -3.556 -2.286 -2.032 -4.572 0.2032 21
+DS -2.032 -4.572 2.032 -4.572 0.2032 21
+DS 2.032 -4.572 3.556 -2.286 0.2032 21
+DS 3.556 -2.286 3.556 -1.524 0.2032 21
+$PAD
+Sh "" R 3.6576 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 -3.302
+$EndPAD
+$PAD
+Sh "2" R 1.016 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 3.302
+$EndPAD
+$PAD
+Sh "3" R 1.016 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 2.286 3.302
+$EndPAD
+$PAD
+Sh "1" R 1.016 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -2.286 3.302
+$EndPAD
+$SHAPE3D
+Na "smd/SOT223.wrl"
+Sc 0.4 0.4 0.4
+Of 0 0 0
+Ro 0 0 0
+$EndSHAPE3D
+$EndMODULE my_SOT223
 $MODULE my_TQFP32
 Po 0 0 0 15 53FCC362 00000000 ~~
 Li my_TQFP32
@@ -630,6 +693,74 @@ Ne 0 ""
 Po 3.75 0
 $EndPAD
 $EndMODULE my_connector_6
+$MODULE my_crystal
+Po 0 0 0 15 53FF4892 00000000 ~~
+Li my_crystal
+Sc 0
+AR 
+Op 0 0 0
+T0 1.1 1.6 1 1 0 0.15 N V 21 N "my_crystal"
+T1 1.1 -3.1 1 1 0 0.15 N V 21 N "VAL**"
+DS -1.1 -2.6 -1.1 1 0.15 21
+DS -1.1 1 3.3 1 0.15 21
+DS 3.3 1 3.3 -2.6 0.15 21
+DS 3.3 -2.6 -1.1 -2.6 0.15 21
+$PAD
+Sh "1" R 1.4 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 0
+$EndPAD
+$PAD
+Sh "" R 1.4 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 2.2 0
+$EndPAD
+$PAD
+Sh "" R 1.4 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 -1.6
+$EndPAD
+$PAD
+Sh "2" R 1.4 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 2.2 -1.6
+$EndPAD
+$EndMODULE my_crystal
+$MODULE my_crystal_32p768
+Po 0 0 0 15 53FF47D7 00000000 ~~
+Li my_crystal_32p768
+Sc 0
+AR 
+Op 0 0 0
+T0 0 3.9 1 1 0 0.15 N V 21 N "my_crystal_32p768"
+T1 0 -3.7 1 1 0 0.15 N V 21 N "VAL**"
+DS -1 -1.5 -1 1.5 0.15 21
+DS -1 1.5 5.2 1.5 0.15 21
+DS 5.2 1.5 5.2 -1.5 0.15 21
+DS 5.2 -1.5 -1 -1.5 0.15 21
+$PAD
+Sh "1" R 1.3 2.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 0
+$EndPAD
+$PAD
+Sh "2" R 1.3 2.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 4.2 0
+$EndPAD
+$EndMODULE my_crystal_32p768
 $MODULE my_dcjack
 Po 0 0 0 15 53FE1865 00000000 ~~
 Li my_dcjack
@@ -665,6 +796,134 @@ Ne 0 ""
 Po 0 4.8
 $EndPAD
 $EndMODULE my_dcjack
+$MODULE my_dip16
+Po 0 0 0 15 53FF5CB1 00000000 ~~
+Li my_dip16
+Sc 0
+AR 
+Op 0 0 0
+T0 -1.27 -2.54 1 1 0 0.15 N V 21 N "my_dip16"
+T1 -12.7 -2.54 1 1 900 0.15 N V 21 N "VAL**"
+DA -10.16 0 -8.89 0 900 0.15 21
+DA -10.16 0 -10.16 -1.27 900 0.15 21
+DS -10.16 -1.27 -10.16 -2.54 0.15 21
+DS -10.16 -2.54 10.16 -2.54 0.15 21
+DS 10.16 -2.54 10.16 2.54 0.15 21
+DS 10.16 2.54 -10.16 2.54 0.15 21
+DS -10.16 2.54 -10.16 1.27 0.15 21
+$PAD
+Sh "1" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -8.89 3.81
+$EndPAD
+$PAD
+Sh "2" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -6.35 3.81
+$EndPAD
+$PAD
+Sh "3" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.81 3.81
+$EndPAD
+$PAD
+Sh "4" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 3.81
+$EndPAD
+$PAD
+Sh "5" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 3.81
+$EndPAD
+$PAD
+Sh "6" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.81 3.81
+$EndPAD
+$PAD
+Sh "7" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 6.35 3.81
+$EndPAD
+$PAD
+Sh "8" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 8.89 3.81
+$EndPAD
+$PAD
+Sh "9" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 8.89 -3.81
+$EndPAD
+$PAD
+Sh "10" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 6.35 -3.81
+$EndPAD
+$PAD
+Sh "11" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.81 -3.81
+$EndPAD
+$PAD
+Sh "12" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -3.81
+$EndPAD
+$PAD
+Sh "13" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -3.81
+$EndPAD
+$PAD
+Sh "14" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.81 -3.81
+$EndPAD
+$PAD
+Sh "15" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -6.35 -3.81
+$EndPAD
+$PAD
+Sh "16" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -8.89 -3.81
+$EndPAD
+$EndMODULE my_dip16
 $MODULE my_dip4
 Po 0 0 0 15 53FCC130 00000000 ~~
 Li my_dip4
@@ -717,6 +976,78 @@ Of 0 0 0
 Ro 0 0 0
 $EndSHAPE3D
 $EndMODULE my_dip4
+$MODULE my_dip8
+Po 0 0 0 15 53FF5C29 00000000 ~~
+Li my_dip8
+Sc 0
+AR 
+Op 0 0 0
+T0 6.35 -1.27 1 1 900 0.15 N V 21 N "my_dip8"
+T1 -6.35 -1.27 1 1 900 0.15 N V 21 N "VAL**"
+DA -5.08 -1.27 -3.81 -1.27 900 0.15 21
+DA -5.08 -1.27 -5.08 -2.54 900 0.15 21
+DS -5.08 -2.54 -5.08 -3.81 0.15 21
+DS -5.08 -3.81 5.08 -3.81 0.15 21
+DS 5.08 -3.81 5.08 1.27 0.15 21
+DS 5.08 1.27 -5.08 1.27 0.15 21
+DS -5.08 1.27 -5.08 0 0.15 21
+$PAD
+Sh "1" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.81 2.54
+$EndPAD
+$PAD
+Sh "2" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 2.54
+$EndPAD
+$PAD
+Sh "3" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 2.54
+$EndPAD
+$PAD
+Sh "4" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.81 2.54
+$EndPAD
+$PAD
+Sh "5" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.81 -5.08
+$EndPAD
+$PAD
+Sh "6" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -5.08
+$EndPAD
+$PAD
+Sh "7" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -5.08
+$EndPAD
+$PAD
+Sh "8" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.81 -5.08
+$EndPAD
+$EndMODULE my_dip8
 $MODULE my_double_layer_capacitor
 Po 0 0 0 15 53FDF1A4 00000000 ~~
 Li my_double_layer_capacitor
@@ -774,6 +1105,38 @@ Ne 0 ""
 Po -4.1 0
 $EndPAD
 $EndMODULE my_inductor
+$MODULE my_napion
+Po 0 0 0 15 53FF4458 00000000 ~~
+Li my_napion
+Sc 0
+AR 
+Op 0 0 0
+T0 0 6.5 1 1 0 0.15 N V 21 N "my_napion"
+T1 4 -6 1 1 0 0.15 N V 21 N "VAL**"
+DC 0 0 2.54 0 0.15 21
+DC 0 0 5.5 0 0.15 21
+$PAD
+Sh "1" C 1.6 1.6 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 2.54 0
+$EndPAD
+$PAD
+Sh "2" C 1.6 1.6 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -2.54 0
+$EndPAD
+$PAD
+Sh "3" C 1.6 1.6 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 0 -2.54
+$EndPAD
+$EndMODULE my_napion
 $MODULE my_neon
 Po 0 0 0 15 53FE1351 00000000 ~~
 Li my_neon
@@ -797,6 +1160,121 @@ Ne 0 ""
 Po 1 0
 $EndPAD
 $EndMODULE my_neon
+$MODULE my_nixie
+Po 0 0 0 15 53FF518F 00000000 ~~
+Li my_nixie
+Sc 0
+AR 
+Op 0 0 0
+T0 -6.4 6.6 1 1 0 0.15 N V 21 N "my_nixie"
+T1 5.8 7.1 1 1 0 0.15 N V 21 N "VAL**"
+T2 -3.3 -6.4 1 1 0 0.15 N V 21 N "1"
+T2 -5.8 -3.9 1 1 0 0.15 N V 21 N "7"
+T2 -6.9 -0.9 1 1 0 0.15 N V 21 N "3"
+T2 -6.5 2.6 1 1 0 0.15 N V 21 N "l"
+T2 -4.8 5.4 1 1 0 0.15 N V 21 N "4"
+T2 -1.9 7.1 1 1 0 0.15 N V 21 N "5"
+T2 1.6 7.1 1 1 0 0.15 N V 21 N "6"
+T2 4.8 5.6 1 1 0 0.15 N V 21 N "2"
+T2 6.6 2.6 1 1 0 0.15 N V 21 N "r"
+T2 7 -0.9 1 1 0 0.15 N V 21 N "8"
+T2 5.9 -4 1 1 0 0.15 N V 21 N "9"
+T2 3.4 -6.2 1 1 0 0.15 N V 21 N "0"
+T2 0 -7.6 1 1 0 0.15 N V 21 N "Anode"
+DC 0 0 -6.5 0 0.15 21
+DC 0 0 -5.7 0 0.15 21
+$PAD
+Sh "1" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 0 -5.7
+$EndPAD
+$PAD
+Sh "2" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.4 5.4
+$EndPAD
+$PAD
+Sh "3" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.7 4.2
+$EndPAD
+$PAD
+Sh "4" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 5.3 2
+$EndPAD
+$PAD
+Sh "5" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 5.6 -0.7
+$EndPAD
+$PAD
+Sh "6" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 4.7 -3.2
+$EndPAD
+$PAD
+Sh "7" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 2.6 -5
+$EndPAD
+$PAD
+Sh "8" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -2.6 -5
+$EndPAD
+$PAD
+Sh "9" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -4.7 -3.2
+$EndPAD
+$PAD
+Sh "10" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -5.6 -0.7
+$EndPAD
+$PAD
+Sh "11" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -5.3 2
+$EndPAD
+$PAD
+Sh "12" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.7 4.2
+$EndPAD
+$PAD
+Sh "13" C 1.4 1.4 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.4 5.4
+$EndPAD
+$EndMODULE my_nixie
 $MODULE my_photo_diode
 Po 0 0 0 15 53FE0EAC 00000000 ~~
 Li my_photo_diode
@@ -826,6 +1304,126 @@ Ne 0 ""
 Po -1.35 0
 $EndPAD
 $EndMODULE my_photo_diode
+$MODULE my_remocon
+Po 0 0 0 15 53FF45E8 00000000 ~~
+Li my_remocon
+Sc 0
+AR 
+Op 0 0 0
+T0 0 2.1 1 1 0 0.15 N V 21 N "my_remocon"
+T1 0 -4.5 1 1 0 0.15 N V 21 N "VAL**"
+DS -3.7 0 -3.7 1.5 0.15 21
+DS -3.7 1.5 3.7 1.5 0.15 21
+DS 3.7 1.5 3.7 0 0.15 21
+DS 3.7 0 -3.7 0 0.15 21
+DS 3.7 -3.7 3.7 0 0.15 21
+DS 3.7 -3.7 -3.7 -3.7 0.15 21
+DS -3.7 -3.7 -3.7 0 0.15 21
+$PAD
+Sh "1" C 1.6 1.6 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 2.54 -2.3
+$EndPAD
+$PAD
+Sh "2" C 1.6 1.6 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 0 -2.3
+$EndPAD
+$PAD
+Sh "3" C 1.6 1.6 0 0 0
+Dr 0.8 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -2.54 -2.3
+$EndPAD
+$EndMODULE my_remocon
+$MODULE my_rotary_switch
+Po 0 0 0 15 53FF5B18 00000000 ~~
+Li my_rotary_switch
+Sc 0
+AR 
+Op 0 0 0
+T0 0 13 1 1 0 0.15 N V 21 N "my_rotary_switch"
+T1 7.75 10.75 1 1 0 0.15 N V 21 N "VAL**"
+DS -6.5 0.3 5 0.3 0.15 21
+DS -6.5 0.3 -6.5 -6.45 0.15 21
+DS 5 0.3 5 -4.7 0.15 21
+DC 0 -10.2 7.5 -9.7 0.15 21
+$PAD
+Sh "1" R 1 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -5.25 0
+$EndPAD
+$PAD
+Sh "2" R 1 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -3.5 0
+$EndPAD
+$PAD
+Sh "3" R 1 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -1.75 0
+$EndPAD
+$PAD
+Sh "4" R 1 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 0
+$EndPAD
+$PAD
+Sh "5" R 1 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1.75 0
+$EndPAD
+$PAD
+Sh "6" R 1 1.2 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 3.5 0
+$EndPAD
+$PAD
+Sh "" C 1.2 1.2 0 0 0
+Dr 1.2 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 0 -3.8
+$EndPAD
+$PAD
+Sh "1" O 2 2.6 0 0 0
+Dr 1 0 0 O 1 1.6
+At STD N 00E0FFFF
+Ne 0 ""
+Po 5 -2.2
+$EndPAD
+$PAD
+Sh "2" O 2 2.6 0 0 0
+Dr 1 0 0 O 1 1.6
+At STD N 00E0FFFF
+Ne 0 ""
+Po -6.5 -2.2
+$EndPAD
+$PAD
+Sh "" C 1.2 1.2 0 0 0
+Dr 1.2 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 0 -14.3
+$EndPAD
+$EndMODULE my_rotary_switch
 $MODULE my_smd10x10
 Po 0 0 0 15 53F783BA 00000000 ~~
 Li my_smd10x10
@@ -1091,40 +1689,44 @@ Po -3.81 0
 $EndPAD
 $EndMODULE my_sounder
 $MODULE my_tact_switch
-Po 0 0 0 15 53FE11E7 00000000 ~~
+Po 0 0 0 15 53FF49B5 00000000 ~~
 Li my_tact_switch
 Sc 0
 AR 
 Op 0 0 0
-T0 0.2 3.35 1 1 0 0.15 N V 21 N "my_tact_switch"
-T1 0.05 -2.7 1 1 0 0.15 N V 21 N "VAL**"
+T0 0.2 -2.5 1 1 0 0.15 N V 21 N "my_tact_switch"
+T1 0.4 -0.9 1 1 0 0.15 N V 21 N "VAL**"
+DS 3.7 0 3.7 6.5 0.15 21
+DS 3.7 6.5 -3.7 6.5 0.15 21
+DS -3.7 6.5 -3.7 0 0.15 21
+DS -3.7 0 3.7 0 0.15 21
 $PAD
 Sh "1" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
-Po -2.35 1.55
+Po -2.25 4.05
 $EndPAD
 $PAD
 Sh "2" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
-Po 2.15 1.55
+Po 2.25 4.05
 $EndPAD
 $PAD
 Sh "" C 1.8 1.8 0 0 0
 Dr 1.2 0 0
 At STD N 00E0FFFF
 Ne 0 ""
-Po 3.4 -0.95
+Po 3.5 1.55
 $EndPAD
 $PAD
 Sh "" C 1.8 1.8 0 0 0
 Dr 1.2 0 0
 At STD N 00E0FFFF
 Ne 0 ""
-Po -3.6 -0.95
+Po -3.5 1.55
 $EndPAD
 $EndMODULE my_tact_switch
 $MODULE my_usb_mini_b

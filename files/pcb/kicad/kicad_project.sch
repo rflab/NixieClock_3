@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 13
 Title ""
-Date "26 aug 2014"
+Date "28 aug 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -157,7 +157,7 @@ L CRYSTAL X1
 U 1 1 53F8D38B
 P 6000 3700
 F 0 "X1" H 6000 3850 60  0000 C CNN
-F 1 "CRYSTAL" H 6000 3550 60  0000 C CNN
+F 1 "12MHz" H 6000 3550 60  0000 C CNN
 F 2 "~" H 6000 3700 60  0000 C CNN
 F 3 "~" H 6000 3700 60  0000 C CNN
 	1    6000 3700

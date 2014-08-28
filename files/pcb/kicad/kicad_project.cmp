@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/28 2:47:05
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/29 1:51:39
 
 BeginCmp
 TimeStamp = /53F8B8E7;
@@ -88,7 +88,7 @@ BeginCmp
 TimeStamp = /53F8942B/53F89A86;
 Reference = C13;
 ValeurCmp = 350V 1u;
-IdModule  = SMD5750;
+IdModule  = my_SMD5750;
 EndCmp
 
 BeginCmp
@@ -101,6 +101,34 @@ EndCmp
 BeginCmp
 TimeStamp = /53F77746/53FCAC33;
 Reference = C15;
+ValeurCmp = 0.1u;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F9209B/53FF6073;
+Reference = C16;
+ValeurCmp = 0.1u;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F9209D/53FF6211;
+Reference = C17;
+ValeurCmp = 0.1u;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F905A9/53FF68E6;
+Reference = C18;
+ValeurCmp = 0.1u;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F9A379/53FF65D2;
+Reference = C19;
 ValeurCmp = 0.1u;
 IdModule  = SM0603_Capa;
 EndCmp
@@ -186,28 +214,28 @@ BeginCmp
 TimeStamp = /53F77746/53F99A7D;
 Reference = IC5;
 ValeurCmp = SN74141_K155NA;
-IdModule  = DIP-18__300;
+IdModule  = LM78XX-TO92;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53F9A135;
 Reference = IC6;
 ValeurCmp = TLP627-4;
-IdModule  = DIP-16__300;
+IdModule  = my_dip16;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53F9A144;
 Reference = IC7;
 ValeurCmp = TLP627-4;
-IdModule  = DIP-16__300;
+IdModule  = my_dip16;
 EndCmp
 
 BeginCmp
-TimeStamp = /53F8942B/53F8BD05;
+TimeStamp = /53F8942B/53FF5CD5;
 Reference = IC8;
-ValeurCmp = 3-TERMINAL_REGULATOR;
-IdModule  = SOT223;
+ValeurCmp = MY_3_TERMINAL_REGULATOR;
+IdModule  = my_SOT223;
 EndCmp
 
 BeginCmp
@@ -235,7 +263,7 @@ BeginCmp
 TimeStamp = /53F9A377/53F95D31;
 Reference = IC12;
 ValeurCmp = IC_8PIN;
-IdModule  = DIP-8__300;
+IdModule  = my_dip8;
 EndCmp
 
 BeginCmp
@@ -297,7 +325,7 @@ EndCmp
 BeginCmp
 TimeStamp = /53F8B71E;
 Reference = R1;
-ValeurCmp = R;
+ValeurCmp = 510;
 IdModule  = SM0805;
 EndCmp
 
@@ -318,14 +346,14 @@ EndCmp
 BeginCmp
 TimeStamp = /53F944F2;
 Reference = R4;
-ValeurCmp = R;
+ValeurCmp = 10k;
 IdModule  = SM0805;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F94528;
 Reference = R5;
-ValeurCmp = R;
+ValeurCmp = 10k;
 IdModule  = SM0805;
 EndCmp
 
@@ -522,7 +550,7 @@ BeginCmp
 TimeStamp = /53F8FD6A/53F918EF;
 Reference = SW2;
 ValeurCmp = EVQWK;
-IdModule  = ;
+IdModule  = my_rotary_switch;
 EndCmp
 
 BeginCmp
@@ -599,42 +627,42 @@ BeginCmp
 TimeStamp = /53F77746/53F9F7BB/53F9F979;
 Reference = U5;
 ValeurCmp = NIXIE_IN_16;
-IdModule  = ;
+IdModule  = my_nixie;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53F9F7BB/53F9F93D;
 Reference = U6;
 ValeurCmp = NIXIE_IN_16;
-IdModule  = ;
+IdModule  = my_nixie;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53F9F7BB/53F9F901;
 Reference = U7;
 ValeurCmp = NIXIE_IN_16;
-IdModule  = ;
+IdModule  = my_nixie;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53F9F7BB/53F9F95B;
 Reference = U8;
 ValeurCmp = NIXIE_IN_16;
-IdModule  = ;
+IdModule  = my_nixie;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53F9F7BB/53F9F91F;
 Reference = U9;
 ValeurCmp = NIXIE_IN_16;
-IdModule  = ;
+IdModule  = my_nixie;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53F9F7BB/53F9F8E3;
 Reference = U10;
 ValeurCmp = NIXIE_IN_16;
-IdModule  = ;
+IdModule  = my_nixie;
 EndCmp
 
 BeginCmp
@@ -654,15 +682,15 @@ EndCmp
 BeginCmp
 TimeStamp = /53F9209B/53F8FE49;
 Reference = U13;
-ValeurCmp = SENSOR;
-IdModule  = ;
+ValeurCmp = remocon;
+IdModule  = my_remocon;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F9209D/53FB5E8C;
 Reference = U14;
-ValeurCmp = SENSOR;
-IdModule  = ;
+ValeurCmp = napion;
+IdModule  = my_napion;
 EndCmp
 
 BeginCmp
@@ -682,15 +710,15 @@ EndCmp
 BeginCmp
 TimeStamp = /53F8D38B;
 Reference = X1;
-ValeurCmp = CRYSTAL;
-IdModule  = ;
+ValeurCmp = 12MHz;
+IdModule  = my_crystal;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F905A9/53F95FD5;
 Reference = X2;
-ValeurCmp = CRYSTAL;
-IdModule  = ;
+ValeurCmp = 32.768kHz;
+IdModule  = my_crystal_32p768;
 EndCmp
 
 EndListe
