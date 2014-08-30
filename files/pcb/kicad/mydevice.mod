@@ -1,4 +1,4 @@
-PCBNEW-LibModule-V1  2014/08/29 1:47:24
+PCBNEW-LibModule-V1  2014/08/31 0:14:43
 # encoding utf-8
 Units mm
 $INDEX
@@ -18,11 +18,13 @@ my_dip16
 my_dip4
 my_dip8
 my_double_layer_capacitor
+my_drill_3mm
 my_inductor
 my_napion
 my_neon
 my_nixie
 my_photo_diode
+my_pin52
 my_remocon
 my_rotary_switch
 my_smd10x10
@@ -598,12 +600,12 @@ Ro 0 0 0
 $EndSHAPE3D
 $EndMODULE my_TQFP32
 $MODULE my_am2321
-Po 0 0 0 15 53FE05FD 00000000 ~~
+Po 0 0 0 15 5401E092 00000000 ~~
 Li my_am2321
 Sc 0
 AR 
 Op 0 0 0
-T0 0.2 -1.5 1 1 0 0.15 N V 21 N "my_am2321"
+T0 0 -5.08 1 1 0 0.15 N V 21 N "my_am2321"
 T1 0 -9.6 1 1 0 0.15 N V 21 N "VAL**"
 DS 3.9 2.4 -3.9 2.4 0.15 21
 DS -3.9 2.4 -3.9 -8.9 0.15 21
@@ -797,13 +799,13 @@ Po 0 4.8
 $EndPAD
 $EndMODULE my_dcjack
 $MODULE my_dip16
-Po 0 0 0 15 53FF5CB1 00000000 ~~
+Po 0 0 0 15 5401E0D5 00000000 ~~
 Li my_dip16
 Sc 0
 AR 
 Op 0 0 0
-T0 -1.27 -2.54 1 1 0 0.15 N V 21 N "my_dip16"
-T1 -12.7 -2.54 1 1 900 0.15 N V 21 N "VAL**"
+T0 0 0 1 1 0 0.15 N V 21 N "my_dip16"
+T1 -11.43 0 1 1 900 0.15 N V 21 N "VAL**"
 DA -10.16 0 -8.89 0 900 0.15 21
 DA -10.16 0 -10.16 -1.27 900 0.15 21
 DS -10.16 -1.27 -10.16 -2.54 0.15 21
@@ -925,22 +927,22 @@ Po -8.89 -3.81
 $EndPAD
 $EndMODULE my_dip16
 $MODULE my_dip4
-Po 0 0 0 15 53FCC130 00000000 ~~
+Po 0 0 0 15 5401E155 00000000 ~~
 Li my_dip4
 Cd 6 pins DIL package, round pads
 Kw DIL
 Sc 0
 AR 
 Op 0 0 0
-T0 -2.54 0 1.905 1.016 900 0.2032 N V 21 N "U***"
-T1 1.27 0 1.524 0.889 0 0.2032 N V 21 N "DIP-4"
-DS -1.27 -1.27 -1.27 -5.08 0.15 21
-DS -1.27 1.27 -1.27 5.08 0.15 21
+T0 -2.54 0 1 1.016 900 0.2032 N V 21 N "U***"
+T1 1.27 0 1 0.889 0 0.22225 N V 21 N "DIP-4"
+DS -1.27 -1.27 -1.27 -2.54 0.15 21
+DS -1.27 -2.54 3.81 -2.54 0.15 21
+DS 3.81 -2.54 3.81 2.54 0.15 21
+DS 3.81 2.54 -1.27 2.54 0.15 21
+DS -1.27 2.54 -1.27 1.27 0.15 21
 DA -1.27 0 0 0 900 0.15 21
 DA -1.27 0 -1.27 -1.27 900 0.15 21
-DS -1.27 -5.08 3.81 -5.08 0.15 21
-DS 3.81 -5.08 3.81 5.08 0.15 21
-DS 3.81 5.08 -1.27 5.08 0.15 21
 $PAD
 Sh "1" C 1.397 1.397 0 0 0
 Dr 0.8128 0 0
@@ -969,12 +971,6 @@ At STD N 00E0FFFF
 Ne 0 ""
 Po 0 -3.81
 $EndPAD
-$SHAPE3D
-Na "dil/dil_6.wrl"
-Sc 1 1 1
-Of 0 0 0
-Ro 0 0 0
-$EndSHAPE3D
 $EndMODULE my_dip4
 $MODULE my_dip8
 Po 0 0 0 15 53FF5C29 00000000 ~~
@@ -1078,6 +1074,22 @@ Ne 0 ""
 Po 6.5 0
 $EndPAD
 $EndMODULE my_double_layer_capacitor
+$MODULE my_drill_3mm
+Po 0 0 0 15 5401EA5D 00000000 ~~
+Li my_drill_3mm
+Sc 0
+AR 
+Op 0 0 0
+T0 0 -2.54 1 1 0 0.15 N V 21 N "my_drill_3mm"
+T1 0 2.54 1 1 0 0.15 N V 21 N "VAL**"
+$PAD
+Sh "1" C 3 3 0 0 0
+Dr 3 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 0 0
+$EndPAD
+$EndMODULE my_drill_3mm
 $MODULE my_inductor
 Po 0 0 0 15 53FE086E 00000000 ~~
 Li my_inductor
@@ -1304,6 +1316,89 @@ Ne 0 ""
 Po -1.35 0
 $EndPAD
 $EndMODULE my_photo_diode
+$MODULE my_pin52
+Po 0 0 0 15 540092AE 00000000 ~~
+Li my_pin52
+Sc 0
+AR 
+Op 0 0 0
+T0 0 7.62 1 1 0 0.15 N V 21 N "my_pin52"
+T1 0 -7.62 1 1 0 0.15 N V 21 N "VAL**"
+DS -2.54 -6.35 2.54 -6.35 0.15 21
+DS 2.54 -6.35 2.54 6.35 0.15 21
+DS 2.54 6.35 -2.54 6.35 0.15 21
+DS -2.54 6.35 -2.54 -6.35 0.15 21
+$PAD
+Sh "1" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -5.08
+$EndPAD
+$PAD
+Sh "2" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -2.54
+$EndPAD
+$PAD
+Sh "3" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 0
+$EndPAD
+$PAD
+Sh "4" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 2.54
+$EndPAD
+$PAD
+Sh "5" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 5.08
+$EndPAD
+$PAD
+Sh "6" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 5.08
+$EndPAD
+$PAD
+Sh "7" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 2.54
+$EndPAD
+$PAD
+Sh "8" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 0
+$EndPAD
+$PAD
+Sh "9" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -2.54
+$EndPAD
+$PAD
+Sh "10" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -5.08
+$EndPAD
+$EndMODULE my_pin52
 $MODULE my_remocon
 Po 0 0 0 15 53FF45E8 00000000 ~~
 Li my_remocon

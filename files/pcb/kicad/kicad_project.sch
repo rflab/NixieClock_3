@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 13
 Title ""
-Date "28 aug 2014"
+Date "30 aug 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -704,4 +704,68 @@ Text Notes 4850 7150 0    60   ~ 0
 Reset circuit\nstartup in 0.1[sec]
 Text Notes 1350 1900 0    60   ~ 0
 9V in - 170V out, 5V out
+$Comp
+L MY_PIN52 U17
+U 1 1 540098C7
+P 2950 6150
+F 0 "U17" H 2900 5900 60  0000 C CNN
+F 1 "MY_PIN52" V 2950 6200 60  0000 C CNN
+F 2 "" H 2950 6150 60  0000 C CNN
+F 3 "" H 2950 6150 60  0000 C CNN
+	1    2950 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L MY_PIN52 U15
+U 1 1 540098D6
+P 1800 6150
+F 0 "U15" H 1750 5900 60  0000 C CNN
+F 1 "MY_PIN52" V 1800 6200 60  0000 C CNN
+F 2 "" H 1800 6150 60  0000 C CNN
+F 3 "" H 1800 6150 60  0000 C CNN
+	1    1800 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L MY_PIN52 U18
+U 1 1 54009923
+P 2950 7200
+F 0 "U18" H 2900 6950 60  0000 C CNN
+F 1 "MY_PIN52" V 2950 7250 60  0000 C CNN
+F 2 "" H 2950 7200 60  0000 C CNN
+F 3 "" H 2950 7200 60  0000 C CNN
+	1    2950 7200
+	1    0    0    -1  
+$EndComp
+$Comp
+L MY_PIN52 U16
+U 1 1 54009929
+P 1800 7200
+F 0 "U16" H 1750 6950 60  0000 C CNN
+F 1 "MY_PIN52" V 1800 7250 60  0000 C CNN
+F 2 "" H 1800 7200 60  0000 C CNN
+F 3 "" H 1800 7200 60  0000 C CNN
+	1    1800 7200
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	3400 6450 1200 6450
+Wire Notes Line
+	1200 6450 1200 5700
+Wire Notes Line
+	1200 5700 3400 5700
+Wire Notes Line
+	3400 5700 3400 6450
+Wire Notes Line
+	1200 6800 3400 6800
+Wire Notes Line
+	3400 6800 3400 7500
+Wire Notes Line
+	3400 7500 1200 7500
+Wire Notes Line
+	1200 7500 1200 6800
+Text Notes 1200 5650 0    60   ~ 0
+upper board
+Text Notes 1200 6750 0    60   ~ 0
+lower board
 $EndSCHEMATC

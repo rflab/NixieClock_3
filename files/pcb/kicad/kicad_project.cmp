@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/29 1:51:39
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/31 0:54:44
 
 BeginCmp
 TimeStamp = /53F8B8E7;
@@ -214,7 +214,7 @@ BeginCmp
 TimeStamp = /53F77746/53F99A7D;
 Reference = IC5;
 ValeurCmp = SN74141_K155NA;
-IdModule  = LM78XX-TO92;
+IdModule  = my_dip16;
 EndCmp
 
 BeginCmp
@@ -262,7 +262,7 @@ EndCmp
 BeginCmp
 TimeStamp = /53F9A377/53F95D31;
 Reference = IC12;
-ValeurCmp = IC_8PIN;
+ValeurCmp = LPS331AP;
 IdModule  = my_dip8;
 EndCmp
 
@@ -691,6 +691,34 @@ TimeStamp = /53F9209D/53FB5E8C;
 Reference = U14;
 ValeurCmp = napion;
 IdModule  = my_napion;
+EndCmp
+
+BeginCmp
+TimeStamp = /540098D6;
+Reference = U15;
+ValeurCmp = MY_PIN52;
+IdModule  = my_pin52;
+EndCmp
+
+BeginCmp
+TimeStamp = /54009929;
+Reference = U16;
+ValeurCmp = MY_PIN52;
+IdModule  = my_pin52;
+EndCmp
+
+BeginCmp
+TimeStamp = /540098C7;
+Reference = U17;
+ValeurCmp = MY_PIN52;
+IdModule  = my_pin52;
+EndCmp
+
+BeginCmp
+TimeStamp = /54009923;
+Reference = U18;
+ValeurCmp = MY_PIN52;
+IdModule  = my_pin52;
 EndCmp
 
 BeginCmp
