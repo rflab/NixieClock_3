@@ -35,7 +35,7 @@ EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 8 13
+Sheet 8 11
 Title ""
 Date "31 aug 2014"
 Rev ""
@@ -59,10 +59,10 @@ $EndComp
 Text HLabel 5750 4550 3    60   Input ~ 0
 beep
 $Comp
-L +5V #PWR042
+L +5V #PWR040
 U 1 1 53F901C9
 P 5750 3400
-F 0 "#PWR042" H 5750 3490 20  0001 C CNN
+F 0 "#PWR040" H 5750 3490 20  0001 C CNN
 F 1 "+5V" H 5750 3490 30  0000 C CNN
 F 2 "" H 5750 3400 60  0000 C CNN
 F 3 "" H 5750 3400 60  0000 C CNN

@@ -335,17 +335,6 @@ NoConn ~ 1850 2550
 Text GLabel 10050 2450 2    60   Input ~ 0
 170V
 $Comp
-L GND #PWR023
-U 1 1 53FBF18E
-P 4100 3300
-F 0 "#PWR023" H 4100 3300 30  0001 C CNN
-F 1 "GND" H 4100 3230 30  0001 C CNN
-F 2 "" H 4100 3300 60  0000 C CNN
-F 3 "" H 4100 3300 60  0000 C CNN
-	1    4100 3300
-	1    0    0    -1  
-$EndComp
-$Comp
 L +9V #PWR024
 U 1 1 53FCA114
 P 2000 2350
@@ -414,8 +403,6 @@ Wire Wire Line
 	4850 2950 4700 2950
 Wire Wire Line
 	4300 2950 4100 2950
-Wire Wire Line
-	4100 2950 4100 3300
 Wire Wire Line
 	5450 3000 5650 3000
 Wire Wire Line
@@ -511,7 +498,7 @@ Wire Wire Line
 	6850 3650 6950 3650
 Connection ~ 6900 3650
 Wire Wire Line
-	4100 3200 4200 3200
+	3650 3200 4200 3200
 Connection ~ 4850 2450
 Wire Wire Line
 	6350 3650 6200 3650
@@ -636,4 +623,8 @@ Wire Wire Line
 	1150 3550 1350 3550
 Wire Wire Line
 	1350 3550 1350 3500
+Text GLabel 3650 3200 0    60   Input ~ 0
+GND_L
+Wire Wire Line
+	4100 2950 4100 3200
 $EndSCHEMATC

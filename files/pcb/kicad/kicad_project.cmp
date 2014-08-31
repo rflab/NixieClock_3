@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/31 18:07:11
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/09/01 2:24:48
 
 BeginCmp
 TimeStamp = /53F8B8E7;
@@ -127,13 +127,6 @@ IdModule  = SM0603_Capa;
 EndCmp
 
 BeginCmp
-TimeStamp = /53F9A379/53FF65D2;
-Reference = C19;
-ValeurCmp = 0.1u;
-IdModule  = SM0603_Capa;
-EndCmp
-
-BeginCmp
 TimeStamp = /53F8CD21/53FCC671;
 Reference = CON1;
 ValeurCmp = USB_MINI_B;
@@ -257,20 +250,6 @@ TimeStamp = /53F905A9/53F95FB5;
 Reference = IC11;
 ValeurCmp = DS1307;
 IdModule  = so-8;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F9A377/53F95D31;
-Reference = IC12;
-ValeurCmp = LPS331AP;
-IdModule  = my_dip_module;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F9A379/53FABC17;
-Reference = IC13;
-ValeurCmp = AM2321;
-IdModule  = my_am2321;
 EndCmp
 
 BeginCmp
@@ -544,13 +523,6 @@ TimeStamp = /53F90D02;
 Reference = SW1;
 ValeurCmp = SW_PUSH;
 IdModule  = my_tact_switch;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F8FD6A/53F918EF;
-Reference = SW2;
-ValeurCmp = EVQWK;
-IdModule  = my_rotary_switch;
 EndCmp
 
 BeginCmp

@@ -35,7 +35,7 @@ EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 13
+Sheet 1 11
 Title ""
 Date "31 aug 2014"
 Rev ""
@@ -371,14 +371,6 @@ F2 "CLKOUT" I L 7700 3350 60
 F3 "SDA" I L 7700 3150 60 
 F4 "SCL" I L 7700 3250 60 
 $EndSheet
-$Sheet
-S 9900 3100 550  400 
-U 53F9A379
-F0 "Sheet53F9A378" 50
-F1 "AM2321.sch" 50
-F2 "SDA" I L 9900 3150 60 
-F3 "SCL" I L 9900 3250 60 
-$EndSheet
 $Comp
 L C C2
 U 1 1 53FB7281
@@ -531,13 +523,6 @@ Text Label 7050 4300 0    60   ~ 0
 RESET
 Text Label 4450 4600 0    60   ~ 0
 MOSI
-$Sheet
-S 5750 6000 550  200 
-U 53F9209D
-F0 "Sheet53F9209C" 50
-F1 "napion.sch" 50
-F2 "out" I L 5750 6100 60 
-$EndSheet
 $Comp
 L C C4
 U 1 1 53F8D419
@@ -836,12 +821,4 @@ Wire Wire Line
 Connection ~ 10900 4450
 Connection ~ 10900 4550
 Connection ~ 10900 4650
-$Sheet
-S 8800 3100 550  400 
-U 53F9A377
-F0 "Sheet53F9A376" 50
-F1 "LPS331.sch" 50
-F2 "SDA" I L 8800 3150 60 
-F3 "SCL" I L 8800 3250 60 
-$EndSheet
 $EndSCHEMATC
