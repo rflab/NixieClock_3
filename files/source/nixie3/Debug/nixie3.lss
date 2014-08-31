@@ -1,0 +1,1357 @@
+
+nixie3.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         0000000c  00800100  0000074c  000007e0  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000074c  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000016  0080010c  0080010c  000007ec  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000007ec  2**0
+                  CONTENTS, READONLY
+  4 .debug_aranges 000000c8  00000000  00000000  0000081c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000101c  00000000  00000000  000008e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000038e  00000000  00000000  00001900  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000438  00000000  00000000  00001c8e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000228  00000000  00000000  000020c8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003e4  00000000  00000000  000022f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000074a  00000000  00000000  000026d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000000b8  00000000  00000000  00002e1e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 3c 00 	jmp	0x78	; 0x78 <__ctors_end>
+   4:	0c 94 09 02 	jmp	0x412	; 0x412 <__vector_1>
+   8:	0c 94 1c 02 	jmp	0x438	; 0x438 <__vector_2>
+   c:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  10:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  14:	0c 94 2f 02 	jmp	0x45e	; 0x45e <__vector_5>
+  18:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  1c:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  20:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  24:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  28:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  2c:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  30:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  34:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  38:	0c 94 7f 01 	jmp	0x2fe	; 0x2fe <__vector_14>
+  3c:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  40:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  44:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  48:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  4c:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  50:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  54:	0c 94 6b 00 	jmp	0xd6	; 0xd6 <__vector_21>
+  58:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  5c:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  60:	0c 94 75 00 	jmp	0xea	; 0xea <__vector_24>
+  64:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__bad_interrupt>
+  68:	a9 01       	movw	r20, r18
+  6a:	b3 01       	movw	r22, r6
+  6c:	bd 01       	movw	r22, r26
+  6e:	c7 01       	movw	r24, r14
+  70:	d1 01       	movw	r26, r2
+  72:	db 01       	movw	r26, r22
+  74:	e5 01       	movw	r28, r10
+  76:	ef 01       	movw	r28, r30
+
+00000078 <__ctors_end>:
+  78:	11 24       	eor	r1, r1
+  7a:	1f be       	out	0x3f, r1	; 63
+  7c:	cf ef       	ldi	r28, 0xFF	; 255
+  7e:	d8 e0       	ldi	r29, 0x08	; 8
+  80:	de bf       	out	0x3e, r29	; 62
+  82:	cd bf       	out	0x3d, r28	; 61
+
+00000084 <__do_copy_data>:
+  84:	11 e0       	ldi	r17, 0x01	; 1
+  86:	a0 e0       	ldi	r26, 0x00	; 0
+  88:	b1 e0       	ldi	r27, 0x01	; 1
+  8a:	ec e4       	ldi	r30, 0x4C	; 76
+  8c:	f7 e0       	ldi	r31, 0x07	; 7
+  8e:	02 c0       	rjmp	.+4      	; 0x94 <__do_copy_data+0x10>
+  90:	05 90       	lpm	r0, Z+
+  92:	0d 92       	st	X+, r0
+  94:	ac 30       	cpi	r26, 0x0C	; 12
+  96:	b1 07       	cpc	r27, r17
+  98:	d9 f7       	brne	.-10     	; 0x90 <__do_copy_data+0xc>
+
+0000009a <__do_clear_bss>:
+  9a:	21 e0       	ldi	r18, 0x01	; 1
+  9c:	ac e0       	ldi	r26, 0x0C	; 12
+  9e:	b1 e0       	ldi	r27, 0x01	; 1
+  a0:	01 c0       	rjmp	.+2      	; 0xa4 <.do_clear_bss_start>
+
+000000a2 <.do_clear_bss_loop>:
+  a2:	1d 92       	st	X+, r1
+
+000000a4 <.do_clear_bss_start>:
+  a4:	a2 32       	cpi	r26, 0x22	; 34
+  a6:	b2 07       	cpc	r27, r18
+  a8:	e1 f7       	brne	.-8      	; 0xa2 <.do_clear_bss_loop>
+  aa:	0e 94 40 02 	call	0x480	; 0x480 <main>
+  ae:	0c 94 a4 03 	jmp	0x748	; 0x748 <_exit>
+
+000000b2 <__bad_interrupt>:
+  b2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000b6 <ChangeDigit>:
+// ニキシー管 / Nixie tube
+// 現在表示桁の変更
+// 繰り返しコールしてダイナミック点灯を行う
+static void ChangeDigit(e_digit digit_)
+{
+	setbits(PORT_NIXIE_DIGIT, MASK_NIXIE_DIGIT, OFFSET_NIXIE_DIGIT, (char)digit_);
+  b6:	95 b1       	in	r25, 0x05	; 5
+  b8:	98 7f       	andi	r25, 0xF8	; 248
+  ba:	89 2b       	or	r24, r25
+  bc:	85 b9       	out	0x05, r24	; 5
+  be:	08 95       	ret
+
+000000c0 <ChangeNumber>:
+// 現在表示桁を指定した値に変更
+// 10~15は点灯せず
+static void ChangeNumber(unsigned char num_)
+{
+	static const unsigned char num2bit[] = {3, 4, 6, 9, 8, 1, 5, 0, 2, 7, 10};
+	setbits(PORT_NIXIE_DRIVER, MASK_NIXIE_DRIVER, OFFSET_NIXIE_DRIVER, num2bit[num_]);
+  c0:	98 b1       	in	r25, 0x08	; 8
+  c2:	e8 2f       	mov	r30, r24
+  c4:	f0 e0       	ldi	r31, 0x00	; 0
+  c6:	e0 50       	subi	r30, 0x00	; 0
+  c8:	ff 4f       	sbci	r31, 0xFF	; 255
+  ca:	89 2f       	mov	r24, r25
+  cc:	80 7f       	andi	r24, 0xF0	; 240
+  ce:	90 81       	ld	r25, Z
+  d0:	89 2b       	or	r24, r25
+  d2:	88 b9       	out	0x08, r24	; 8
+  d4:	08 95       	ret
+
+000000d6 <__vector_21>:
+
+//------
+// ADC
+
+ISR(ADC_vect)
+{
+  d6:	1f 92       	push	r1
+  d8:	0f 92       	push	r0
+  da:	0f b6       	in	r0, 0x3f	; 63
+  dc:	0f 92       	push	r0
+  de:	11 24       	eor	r1, r1
+}
+  e0:	0f 90       	pop	r0
+  e2:	0f be       	out	0x3f, r0	; 63
+  e4:	0f 90       	pop	r0
+  e6:	1f 90       	pop	r1
+  e8:	18 95       	reti
+
+000000ea <__vector_24>:
+// read   : 読み込んでack/nackを返す
+// ack    : 受信側から9bit目にSDA_L, 
+// nack   : 受信側から9bit目にSDA_H (マスターからのデータ転送終了要求等に使う)
+
+ISR(TWI_vect)
+{
+  ea:	1f 92       	push	r1
+  ec:	0f 92       	push	r0
+  ee:	0f b6       	in	r0, 0x3f	; 63
+  f0:	0f 92       	push	r0
+  f2:	11 24       	eor	r1, r1
+	// none
+}
+  f4:	0f 90       	pop	r0
+  f6:	0f be       	out	0x3f, r0	; 63
+  f8:	0f 90       	pop	r0
+  fa:	1f 90       	pop	r1
+  fc:	18 95       	reti
+
+000000fe <iic_wait_job>:
+				return true;
+			_delay_ms(1);
+		}
+		return false;
+	#else
+		while(!(TWCR & (1<<TWINT)));
+  fe:	ec eb       	ldi	r30, 0xBC	; 188
+ 100:	f0 e0       	ldi	r31, 0x00	; 0
+ 102:	80 81       	ld	r24, Z
+ 104:	88 23       	and	r24, r24
+ 106:	ec f7       	brge	.-6      	; 0x102 <iic_wait_job+0x4>
+		return true;
+	#endif
+}
+ 108:	81 e0       	ldi	r24, 0x01	; 1
+ 10a:	08 95       	ret
+
+0000010c <iic_start>:
+
+// IICスタートコンディション
+bool iic_start(unsigned char sla_rw_)
+{
+ 10c:	1f 93       	push	r17
+ 10e:	cf 93       	push	r28
+ 110:	df 93       	push	r29
+ 112:	18 2f       	mov	r17, r24
+	// スタートコンディション送信
+	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);// | (1<<TWIE);
+ 114:	cc eb       	ldi	r28, 0xBC	; 188
+ 116:	d0 e0       	ldi	r29, 0x00	; 0
+ 118:	84 ea       	ldi	r24, 0xA4	; 164
+ 11a:	88 83       	st	Y, r24
+	iic_wait_job();
+ 11c:	0e 94 7f 00 	call	0xfe	; 0xfe <iic_wait_job>
+	
+	// スレーブアドレスとRWを送信
+	TWDR = sla_rw_;
+ 120:	10 93 bb 00 	sts	0x00BB, r17
+	TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);
+ 124:	84 e8       	ldi	r24, 0x84	; 132
+ 126:	88 83       	st	Y, r24
+	iic_wait_job();
+ 128:	0e 94 7f 00 	call	0xfe	; 0xfe <iic_wait_job>
+
+	return true;
+}
+ 12c:	81 e0       	ldi	r24, 0x01	; 1
+ 12e:	df 91       	pop	r29
+ 130:	cf 91       	pop	r28
+ 132:	1f 91       	pop	r17
+ 134:	08 95       	ret
+
+00000136 <iic_repeat>:
+
+// IICリピートスタートコンディション
+bool iic_repeat(unsigned char sla_rw_)
+{
+	return iic_start(sla_rw_);
+ 136:	0e 94 86 00 	call	0x10c	; 0x10c <iic_start>
+}
+ 13a:	08 95       	ret
+
+0000013c <iic_stop>:
+
+// IICストップコンディション
+void iic_stop()
+{
+	// ストップコンディション送信
+	TWCR = (1<<TWINT) | (1<<TWSTO) | (1<<TWEN);// | (1<<TWIE);
+ 13c:	84 e9       	ldi	r24, 0x94	; 148
+ 13e:	80 93 bc 00 	sts	0x00BC, r24
+
+	// stopコンディションについては割り込みが発生しない？
+	// iic_wait_job();できない
+	while(TWCR & (1<<TWSTO));
+ 142:	ec eb       	ldi	r30, 0xBC	; 188
+ 144:	f0 e0       	ldi	r31, 0x00	; 0
+ 146:	80 81       	ld	r24, Z
+ 148:	84 fd       	sbrc	r24, 4
+ 14a:	fd cf       	rjmp	.-6      	; 0x146 <iic_stop+0xa>
+}
+ 14c:	08 95       	ret
+
+0000014e <iic_write>:
+
+// IIC送信
+bool iic_write(unsigned char data_)
+{
+	TWDR = data_;
+ 14e:	80 93 bb 00 	sts	0x00BB, r24
+	TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);
+ 152:	84 e8       	ldi	r24, 0x84	; 132
+ 154:	80 93 bc 00 	sts	0x00BC, r24
+	iic_wait_job();
+ 158:	0e 94 7f 00 	call	0xfe	; 0xfe <iic_wait_job>
+	
+	// ステータスレジスタ確認（ACK 0x28)
+	//return (TWSR & 0xF8 ) == 0x28;
+	return true;
+}
+ 15c:	81 e0       	ldi	r24, 0x01	; 1
+ 15e:	08 95       	ret
+
+00000160 <iic_read>:
+// IIC受信
+unsigned char iic_read(bool ack_)
+{
+	//TWDR = 0;
+
+	if (ack_ != false)
+ 160:	88 23       	and	r24, r24
+ 162:	21 f0       	breq	.+8      	; 0x16c <iic_read+0xc>
+	{
+		TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
+ 164:	84 ec       	ldi	r24, 0xC4	; 196
+ 166:	80 93 bc 00 	sts	0x00BC, r24
+ 16a:	03 c0       	rjmp	.+6      	; 0x172 <iic_read+0x12>
+	}
+	else
+	{
+		TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);
+ 16c:	84 e8       	ldi	r24, 0x84	; 132
+ 16e:	80 93 bc 00 	sts	0x00BC, r24
+	}
+
+	while(!(TWCR & (1<<TWINT)));
+ 172:	ec eb       	ldi	r30, 0xBC	; 188
+ 174:	f0 e0       	ldi	r31, 0x00	; 0
+ 176:	80 81       	ld	r24, Z
+ 178:	88 23       	and	r24, r24
+ 17a:	ec f7       	brge	.-6      	; 0x176 <iic_read+0x16>
+	return TWDR;
+ 17c:	80 91 bb 00 	lds	r24, 0x00BB
+}
+ 180:	08 95       	ret
+
+00000182 <led>:
+//----------------------------
+
+// LED
+void led(bool on_)
+{
+	if (on_)
+ 182:	88 23       	and	r24, r24
+ 184:	11 f0       	breq	.+4      	; 0x18a <led+0x8>
+		PORT_LED |= MASK_LED;
+ 186:	5c 9a       	sbi	0x0b, 4	; 11
+ 188:	08 95       	ret
+	else
+		PORT_LED &= ~MASK_LED;
+ 18a:	5c 98       	cbi	0x0b, 4	; 11
+ 18c:	08 95       	ret
+
+0000018e <beep>:
+//--------
+// BEEP
+void beep(unsigned char num_)
+{
+	int i=0;
+	for (i=0; i<num_; ++i)
+ 18e:	90 e0       	ldi	r25, 0x00	; 0
+ 190:	18 16       	cp	r1, r24
+ 192:	19 06       	cpc	r1, r25
+ 194:	dc f4       	brge	.+54     	; 0x1cc <beep+0x3e>
+ 196:	20 e0       	ldi	r18, 0x00	; 0
+ 198:	30 e0       	ldi	r19, 0x00	; 0
+	{
+		PORT_BEEP |= MASK_BEEP;
+ 19a:	2e 9a       	sbi	0x05, 6	; 5
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 19c:	4f e7       	ldi	r20, 0x7F	; 127
+ 19e:	58 e3       	ldi	r21, 0x38	; 56
+ 1a0:	61 e0       	ldi	r22, 0x01	; 1
+ 1a2:	41 50       	subi	r20, 0x01	; 1
+ 1a4:	50 40       	sbci	r21, 0x00	; 0
+ 1a6:	60 40       	sbci	r22, 0x00	; 0
+ 1a8:	e1 f7       	brne	.-8      	; 0x1a2 <beep+0x14>
+ 1aa:	00 c0       	rjmp	.+0      	; 0x1ac <beep+0x1e>
+ 1ac:	00 00       	nop
+		_delay_ms(50);
+		PORT_BEEP &= ~MASK_BEEP;
+ 1ae:	2e 98       	cbi	0x05, 6	; 5
+ 1b0:	4f e7       	ldi	r20, 0x7F	; 127
+ 1b2:	58 e3       	ldi	r21, 0x38	; 56
+ 1b4:	61 e0       	ldi	r22, 0x01	; 1
+ 1b6:	41 50       	subi	r20, 0x01	; 1
+ 1b8:	50 40       	sbci	r21, 0x00	; 0
+ 1ba:	60 40       	sbci	r22, 0x00	; 0
+ 1bc:	e1 f7       	brne	.-8      	; 0x1b6 <beep+0x28>
+ 1be:	00 c0       	rjmp	.+0      	; 0x1c0 <beep+0x32>
+ 1c0:	00 00       	nop
+//--------
+// BEEP
+void beep(unsigned char num_)
+{
+	int i=0;
+	for (i=0; i<num_; ++i)
+ 1c2:	2f 5f       	subi	r18, 0xFF	; 255
+ 1c4:	3f 4f       	sbci	r19, 0xFF	; 255
+ 1c6:	28 17       	cp	r18, r24
+ 1c8:	39 07       	cpc	r19, r25
+ 1ca:	3c f3       	brlt	.-50     	; 0x19a <beep+0xc>
+ 1cc:	08 95       	ret
+
+000001ce <beep_hex>:
+// 8bit値で音を変える
+// 1 ピッ
+// 0 ピー
+void beep_hex(unsigned char hex_)
+{	
+	int i_bit = 0;
+ 1ce:	20 e0       	ldi	r18, 0x00	; 0
+ 1d0:	30 e0       	ldi	r19, 0x00	; 0
+		if (i_bit==4)
+		{
+			_delay_ms(200);
+		}
+
+		if (hex_ & (0x80>>i_bit))
+ 1d2:	60 e8       	ldi	r22, 0x80	; 128
+ 1d4:	70 e0       	ldi	r23, 0x00	; 0
+ 1d6:	90 e0       	ldi	r25, 0x00	; 0
+ 1d8:	0c c0       	rjmp	.+24     	; 0x1f2 <beep_hex+0x24>
+void beep_hex(unsigned char hex_)
+{	
+	int i_bit = 0;
+	for (; i_bit < 8; ++i_bit)
+	{
+		if (i_bit==4)
+ 1da:	24 30       	cpi	r18, 0x04	; 4
+ 1dc:	31 05       	cpc	r19, r1
+ 1de:	49 f4       	brne	.+18     	; 0x1f2 <beep_hex+0x24>
+ 1e0:	4f ef       	ldi	r20, 0xFF	; 255
+ 1e2:	51 ee       	ldi	r21, 0xE1	; 225
+ 1e4:	e4 e0       	ldi	r30, 0x04	; 4
+ 1e6:	41 50       	subi	r20, 0x01	; 1
+ 1e8:	50 40       	sbci	r21, 0x00	; 0
+ 1ea:	e0 40       	sbci	r30, 0x00	; 0
+ 1ec:	e1 f7       	brne	.-8      	; 0x1e6 <beep_hex+0x18>
+ 1ee:	00 c0       	rjmp	.+0      	; 0x1f0 <beep_hex+0x22>
+ 1f0:	00 00       	nop
+		{
+			_delay_ms(200);
+		}
+
+		if (hex_ & (0x80>>i_bit))
+ 1f2:	ab 01       	movw	r20, r22
+ 1f4:	02 2e       	mov	r0, r18
+ 1f6:	02 c0       	rjmp	.+4      	; 0x1fc <beep_hex+0x2e>
+ 1f8:	55 95       	asr	r21
+ 1fa:	47 95       	ror	r20
+ 1fc:	0a 94       	dec	r0
+ 1fe:	e2 f7       	brpl	.-8      	; 0x1f8 <beep_hex+0x2a>
+ 200:	48 23       	and	r20, r24
+ 202:	59 23       	and	r21, r25
+ 204:	45 2b       	or	r20, r21
+ 206:	a9 f0       	breq	.+42     	; 0x232 <beep_hex+0x64>
+		{
+			PORT_BEEP |= MASK_BEEP;
+ 208:	2e 9a       	sbi	0x05, 6	; 5
+ 20a:	4f ef       	ldi	r20, 0xFF	; 255
+ 20c:	51 ee       	ldi	r21, 0xE1	; 225
+ 20e:	e4 e0       	ldi	r30, 0x04	; 4
+ 210:	41 50       	subi	r20, 0x01	; 1
+ 212:	50 40       	sbci	r21, 0x00	; 0
+ 214:	e0 40       	sbci	r30, 0x00	; 0
+ 216:	e1 f7       	brne	.-8      	; 0x210 <beep_hex+0x42>
+ 218:	00 c0       	rjmp	.+0      	; 0x21a <beep_hex+0x4c>
+ 21a:	00 00       	nop
+			_delay_ms(200);
+			PORT_BEEP &= ~MASK_BEEP;
+ 21c:	2e 98       	cbi	0x05, 6	; 5
+ 21e:	4f ef       	ldi	r20, 0xFF	; 255
+ 220:	50 e7       	ldi	r21, 0x70	; 112
+ 222:	e2 e0       	ldi	r30, 0x02	; 2
+ 224:	41 50       	subi	r20, 0x01	; 1
+ 226:	50 40       	sbci	r21, 0x00	; 0
+ 228:	e0 40       	sbci	r30, 0x00	; 0
+ 22a:	e1 f7       	brne	.-8      	; 0x224 <beep_hex+0x56>
+ 22c:	00 c0       	rjmp	.+0      	; 0x22e <beep_hex+0x60>
+ 22e:	00 00       	nop
+ 230:	14 c0       	rjmp	.+40     	; 0x25a <beep_hex+0x8c>
+			_delay_ms(100);
+		}
+		else
+		{
+			PORT_BEEP |= MASK_BEEP;
+ 232:	2e 9a       	sbi	0x05, 6	; 5
+ 234:	4f e7       	ldi	r20, 0x7F	; 127
+ 236:	58 e3       	ldi	r21, 0x38	; 56
+ 238:	e1 e0       	ldi	r30, 0x01	; 1
+ 23a:	41 50       	subi	r20, 0x01	; 1
+ 23c:	50 40       	sbci	r21, 0x00	; 0
+ 23e:	e0 40       	sbci	r30, 0x00	; 0
+ 240:	e1 f7       	brne	.-8      	; 0x23a <beep_hex+0x6c>
+ 242:	00 c0       	rjmp	.+0      	; 0x244 <beep_hex+0x76>
+ 244:	00 00       	nop
+			_delay_ms(50);
+			PORT_BEEP &= ~MASK_BEEP;
+ 246:	2e 98       	cbi	0x05, 6	; 5
+ 248:	4f ef       	ldi	r20, 0xFF	; 255
+ 24a:	50 e7       	ldi	r21, 0x70	; 112
+ 24c:	e2 e0       	ldi	r30, 0x02	; 2
+ 24e:	41 50       	subi	r20, 0x01	; 1
+ 250:	50 40       	sbci	r21, 0x00	; 0
+ 252:	e0 40       	sbci	r30, 0x00	; 0
+ 254:	e1 f7       	brne	.-8      	; 0x24e <beep_hex+0x80>
+ 256:	00 c0       	rjmp	.+0      	; 0x258 <beep_hex+0x8a>
+ 258:	00 00       	nop
+// 1 ピッ
+// 0 ピー
+void beep_hex(unsigned char hex_)
+{	
+	int i_bit = 0;
+	for (; i_bit < 8; ++i_bit)
+ 25a:	2f 5f       	subi	r18, 0xFF	; 255
+ 25c:	3f 4f       	sbci	r19, 0xFF	; 255
+ 25e:	28 30       	cpi	r18, 0x08	; 8
+ 260:	31 05       	cpc	r19, r1
+ 262:	09 f0       	breq	.+2      	; 0x266 <beep_hex+0x98>
+ 264:	ba cf       	rjmp	.-140    	; 0x1da <beep_hex+0xc>
+ 266:	2f ef       	ldi	r18, 0xFF	; 255
+ 268:	41 ee       	ldi	r20, 0xE1	; 225
+ 26a:	54 e0       	ldi	r21, 0x04	; 4
+ 26c:	21 50       	subi	r18, 0x01	; 1
+ 26e:	40 40       	sbci	r20, 0x00	; 0
+ 270:	50 40       	sbci	r21, 0x00	; 0
+ 272:	e1 f7       	brne	.-8      	; 0x26c <beep_hex+0x9e>
+ 274:	00 c0       	rjmp	.+0      	; 0x276 <beep_hex+0xa8>
+ 276:	00 00       	nop
+ 278:	08 95       	ret
+
+0000027a <LPS331_read>:
+//-----------------
+// 気圧センサ / atmospheric pressure sensor
+// update_atmospheric_pressureから呼び出す１バイト読み出し
+// 連続よみもできるようだが、面倒なのでネットで見つけた方法のままにする
+unsigned char LPS331_read(unsigned char address_)
+{
+ 27a:	cf 93       	push	r28
+ 27c:	c8 2f       	mov	r28, r24
+	unsigned char data;
+	
+	iic_start(LP3331_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+ 27e:	8a eb       	ldi	r24, 0xBA	; 186
+ 280:	0e 94 86 00 	call	0x10c	; 0x10c <iic_start>
+	iic_write(address_);
+ 284:	8c 2f       	mov	r24, r28
+ 286:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+	iic_repeat(LP3331_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
+ 28a:	8b eb       	ldi	r24, 0xBB	; 187
+ 28c:	0e 94 9b 00 	call	0x136	; 0x136 <iic_repeat>
+	data = iic_read(false);
+ 290:	80 e0       	ldi	r24, 0x00	; 0
+ 292:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 296:	c8 2f       	mov	r28, r24
+	iic_stop();
+ 298:	0e 94 9e 00 	call	0x13c	; 0x13c <iic_stop>
+	
+	return data;
+}
+ 29c:	8c 2f       	mov	r24, r28
+ 29e:	cf 91       	pop	r28
+ 2a0:	08 95       	ret
+
+000002a2 <LPS331_write>:
+
+bool LPS331_write(unsigned char address_, unsigned char data_)
+{
+ 2a2:	cf 93       	push	r28
+ 2a4:	df 93       	push	r29
+ 2a6:	d8 2f       	mov	r29, r24
+ 2a8:	c6 2f       	mov	r28, r22
+	iic_start(LP3331_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+ 2aa:	8a eb       	ldi	r24, 0xBA	; 186
+ 2ac:	0e 94 86 00 	call	0x10c	; 0x10c <iic_start>
+	iic_write(address_);
+ 2b0:	8d 2f       	mov	r24, r29
+ 2b2:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+	iic_write(data_);
+ 2b6:	8c 2f       	mov	r24, r28
+ 2b8:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+	iic_stop();
+ 2bc:	0e 94 9e 00 	call	0x13c	; 0x13c <iic_stop>
+	
+	return true;
+}
+ 2c0:	81 e0       	ldi	r24, 0x01	; 1
+ 2c2:	df 91       	pop	r29
+ 2c4:	cf 91       	pop	r28
+ 2c6:	08 95       	ret
+
+000002c8 <LPS331_init>:
+// 初期化
+unsigned char LPS331_init()
+{
+	unsigned char data;
+
+	data = LPS331_read(0x20);
+ 2c8:	80 e2       	ldi	r24, 0x20	; 32
+ 2ca:	0e 94 3d 01 	call	0x27a	; 0x27a <LPS331_read>
+	data &= 0x7F;                // PDビットクリア
+ 2ce:	68 2f       	mov	r22, r24
+ 2d0:	6f 77       	andi	r22, 0x7F	; 127
+	LPS331_write(0x20, data);
+ 2d2:	80 e2       	ldi	r24, 0x20	; 32
+ 2d4:	0e 94 51 01 	call	0x2a2	; 0x2a2 <LPS331_write>
+
+	LPS331_write(0x10, 0x7A);		// アベレージング回数設定：気圧512回、温度128回
+ 2d8:	6a e7       	ldi	r22, 0x7A	; 122
+ 2da:	80 e1       	ldi	r24, 0x10	; 16
+ 2dc:	0e 94 51 01 	call	0x2a2	; 0x2a2 <LPS331_write>
+	//  LPS331_write(0x10, 0x00);	// アベレージング回数設定：気圧1回、温度1回
+	LPS331_write(0x20, 0x04);		// ワンショット、BDU有効、
+ 2e0:	64 e0       	ldi	r22, 0x04	; 4
+ 2e2:	80 e2       	ldi	r24, 0x20	; 32
+ 2e4:	0e 94 51 01 	call	0x2a2	; 0x2a2 <LPS331_write>
+	LPS331_write(0x20, 0x84);		// PDビットON（パワーON)
+ 2e8:	64 e8       	ldi	r22, 0x84	; 132
+ 2ea:	80 e2       	ldi	r24, 0x20	; 32
+ 2ec:	0e 94 51 01 	call	0x2a2	; 0x2a2 <LPS331_write>
+ 2f0:	8f e1       	ldi	r24, 0x1F	; 31
+ 2f2:	9e e4       	ldi	r25, 0x4E	; 78
+ 2f4:	01 97       	sbiw	r24, 0x01	; 1
+ 2f6:	f1 f7       	brne	.-4      	; 0x2f4 <LPS331_init+0x2c>
+ 2f8:	00 c0       	rjmp	.+0      	; 0x2fa <LPS331_init+0x32>
+ 2fa:	00 00       	nop
+
+	_delay_ms(10);					// 動作開始まで待つ
+}
+ 2fc:	08 95       	ret
+
+000002fe <__vector_14>:
+//----------------------------
+// interrupts
+//----------------------------
+// タイマ割り込み
+ISR(TIMER0_COMPA_vect)
+{
+ 2fe:	1f 92       	push	r1
+ 300:	0f 92       	push	r0
+ 302:	0f b6       	in	r0, 0x3f	; 63
+ 304:	0f 92       	push	r0
+ 306:	11 24       	eor	r1, r1
+ 308:	2f 93       	push	r18
+ 30a:	3f 93       	push	r19
+ 30c:	4f 93       	push	r20
+ 30e:	5f 93       	push	r21
+ 310:	6f 93       	push	r22
+ 312:	7f 93       	push	r23
+ 314:	8f 93       	push	r24
+ 316:	9f 93       	push	r25
+ 318:	af 93       	push	r26
+ 31a:	bf 93       	push	r27
+ 31c:	ef 93       	push	r30
+ 31e:	ff 93       	push	r31
+	static unsigned char digit = 0;
+	static unsigned char blank = 0;
+
+	// blank期間なら全LEDをOFF
+	blank = blank == 0 ? 1 : 0;
+ 320:	81 e0       	ldi	r24, 0x01	; 1
+ 322:	90 91 15 01 	lds	r25, 0x0115
+ 326:	91 11       	cpse	r25, r1
+ 328:	80 e0       	ldi	r24, 0x00	; 0
+ 32a:	80 93 15 01 	sts	0x0115, r24
+	if (blank)
+ 32e:	88 23       	and	r24, r24
+ 330:	21 f0       	breq	.+8      	; 0x33a <__vector_14+0x3c>
+	{
+		ChangeNumber(10); // 10は点灯せず
+ 332:	8a e0       	ldi	r24, 0x0A	; 10
+ 334:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+
+		return;
+ 338:	5b c0       	rjmp	.+182    	; 0x3f0 <__vector_14+0xf2>
+	}
+	
+	// 表示LEDを切り替え
+	digit++;
+ 33a:	80 91 14 01 	lds	r24, 0x0114
+ 33e:	8f 5f       	subi	r24, 0xFF	; 255
+	digit &= 0x7;
+ 340:	87 70       	andi	r24, 0x07	; 7
+ 342:	80 93 14 01 	sts	0x0114, r24
+	switch (digit)
+ 346:	90 e0       	ldi	r25, 0x00	; 0
+ 348:	fc 01       	movw	r30, r24
+ 34a:	ec 5c       	subi	r30, 0xCC	; 204
+ 34c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 34e:	0c 94 9e 03 	jmp	0x73c	; 0x73c <__tablejump2__>
+	{
+		case 0:
+			ChangeDigit(DIGIT_0);
+ 352:	80 e0       	ldi	r24, 0x00	; 0
+ 354:	0e 94 5b 00 	call	0xb6	; 0xb6 <ChangeDigit>
+			ChangeNumber(number);
+ 358:	80 91 20 01 	lds	r24, 0x0120
+ 35c:	90 91 21 01 	lds	r25, 0x0121
+ 360:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+			break;
+ 364:	45 c0       	rjmp	.+138    	; 0x3f0 <__vector_14+0xf2>
+		case 1:
+			ChangeDigit(DIGIT_1);
+ 366:	81 e0       	ldi	r24, 0x01	; 1
+ 368:	0e 94 5b 00 	call	0xb6	; 0xb6 <ChangeDigit>
+			ChangeNumber(number);
+ 36c:	80 91 20 01 	lds	r24, 0x0120
+ 370:	90 91 21 01 	lds	r25, 0x0121
+ 374:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+			break;
+ 378:	3b c0       	rjmp	.+118    	; 0x3f0 <__vector_14+0xf2>
+		case 2:
+			ChangeDigit(DIGIT_COLON_L);
+ 37a:	82 e0       	ldi	r24, 0x02	; 2
+ 37c:	0e 94 5b 00 	call	0xb6	; 0xb6 <ChangeDigit>
+			ChangeNumber(number);
+ 380:	80 91 20 01 	lds	r24, 0x0120
+ 384:	90 91 21 01 	lds	r25, 0x0121
+ 388:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+			break;
+ 38c:	31 c0       	rjmp	.+98     	; 0x3f0 <__vector_14+0xf2>
+		case 3:
+			ChangeDigit(DIGIT_2);
+ 38e:	83 e0       	ldi	r24, 0x03	; 3
+ 390:	0e 94 5b 00 	call	0xb6	; 0xb6 <ChangeDigit>
+			ChangeNumber(number);
+ 394:	80 91 20 01 	lds	r24, 0x0120
+ 398:	90 91 21 01 	lds	r25, 0x0121
+ 39c:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+			break;
+ 3a0:	27 c0       	rjmp	.+78     	; 0x3f0 <__vector_14+0xf2>
+		case 4:
+			ChangeDigit(DIGIT_3);
+ 3a2:	84 e0       	ldi	r24, 0x04	; 4
+ 3a4:	0e 94 5b 00 	call	0xb6	; 0xb6 <ChangeDigit>
+			ChangeNumber(number);
+ 3a8:	80 91 20 01 	lds	r24, 0x0120
+ 3ac:	90 91 21 01 	lds	r25, 0x0121
+ 3b0:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+			break;
+ 3b4:	1d c0       	rjmp	.+58     	; 0x3f0 <__vector_14+0xf2>
+		case 5:
+			ChangeDigit(DIGIT_COLON_R);
+ 3b6:	85 e0       	ldi	r24, 0x05	; 5
+ 3b8:	0e 94 5b 00 	call	0xb6	; 0xb6 <ChangeDigit>
+			ChangeNumber(number);
+ 3bc:	80 91 20 01 	lds	r24, 0x0120
+ 3c0:	90 91 21 01 	lds	r25, 0x0121
+ 3c4:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+			break;
+ 3c8:	13 c0       	rjmp	.+38     	; 0x3f0 <__vector_14+0xf2>
+		case 6:
+			ChangeDigit(DIGIT_4);
+ 3ca:	86 e0       	ldi	r24, 0x06	; 6
+ 3cc:	0e 94 5b 00 	call	0xb6	; 0xb6 <ChangeDigit>
+			ChangeNumber(number);
+ 3d0:	80 91 20 01 	lds	r24, 0x0120
+ 3d4:	90 91 21 01 	lds	r25, 0x0121
+ 3d8:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+			break;
+ 3dc:	09 c0       	rjmp	.+18     	; 0x3f0 <__vector_14+0xf2>
+		case 7:
+			ChangeDigit(DIGIT_5);
+ 3de:	87 e0       	ldi	r24, 0x07	; 7
+ 3e0:	0e 94 5b 00 	call	0xb6	; 0xb6 <ChangeDigit>
+			ChangeNumber(number);
+ 3e4:	80 91 20 01 	lds	r24, 0x0120
+ 3e8:	90 91 21 01 	lds	r25, 0x0121
+ 3ec:	0e 94 60 00 	call	0xc0	; 0xc0 <ChangeNumber>
+			break;
+		default:
+			break;
+	}
+	return;
+}
+ 3f0:	ff 91       	pop	r31
+ 3f2:	ef 91       	pop	r30
+ 3f4:	bf 91       	pop	r27
+ 3f6:	af 91       	pop	r26
+ 3f8:	9f 91       	pop	r25
+ 3fa:	8f 91       	pop	r24
+ 3fc:	7f 91       	pop	r23
+ 3fe:	6f 91       	pop	r22
+ 400:	5f 91       	pop	r21
+ 402:	4f 91       	pop	r20
+ 404:	3f 91       	pop	r19
+ 406:	2f 91       	pop	r18
+ 408:	0f 90       	pop	r0
+ 40a:	0f be       	out	0x3f, r0	; 63
+ 40c:	0f 90       	pop	r0
+ 40e:	1f 90       	pop	r1
+ 410:	18 95       	reti
+
+00000412 <__vector_1>:
+
+// External interrupt 0
+ISR(INT0_vect)
+{
+ 412:	1f 92       	push	r1
+ 414:	0f 92       	push	r0
+ 416:	0f b6       	in	r0, 0x3f	; 63
+ 418:	0f 92       	push	r0
+ 41a:	11 24       	eor	r1, r1
+ 41c:	8f 93       	push	r24
+	if (!num_up)
+ 41e:	80 91 1e 01 	lds	r24, 0x011E
+ 422:	81 11       	cpse	r24, r1
+ 424:	03 c0       	rjmp	.+6      	; 0x42c <__vector_1+0x1a>
+	{
+		num_down = true;
+ 426:	81 e0       	ldi	r24, 0x01	; 1
+ 428:	80 93 1d 01 	sts	0x011D, r24
+	}
+}
+ 42c:	8f 91       	pop	r24
+ 42e:	0f 90       	pop	r0
+ 430:	0f be       	out	0x3f, r0	; 63
+ 432:	0f 90       	pop	r0
+ 434:	1f 90       	pop	r1
+ 436:	18 95       	reti
+
+00000438 <__vector_2>:
+
+// External interrupt 1
+ISR(INT1_vect)
+{
+ 438:	1f 92       	push	r1
+ 43a:	0f 92       	push	r0
+ 43c:	0f b6       	in	r0, 0x3f	; 63
+ 43e:	0f 92       	push	r0
+ 440:	11 24       	eor	r1, r1
+ 442:	8f 93       	push	r24
+	if (!num_down)
+ 444:	80 91 1d 01 	lds	r24, 0x011D
+ 448:	81 11       	cpse	r24, r1
+ 44a:	03 c0       	rjmp	.+6      	; 0x452 <__vector_2+0x1a>
+	{
+		num_up = true;
+ 44c:	81 e0       	ldi	r24, 0x01	; 1
+ 44e:	80 93 1e 01 	sts	0x011E, r24
+	}
+}
+ 452:	8f 91       	pop	r24
+ 454:	0f 90       	pop	r0
+ 456:	0f be       	out	0x3f, r0	; 63
+ 458:	0f 90       	pop	r0
+ 45a:	1f 90       	pop	r1
+ 45c:	18 95       	reti
+
+0000045e <__vector_5>:
+
+// PIN change interrupt
+ISR(PCINT2_vect)
+{
+ 45e:	1f 92       	push	r1
+ 460:	0f 92       	push	r0
+ 462:	0f b6       	in	r0, 0x3f	; 63
+ 464:	0f 92       	push	r0
+ 466:	11 24       	eor	r1, r1
+ 468:	8f 93       	push	r24
+			num_up = true;
+		}
+	}
+	#endif
+	
+	if (PIN_RTC_CLKOUT & MASK_RTC_CLKOUT)
+ 46a:	48 9b       	sbis	0x09, 0	; 9
+ 46c:	03 c0       	rjmp	.+6      	; 0x474 <__vector_5+0x16>
+	{
+		clkout_flag = true;
+ 46e:	81 e0       	ldi	r24, 0x01	; 1
+ 470:	80 93 1f 01 	sts	0x011F, r24
+	}
+}
+ 474:	8f 91       	pop	r24
+ 476:	0f 90       	pop	r0
+ 478:	0f be       	out	0x3f, r0	; 63
+ 47a:	0f 90       	pop	r0
+ 47c:	1f 90       	pop	r1
+ 47e:	18 95       	reti
+
+00000480 <main>:
+//----------------------------
+// initialize
+//----------------------------
+static void setup()
+{
+	MCUCR &= 0b11101111; // PUD = 0, intrrupt on
+ 480:	85 b7       	in	r24, 0x35	; 53
+ 482:	8f 7e       	andi	r24, 0xEF	; 239
+ 484:	85 bf       	out	0x35, r24	; 53
+
+	// PIN (I/O, interrupt)
+	{
+		// port config
+		DDRB   = 0b11111111; // 0~5が有効 0134:line direct(012:line decoder), 6:beep
+ 486:	8f ef       	ldi	r24, 0xFF	; 255
+ 488:	84 b9       	out	0x04, r24	; 4
+		DDRC   = 0b10001111; // 0~7が有効 0123:nixie_driver, 45:IIC, 6:reset
+ 48a:	8f e8       	ldi	r24, 0x8F	; 143
+ 48c:	87 b9       	out	0x07, r24	; 7
+		DDRD   = 0b00010010; // 0~7が有効 0:rtc_out, 1:rtc_oe, 23:sw_AB, 5:remote, 6:焦電センサ(プルダウン内臓), 7:sw_push
+ 48e:	82 e1       	ldi	r24, 0x12	; 18
+ 490:	8a b9       	out	0x0a, r24	; 10
+		PORTB  = 0b00000000;
+ 492:	15 b8       	out	0x05, r1	; 5
+		PORTC  = 0b00110000; // 45:IICプルアップ, 6:resetプルアップ
+ 494:	80 e3       	ldi	r24, 0x30	; 48
+ 496:	88 b9       	out	0x08, r24	; 8
+		PORTD  = 0b10101111; // 6はセンサが内臓プルダウンなのでHiZ
+ 498:	8f ea       	ldi	r24, 0xAF	; 175
+ 49a:	8b b9       	out	0x0b, r24	; 11
+
+		// pin change interrupt
+		PCMSK0 = 0b00000000;
+ 49c:	10 92 6b 00 	sts	0x006B, r1
+		PCMSK1 = 0b00000000;
+ 4a0:	10 92 6c 00 	sts	0x006C, r1
+		PCMSK2 = 0b00000001; // 7:PCINT7
+ 4a4:	81 e0       	ldi	r24, 0x01	; 1
+ 4a6:	80 93 6d 00 	sts	0x006D, r24
+		PCICR  = 0b00000100; // PCINT2 enable
+ 4aa:	94 e0       	ldi	r25, 0x04	; 4
+ 4ac:	90 93 68 00 	sts	0x0068, r25
+		
+		// interrupt
+		EICRA  = 0b00001010; // INT0, INT1立ち下がり検出
+ 4b0:	8a e0       	ldi	r24, 0x0A	; 10
+ 4b2:	80 93 69 00 	sts	0x0069, r24
+		EIMSK  = 0b00000011; // INT0, INT1有効化
+ 4b6:	83 e0       	ldi	r24, 0x03	; 3
+ 4b8:	8d bb       	out	0x1d, r24	; 29
+	// Timer
+	// 8桁ニキシーを30Hz表示したい、ブランク時間を半分とする
+	// マスタクロック8Mhz / 8 / 30 / 2 = 166666 (16.3 * 1024)回に一度割り込みでOK
+	// 約2msで割り込みさせる
+	{
+		TIMSK0 = 0b0000010; // output compare A
+ 4ba:	ee e6       	ldi	r30, 0x6E	; 110
+ 4bc:	f0 e0       	ldi	r31, 0x00	; 0
+ 4be:	82 e0       	ldi	r24, 0x02	; 2
+ 4c0:	80 83       	st	Z, r24
+
+		// CTC, 1024分周prescaler入力
+		TCCR0A = 0b00000010;
+ 4c2:	84 bd       	out	0x24, r24	; 36
+		TCCR0B = 0b00000101;
+ 4c4:	25 e0       	ldi	r18, 0x05	; 5
+ 4c6:	25 bd       	out	0x25, r18	; 37
+		
+		// 16でリセット
+		OCR0A  = 8; // 暫定で16→8
+ 4c8:	28 e0       	ldi	r18, 0x08	; 8
+ 4ca:	27 bd       	out	0x27, r18	; 39
+		
+		// Compare Match A Interrupt Enable
+		TIMSK0 = 0b00000010;
+ 4cc:	80 83       	st	Z, r24
+	{
+		// 温度湿度センサ・AM2321と通信するI2Cバスのデータ転送速度は、最大100KHzです。
+		// F_SCL = (F_CPU / ((16 + 2(TWBR)) * prescaler)
+		// TWBR = (F_CPU / (F_SCL * prescaler) -16) / 2
+		// 20kHz通信、4分周とすると
+		setbits(TWSR, 0x0, 0, 2); // 0, 1, 2, 3 -> 1, 4, 16, 64
+ 4ce:	e9 eb       	ldi	r30, 0xB9	; 185
+ 4d0:	f0 e0       	ldi	r31, 0x00	; 0
+ 4d2:	80 81       	ld	r24, Z
+ 4d4:	82 60       	ori	r24, 0x02	; 2
+ 4d6:	80 83       	st	Z, r24
+		TWBR = ((F_CPU/20000UL) - 16) / 2;
+ 4d8:	80 ec       	ldi	r24, 0xC0	; 192
+ 4da:	80 93 b8 00 	sts	0x00B8, r24
+		TWCR = 1<<TWEN;
+ 4de:	90 93 bc 00 	sts	0x00BC, r25
+	}
+	
+	// ADC
+	{
+		// デジタルピンdisable
+		DIDR0 = 0b00000000;
+ 4e2:	10 92 7e 00 	sts	0x007E, r1
+	}
+
+	// 割り込み有効化アセンブラ命令コール
+	sei();
+ 4e6:	78 94       	sei
+ 4e8:	2f ef       	ldi	r18, 0xFF	; 255
+ 4ea:	81 ee       	ldi	r24, 0xE1	; 225
+ 4ec:	94 e0       	ldi	r25, 0x04	; 4
+ 4ee:	21 50       	subi	r18, 0x01	; 1
+ 4f0:	80 40       	sbci	r24, 0x00	; 0
+ 4f2:	90 40       	sbci	r25, 0x00	; 0
+ 4f4:	e1 f7       	brne	.-8      	; 0x4ee <main+0x6e>
+ 4f6:	00 c0       	rjmp	.+0      	; 0x4f8 <main+0x78>
+ 4f8:	00 00       	nop
+	
+	///// 外部デバイス初期化
+	_delay_ms(200); // DS1307の電源充電を待つ
+	//RTC8564NB_init();
+	//RTC8564NB_load();
+	LPS331_init();
+ 4fa:	0e 94 64 01 	call	0x2c8	; 0x2c8 <LPS331_init>
+{
+	long tmp;
+	float pressure;
+	float temparature; 
+	
+	tmp = LPS331_read(0x2A);
+ 4fe:	8a e2       	ldi	r24, 0x2A	; 42
+ 500:	0e 94 3d 01 	call	0x27a	; 0x27a <LPS331_read>
+	tmp = LPS331_read(0x29) | (tmp << 8);
+ 504:	89 e2       	ldi	r24, 0x29	; 41
+ 506:	0e 94 3d 01 	call	0x27a	; 0x27a <LPS331_read>
+	tmp = LPS331_read(0x28) | (tmp << 8);
+ 50a:	88 e2       	ldi	r24, 0x28	; 40
+ 50c:	0e 94 3d 01 	call	0x27a	; 0x27a <LPS331_read>
+	pressure = (float) tmp / 4096.0f;
+	
+	tmp = LPS331_read(0x2C);
+ 510:	8c e2       	ldi	r24, 0x2C	; 44
+ 512:	0e 94 3d 01 	call	0x27a	; 0x27a <LPS331_read>
+	tmp = LPS331_read(0x2B) | (tmp << 8);
+ 516:	8b e2       	ldi	r24, 0x2B	; 43
+ 518:	0e 94 3d 01 	call	0x27a	; 0x27a <LPS331_read>
+	// 湿度は（３バイト目×256)+4バイト目 / 10で計算出来ます。
+	// 温度は（5バイト目×256)+6バイト目 / 10で計算出来ますが
+	static unsigned char data[8] = {0};
+
+	// wakeup
+	iic_start(AM2321_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+ 51c:	88 eb       	ldi	r24, 0xB8	; 184
+ 51e:	0e 94 86 00 	call	0x10c	; 0x10c <iic_start>
+ 522:	8f e9       	ldi	r24, 0x9F	; 159
+ 524:	9f e0       	ldi	r25, 0x0F	; 15
+ 526:	01 97       	sbiw	r24, 0x01	; 1
+ 528:	f1 f7       	brne	.-4      	; 0x526 <main+0xa6>
+ 52a:	00 c0       	rjmp	.+0      	; 0x52c <main+0xac>
+ 52c:	00 00       	nop
+	_delay_ms(2);  // 800us~3000us
+	iic_stop();
+ 52e:	0e 94 9e 00 	call	0x13c	; 0x13c <iic_stop>
+
+	// set read bytes
+	iic_start(AM2321_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+ 532:	88 eb       	ldi	r24, 0xB8	; 184
+ 534:	0e 94 86 00 	call	0x10c	; 0x10c <iic_start>
+	iic_write(0x03); // register read
+ 538:	83 e0       	ldi	r24, 0x03	; 3
+ 53a:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+	iic_write(0x00); // register address
+ 53e:	80 e0       	ldi	r24, 0x00	; 0
+ 540:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+	iic_write(0x04); // register size
+ 544:	84 e0       	ldi	r24, 0x04	; 4
+ 546:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+	iic_stop();
+ 54a:	0e 94 9e 00 	call	0x13c	; 0x13c <iic_stop>
+ 54e:	8f e6       	ldi	r24, 0x6F	; 111
+ 550:	97 e1       	ldi	r25, 0x17	; 23
+ 552:	01 97       	sbiw	r24, 0x01	; 1
+ 554:	f1 f7       	brne	.-4      	; 0x552 <main+0xd2>
+ 556:	00 c0       	rjmp	.+0      	; 0x558 <main+0xd8>
+ 558:	00 00       	nop
+	
+	// センサのjob待ち
+	_delay_ms(3); // 1500us
+
+	iic_start(AM2321_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
+ 55a:	89 eb       	ldi	r24, 0xB9	; 185
+ 55c:	0e 94 86 00 	call	0x10c	; 0x10c <iic_start>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 560:	87 ec       	ldi	r24, 0xC7	; 199
+ 562:	90 e0       	ldi	r25, 0x00	; 0
+ 564:	01 97       	sbiw	r24, 0x01	; 1
+ 566:	f1 f7       	brne	.-4      	; 0x564 <main+0xe4>
+ 568:	00 c0       	rjmp	.+0      	; 0x56a <main+0xea>
+ 56a:	00 00       	nop
+	_delay_us(100);
+	data[0] = iic_read(true);  // 機能コード [03]　機能コードの返し
+ 56c:	81 e0       	ldi	r24, 0x01	; 1
+ 56e:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 572:	80 93 0c 01 	sts	0x010C, r24
+	data[1] = iic_read(true);  // 返送するバイト数　（この例では湿度と温度の4バイト）
+ 576:	81 e0       	ldi	r24, 0x01	; 1
+ 578:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 57c:	80 93 0d 01 	sts	0x010D, r24
+	data[2] = iic_read(true);  // アドレス[00]の内容　（湿度の上位バイト）
+ 580:	81 e0       	ldi	r24, 0x01	; 1
+ 582:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 586:	80 93 0e 01 	sts	0x010E, r24
+	data[3] = iic_read(true);  // アドレス[01]の内容　（湿度の下位バイト）
+ 58a:	81 e0       	ldi	r24, 0x01	; 1
+ 58c:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 590:	80 93 0f 01 	sts	0x010F, r24
+	data[4] = iic_read(true);  // アドレス[02]の内容　（温度の上位バイト）
+ 594:	81 e0       	ldi	r24, 0x01	; 1
+ 596:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 59a:	80 93 10 01 	sts	0x0110, r24
+	data[5] = iic_read(true);  // アドレス[03]の内容　（温度の下位バイト）
+ 59e:	81 e0       	ldi	r24, 0x01	; 1
+ 5a0:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 5a4:	80 93 11 01 	sts	0x0111, r24
+	data[6] = iic_read(true);  // 16ビットのCRC（巡回冗長符号）　（下位バイトが先）
+ 5a8:	81 e0       	ldi	r24, 0x01	; 1
+ 5aa:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 5ae:	80 93 12 01 	sts	0x0112, r24
+	data[7] = iic_read(false); // 16ビットのCRC（巡回冗長符号）　（上位バイト）
+ 5b2:	80 e0       	ldi	r24, 0x00	; 0
+ 5b4:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 5b8:	80 93 13 01 	sts	0x0113, r24
+	iic_stop();
+ 5bc:	0e 94 9e 00 	call	0x13c	; 0x13c <iic_stop>
+static void DS1307_init()
+{
+	// VLビットをチェック
+	// 読み出しの場合はrepeatする
+	// 秒のアドレスの先頭ビットがバックアップ異常検出VL
+	iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+ 5c0:	80 ed       	ldi	r24, 0xD0	; 208
+ 5c2:	0e 94 86 00 	call	0x10c	; 0x10c <iic_start>
+		iic_write(0x00); // 0x03 week
+		iic_write(0x00); // 0x04 date
+		iic_write(0x00); // 0x05 month
+		iic_write(0x00); // 0x06 year
+	#else
+		iic_write(0x07);  // word address
+ 5c6:	87 e0       	ldi	r24, 0x07	; 7
+ 5c8:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+	#endif
+	static const unsigned char OUT  = 7;
+	static const unsigned char SQWE = 4;
+	static const unsigned char RS1  = 1;
+	static const unsigned char RS0  = 0;
+	iic_write((1<<OUT) | (1<<SQWE) | (0<<RS1) | (0<<RS0));  // 0x07 control 1kHz 
+ 5cc:	80 e9       	ldi	r24, 0x90	; 144
+ 5ce:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+	iic_stop();
+ 5d2:	0e 94 9e 00 	call	0x13c	; 0x13c <iic_stop>
+	LPS331_load();
+	AM2321_load();
+	DS1307_init();
+	
+	// 初期化完了、起動時一度だけ
+	beep(1);
+ 5d6:	81 e0       	ldi	r24, 0x01	; 1
+ 5d8:	0e 94 c7 00 	call	0x18e	; 0x18e <beep>
+	else if (num_down)
+	{
+		--number;
+		if (number < 0)
+		{
+			number = 9;
+ 5dc:	c9 e0       	ldi	r28, 0x09	; 9
+ 5de:	d0 e0       	ldi	r29, 0x00	; 0
+//----------------------------
+
+// loop
+static void loop()
+{	
+	if ((PIND & 0b10000000) == 0)
+ 5e0:	4f 99       	sbic	0x09, 7	; 9
+ 5e2:	5b c0       	rjmp	.+182    	; 0x69a <main+0x21a>
+	{
+		number = 0;
+ 5e4:	10 92 21 01 	sts	0x0121, r1
+ 5e8:	10 92 20 01 	sts	0x0120, r1
+		g_month	 = iic_read(true);  // 0x05 month
+		g_year	 = iic_read(false);  // 0x06 year
+		iic_stop();
+	#else
+		// repeat start による連続リード
+		iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+ 5ec:	80 ed       	ldi	r24, 0xD0	; 208
+ 5ee:	0e 94 86 00 	call	0x10c	; 0x10c <iic_start>
+		iic_write(0x00); // word address
+ 5f2:	80 e0       	ldi	r24, 0x00	; 0
+ 5f4:	0e 94 a7 00 	call	0x14e	; 0x14e <iic_write>
+		iic_repeat(DS1307_SLAVE_ADDRESS_8BIT|IIC_READ_BIT);
+ 5f8:	81 ed       	ldi	r24, 0xD1	; 209
+ 5fa:	0e 94 9b 00 	call	0x136	; 0x136 <iic_repeat>
+		g_second = iic_read(true);  // 0x00 seconds
+ 5fe:	81 e0       	ldi	r24, 0x01	; 1
+ 600:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 604:	80 93 1a 01 	sts	0x011A, r24
+		g_minute = iic_read(true);  // 0x01 minutes
+ 608:	81 e0       	ldi	r24, 0x01	; 1
+ 60a:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 60e:	80 93 1b 01 	sts	0x011B, r24
+		g_hour	 = iic_read(true);  // 0x02 hours
+ 612:	81 e0       	ldi	r24, 0x01	; 1
+ 614:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 618:	80 93 1c 01 	sts	0x011C, r24
+		g_week	 = iic_read(true);  // 0x03 week
+ 61c:	81 e0       	ldi	r24, 0x01	; 1
+ 61e:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 622:	80 93 16 01 	sts	0x0116, r24
+		g_date	 = iic_read(true);  // 0x04 date
+ 626:	81 e0       	ldi	r24, 0x01	; 1
+ 628:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 62c:	80 93 17 01 	sts	0x0117, r24
+		g_month	 = iic_read(true);  // 0x05 month
+ 630:	81 e0       	ldi	r24, 0x01	; 1
+ 632:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 636:	80 93 18 01 	sts	0x0118, r24
+		g_year	 = iic_read(false);  // 0x06 year
+ 63a:	80 e0       	ldi	r24, 0x00	; 0
+ 63c:	0e 94 b0 00 	call	0x160	; 0x160 <iic_read>
+ 640:	80 93 19 01 	sts	0x0119, r24
+		iic_stop();
+ 644:	0e 94 9e 00 	call	0x13c	; 0x13c <iic_stop>
+	#endif
+
+	// 有効ビットの取り出し
+	g_second  &= 0x7f; // 最上位ビットは休止可能情報 CH
+ 648:	80 91 1a 01 	lds	r24, 0x011A
+ 64c:	8f 77       	andi	r24, 0x7F	; 127
+ 64e:	80 93 1a 01 	sts	0x011A, r24
+	g_minute  &= 0x7f;
+ 652:	80 91 1b 01 	lds	r24, 0x011B
+ 656:	8f 77       	andi	r24, 0x7F	; 127
+ 658:	80 93 1b 01 	sts	0x011B, r24
+	g_hour	  &= 0x3f;
+ 65c:	80 91 1c 01 	lds	r24, 0x011C
+ 660:	8f 73       	andi	r24, 0x3F	; 63
+ 662:	80 93 1c 01 	sts	0x011C, r24
+	g_week	  &= 0x07;
+ 666:	80 91 16 01 	lds	r24, 0x0116
+ 66a:	87 70       	andi	r24, 0x07	; 7
+ 66c:	80 93 16 01 	sts	0x0116, r24
+	g_date	  &= 0x3f;
+ 670:	80 91 17 01 	lds	r24, 0x0117
+ 674:	8f 73       	andi	r24, 0x3F	; 63
+ 676:	80 93 17 01 	sts	0x0117, r24
+	g_month	  &= 0x1f;
+ 67a:	80 91 18 01 	lds	r24, 0x0118
+ 67e:	8f 71       	andi	r24, 0x1F	; 31
+ 680:	80 93 18 01 	sts	0x0118, r24
+	g_year	  &= 0xff; // 0~99
+ 684:	80 91 19 01 	lds	r24, 0x0119
+ 688:	80 93 19 01 	sts	0x0119, r24
+		number = 0;
+		//RTC8564NB_load();
+		//beep(g_second);
+
+		DS1307_read();
+		beep_hex(g_second);
+ 68c:	80 91 1a 01 	lds	r24, 0x011A
+ 690:	0e 94 e7 00 	call	0x1ce	; 0x1ce <beep_hex>
+		
+		//g_illuminance = adc_get(ADC_ILLUMINANCE_SENSOR);
+		//beep_hex(g_illuminance);
+		led(true);
+ 694:	81 e0       	ldi	r24, 0x01	; 1
+ 696:	0e 94 c1 00 	call	0x182	; 0x182 <led>
+	}	
+	
+	if (num_up)
+ 69a:	80 91 1e 01 	lds	r24, 0x011E
+ 69e:	88 23       	and	r24, r24
+ 6a0:	e9 f0       	breq	.+58     	; 0x6dc <main+0x25c>
+	{
+		++number;
+ 6a2:	80 91 20 01 	lds	r24, 0x0120
+ 6a6:	90 91 21 01 	lds	r25, 0x0121
+ 6aa:	01 96       	adiw	r24, 0x01	; 1
+ 6ac:	90 93 21 01 	sts	0x0121, r25
+ 6b0:	80 93 20 01 	sts	0x0120, r24
+		if (number > 9)
+ 6b4:	80 91 20 01 	lds	r24, 0x0120
+ 6b8:	90 91 21 01 	lds	r25, 0x0121
+ 6bc:	0a 97       	sbiw	r24, 0x0a	; 10
+ 6be:	24 f0       	brlt	.+8      	; 0x6c8 <main+0x248>
+		{
+			number = 0;
+ 6c0:	10 92 21 01 	sts	0x0121, r1
+ 6c4:	10 92 20 01 	sts	0x0120, r1
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 6c8:	9f ef       	ldi	r25, 0xFF	; 255
+ 6ca:	21 ee       	ldi	r18, 0xE1	; 225
+ 6cc:	84 e0       	ldi	r24, 0x04	; 4
+ 6ce:	91 50       	subi	r25, 0x01	; 1
+ 6d0:	20 40       	sbci	r18, 0x00	; 0
+ 6d2:	80 40       	sbci	r24, 0x00	; 0
+ 6d4:	e1 f7       	brne	.-8      	; 0x6ce <main+0x24e>
+ 6d6:	00 c0       	rjmp	.+0      	; 0x6d8 <main+0x258>
+ 6d8:	00 00       	nop
+ 6da:	20 c0       	rjmp	.+64     	; 0x71c <main+0x29c>
+		}
+		_delay_ms(200);
+	}
+	else if (num_down)
+ 6dc:	80 91 1d 01 	lds	r24, 0x011D
+ 6e0:	88 23       	and	r24, r24
+ 6e2:	e1 f0       	breq	.+56     	; 0x71c <main+0x29c>
+	{
+		--number;
+ 6e4:	80 91 20 01 	lds	r24, 0x0120
+ 6e8:	90 91 21 01 	lds	r25, 0x0121
+ 6ec:	01 97       	sbiw	r24, 0x01	; 1
+ 6ee:	90 93 21 01 	sts	0x0121, r25
+ 6f2:	80 93 20 01 	sts	0x0120, r24
+		if (number < 0)
+ 6f6:	80 91 20 01 	lds	r24, 0x0120
+ 6fa:	90 91 21 01 	lds	r25, 0x0121
+ 6fe:	99 23       	and	r25, r25
+ 700:	24 f4       	brge	.+8      	; 0x70a <main+0x28a>
+		{
+			number = 9;
+ 702:	d0 93 21 01 	sts	0x0121, r29
+ 706:	c0 93 20 01 	sts	0x0120, r28
+ 70a:	9f ef       	ldi	r25, 0xFF	; 255
+ 70c:	21 ee       	ldi	r18, 0xE1	; 225
+ 70e:	84 e0       	ldi	r24, 0x04	; 4
+ 710:	91 50       	subi	r25, 0x01	; 1
+ 712:	20 40       	sbci	r18, 0x00	; 0
+ 714:	80 40       	sbci	r24, 0x00	; 0
+ 716:	e1 f7       	brne	.-8      	; 0x710 <main+0x290>
+ 718:	00 c0       	rjmp	.+0      	; 0x71a <main+0x29a>
+ 71a:	00 00       	nop
+		}
+		_delay_ms(200);
+	}
+	num_up = false;
+ 71c:	10 92 1e 01 	sts	0x011E, r1
+	num_down = false;
+ 720:	10 92 1d 01 	sts	0x011D, r1
+	//{
+	//	led(false);
+	//}
+
+
+	if (clkout_flag)
+ 724:	80 91 1f 01 	lds	r24, 0x011F
+ 728:	81 11       	cpse	r24, r1
+	{
+		//beep(1);
+		clkout_flag = 0;
+ 72a:	10 92 1f 01 	sts	0x011F, r1
+ 72e:	8f e3       	ldi	r24, 0x3F	; 63
+ 730:	9c e9       	ldi	r25, 0x9C	; 156
+ 732:	01 97       	sbiw	r24, 0x01	; 1
+ 734:	f1 f7       	brne	.-4      	; 0x732 <main+0x2b2>
+ 736:	00 c0       	rjmp	.+0      	; 0x738 <main+0x2b8>
+ 738:	00 00       	nop
+ 73a:	52 cf       	rjmp	.-348    	; 0x5e0 <main+0x160>
+
+0000073c <__tablejump2__>:
+ 73c:	ee 0f       	add	r30, r30
+ 73e:	ff 1f       	adc	r31, r31
+
+00000740 <__tablejump__>:
+ 740:	05 90       	lpm	r0, Z+
+ 742:	f4 91       	lpm	r31, Z
+ 744:	e0 2d       	mov	r30, r0
+ 746:	09 94       	ijmp
+
+00000748 <_exit>:
+ 748:	f8 94       	cli
+
+0000074a <__stop_program>:
+ 74a:	ff cf       	rjmp	.-2      	; 0x74a <__stop_program>

@@ -634,15 +634,19 @@ static void DS1307_init()
 	// 読み出しの場合はrepeatする
 	// 秒のアドレスの先頭ビットがバックアップ異常検出VL
 	iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
-	iic_write(0x00);  // word address
-	//static const unsigned char CH  = 7;
-	iic_write(0x0); // 0x00 seconds
-	iic_write(0x0); // 0x01 minutes
-	iic_write(0x0); // 0x02 hours, bit6=1:24 hour mode
-	iic_write(0x0); // 0x03 week
-	iic_write(0x0); // 0x04 date
-	iic_write(0x0); // 0x05 month
-	iic_write(0x0); // 0x06 year
+	#if 0
+		iic_write(0x00);  // word address
+		//static const unsigned char CH  = 7;
+		iic_write(0x00); // 0x00 seconds
+		iic_write(0x00); // 0x01 minutes
+		iic_write(0x00); // 0x02 hours, bit6=1:24 hour mode
+		iic_write(0x00); // 0x03 week
+		iic_write(0x00); // 0x04 date
+		iic_write(0x00); // 0x05 month
+		iic_write(0x00); // 0x06 year
+	#else
+		iic_write(0x07);  // word address
+	#endif
 	static const unsigned char OUT  = 7;
 	static const unsigned char SQWE = 4;
 	static const unsigned char RS1  = 1;

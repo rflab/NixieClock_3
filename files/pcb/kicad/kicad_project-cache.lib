@@ -1,4 +1,4 @@
-EESchema-LIBRARY Version 2.3  Date: 2014/08/31 0:54:40
+EESchema-LIBRARY Version 2.3  Date: 2014/09/01 1:22:41
 #encoding utf-8
 #
 # +5V
@@ -357,7 +357,7 @@ F3 "~" -50 -150 60 H V C CNN
 DRAW
 S -150 100 150 -100 1 1 0 N
 X ~ 1 -450 50 300 R 39 39 1 1 I
-X ~ 2 -450 -50 300 R 39 39 1 1 I
+X ~ 2 -450 -50 300 R 39 39 1 1 P
 X ~ 3 450 -50 300 L 39 39 1 1 I
 X ~ 4 450 50 300 L 39 39 1 1 I
 ENDDRAW

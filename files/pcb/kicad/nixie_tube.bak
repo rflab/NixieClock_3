@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 13
 Title ""
-Date "30 aug 2014"
+Date "31 aug 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -363,6 +363,128 @@ Text HLabel 2650 2450 0    60   Input ~ 0
 dot_cathode_l
 Text HLabel 2650 2600 0    60   Input ~ 0
 dot_cathode_r
+Text Label 6950 2150 1    60   ~ 0
+N0
+Text Label 7050 2150 1    60   ~ 0
+N1
+Text Label 7150 2150 1    60   ~ 0
+N2
+Text Label 7450 2150 1    60   ~ 0
+N4
+Text Label 7350 2150 1    60   ~ 0
+N3
+Text Label 7550 2150 1    60   ~ 0
+N5
+Text Label 7650 2150 1    60   ~ 0
+N6
+Text Label 7850 2150 1    60   ~ 0
+N7
+Text Label 7950 2150 1    60   ~ 0
+N8
+Text Label 8050 2150 1    60   ~ 0
+N9
+Text Label 8700 6500 1    60   ~ 0
+N0
+Text Label 8800 6500 1    60   ~ 0
+N1
+Text Label 8900 6500 1    60   ~ 0
+N2
+Text Label 9200 6500 1    60   ~ 0
+N4
+Text Label 9100 6500 1    60   ~ 0
+N3
+Text Label 9300 6500 1    60   ~ 0
+N5
+Text Label 9400 6500 1    60   ~ 0
+N6
+Text Label 9600 6500 1    60   ~ 0
+N7
+Text Label 9700 6500 1    60   ~ 0
+N8
+Text Label 9800 6500 1    60   ~ 0
+N9
+Text Label 8650 2150 1    60   ~ 0
+N0
+Text Label 8750 2150 1    60   ~ 0
+N1
+Text Label 8850 2150 1    60   ~ 0
+N2
+Text Label 9150 2150 1    60   ~ 0
+N4
+Text Label 9050 2150 1    60   ~ 0
+N3
+Text Label 9250 2150 1    60   ~ 0
+N5
+Text Label 9350 2150 1    60   ~ 0
+N6
+Text Label 9550 2150 1    60   ~ 0
+N7
+Text Label 9650 2150 1    60   ~ 0
+N8
+Text Label 9750 2150 1    60   ~ 0
+N9
+Text Label 8700 4400 1    60   ~ 0
+N0
+Text Label 8800 4400 1    60   ~ 0
+N1
+Text Label 8900 4400 1    60   ~ 0
+N2
+Text Label 9200 4400 1    60   ~ 0
+N4
+Text Label 9100 4400 1    60   ~ 0
+N3
+Text Label 9300 4400 1    60   ~ 0
+N5
+Text Label 9400 4400 1    60   ~ 0
+N6
+Text Label 9600 4400 1    60   ~ 0
+N7
+Text Label 9700 4400 1    60   ~ 0
+N8
+Text Label 9800 4400 1    60   ~ 0
+N9
+Text Label 7000 4400 1    60   ~ 0
+N0
+Text Label 7100 4400 1    60   ~ 0
+N1
+Text Label 7200 4400 1    60   ~ 0
+N2
+Text Label 7500 4400 1    60   ~ 0
+N4
+Text Label 7400 4400 1    60   ~ 0
+N3
+Text Label 7600 4400 1    60   ~ 0
+N5
+Text Label 7700 4400 1    60   ~ 0
+N6
+Text Label 7900 4400 1    60   ~ 0
+N7
+Text Label 8000 4400 1    60   ~ 0
+N8
+Text Label 8100 4400 1    60   ~ 0
+N9
+Text Label 7000 6500 1    60   ~ 0
+N0
+Text Label 7100 6500 1    60   ~ 0
+N1
+Text Label 7200 6500 1    60   ~ 0
+N2
+Text Label 7500 6500 1    60   ~ 0
+N4
+Text Label 7400 6500 1    60   ~ 0
+N3
+Text Label 7600 6500 1    60   ~ 0
+N5
+Text Label 7700 6500 1    60   ~ 0
+N6
+Text Label 7900 6500 1    60   ~ 0
+N7
+Text Label 8000 6500 1    60   ~ 0
+N8
+Text Label 8100 6500 1    60   ~ 0
+N9
+Text GLabel 2600 4600 0    60   Input ~ 0
+GND_L
 Wire Wire Line
 	8700 6550 8700 6350
 Wire Wire Line
@@ -637,156 +759,17 @@ Connection ~ 4450 2450
 Wire Wire Line
 	4550 2950 4550 2600
 Connection ~ 4550 2600
-$Comp
-L GND #PWR024
-U 1 1 53FB424E
-P 2800 4350
-F 0 "#PWR024" H 2800 4350 30  0001 C CNN
-F 1 "GND" H 2800 4280 30  0001 C CNN
-F 2 "" H 2800 4350 60  0000 C CNN
-F 3 "" H 2800 4350 60  0000 C CNN
-	1    2800 4350
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR025
-U 1 1 53FB425D
-P 3000 4450
-F 0 "#PWR025" H 3000 4450 30  0001 C CNN
-F 1 "GND" H 3000 4380 30  0001 C CNN
-F 2 "" H 3000 4450 60  0000 C CNN
-F 3 "" H 3000 4450 60  0000 C CNN
-	1    3000 4450
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
-	2800 4350 2800 4250
-Wire Wire Line
-	3000 4450 3000 4350
-Text Label 6950 2150 1    60   ~ 0
-N0
-Text Label 7050 2150 1    60   ~ 0
-N1
-Text Label 7150 2150 1    60   ~ 0
-N2
-Text Label 7450 2150 1    60   ~ 0
-N4
-Text Label 7350 2150 1    60   ~ 0
-N3
-Text Label 7550 2150 1    60   ~ 0
-N5
-Text Label 7650 2150 1    60   ~ 0
-N6
-Text Label 7850 2150 1    60   ~ 0
-N7
-Text Label 7950 2150 1    60   ~ 0
-N8
-Text Label 8050 2150 1    60   ~ 0
-N9
-Text Label 8700 6500 1    60   ~ 0
-N0
-Text Label 8800 6500 1    60   ~ 0
-N1
-Text Label 8900 6500 1    60   ~ 0
-N2
-Text Label 9200 6500 1    60   ~ 0
-N4
-Text Label 9100 6500 1    60   ~ 0
-N3
-Text Label 9300 6500 1    60   ~ 0
-N5
-Text Label 9400 6500 1    60   ~ 0
-N6
-Text Label 9600 6500 1    60   ~ 0
-N7
-Text Label 9700 6500 1    60   ~ 0
-N8
-Text Label 9800 6500 1    60   ~ 0
-N9
-Text Label 8650 2150 1    60   ~ 0
-N0
-Text Label 8750 2150 1    60   ~ 0
-N1
-Text Label 8850 2150 1    60   ~ 0
-N2
-Text Label 9150 2150 1    60   ~ 0
-N4
-Text Label 9050 2150 1    60   ~ 0
-N3
-Text Label 9250 2150 1    60   ~ 0
-N5
-Text Label 9350 2150 1    60   ~ 0
-N6
-Text Label 9550 2150 1    60   ~ 0
-N7
-Text Label 9650 2150 1    60   ~ 0
-N8
-Text Label 9750 2150 1    60   ~ 0
-N9
-Text Label 8700 4400 1    60   ~ 0
-N0
-Text Label 8800 4400 1    60   ~ 0
-N1
-Text Label 8900 4400 1    60   ~ 0
-N2
-Text Label 9200 4400 1    60   ~ 0
-N4
-Text Label 9100 4400 1    60   ~ 0
-N3
-Text Label 9300 4400 1    60   ~ 0
-N5
-Text Label 9400 4400 1    60   ~ 0
-N6
-Text Label 9600 4400 1    60   ~ 0
-N7
-Text Label 9700 4400 1    60   ~ 0
-N8
-Text Label 9800 4400 1    60   ~ 0
-N9
-Text Label 7000 4400 1    60   ~ 0
-N0
-Text Label 7100 4400 1    60   ~ 0
-N1
-Text Label 7200 4400 1    60   ~ 0
-N2
-Text Label 7500 4400 1    60   ~ 0
-N4
-Text Label 7400 4400 1    60   ~ 0
-N3
-Text Label 7600 4400 1    60   ~ 0
-N5
-Text Label 7700 4400 1    60   ~ 0
-N6
-Text Label 7900 4400 1    60   ~ 0
-N7
-Text Label 8000 4400 1    60   ~ 0
-N8
-Text Label 8100 4400 1    60   ~ 0
-N9
-Text Label 7000 6500 1    60   ~ 0
-N0
-Text Label 7100 6500 1    60   ~ 0
-N1
-Text Label 7200 6500 1    60   ~ 0
-N2
-Text Label 7500 6500 1    60   ~ 0
-N4
-Text Label 7400 6500 1    60   ~ 0
-N3
-Text Label 7600 6500 1    60   ~ 0
-N5
-Text Label 7700 6500 1    60   ~ 0
-N6
-Text Label 7900 6500 1    60   ~ 0
-N7
-Text Label 8000 6500 1    60   ~ 0
-N8
-Text Label 8100 6500 1    60   ~ 0
-N9
+	3000 4350 3000 4600
 Wire Wire Line
 	4350 4850 4350 3900
 Wire Wire Line
 	3250 4850 3250 3900
 Connection ~ 3000 2850
 Connection ~ 2800 2750
+Wire Wire Line
+	3000 4600 2600 4600
+Wire Wire Line
+	2800 4250 2800 4600
+Connection ~ 2800 4600
 $EndSCHEMATC

@@ -1,10 +1,9 @@
-PCBNEW-LibModule-V1  2014/08/31 0:14:43
+PCBNEW-LibModule-V1  2014/08/31 22:35:13
 # encoding utf-8
 Units mm
 $INDEX
-ICM7555CD
-USB_MINI_B
 my_3pin
+my_M3_screw
 my_SMD5750
 my_SMD_VR
 my_SOT223
@@ -17,8 +16,8 @@ my_dcjack
 my_dip16
 my_dip4
 my_dip8
+my_dip_module
 my_double_layer_capacitor
-my_drill_3mm
 my_inductor
 my_napion
 my_neon
@@ -34,157 +33,6 @@ my_sounder
 my_tact_switch
 my_usb_mini_b
 $EndINDEX
-$MODULE ICM7555CD
-Po 0 0 0 15 53F4CDCD 00000000 ~~
-Li ICM7555CD
-Sc 0
-AR 
-Op 0 0 0
-T0 0 3.5 1 1 0 0.15 N V 21 N "ICM7555CD"
-T1 0 -3.5 1 1 0 0.15 N V 21 N ""
-DS 1.5 2.5 1.5 -2.5 0.15 21
-DS 1 -2.5 4.5 -2.5 0.15 21
-DS -1 -2.5 -4.5 -2.5 0.15 21
-DA 0 -2.5 0 -1.5 900 0.15 21
-DA 0 -2.5 1 -2.5 900 0.15 21
-DS -4.5 -2.5 -4.5 2.5 0.15 21
-DS -4.5 2.5 4.5 2.5 0.15 21
-DS 4.5 2.5 4.5 -2.5 0.15 21
-$PAD
-Sh "1" R 2 0.6 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po -3.175 -1.905
-$EndPAD
-$PAD
-Sh "2" R 2 0.6 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po -3.175 -0.635
-$EndPAD
-$PAD
-Sh "3" R 2 0.6 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po -3.175 0.635
-$EndPAD
-$PAD
-Sh "4" R 2 0.6 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po -3.175 1.905
-$EndPAD
-$PAD
-Sh "5" R 2 0.6 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.175 1.905
-$EndPAD
-$PAD
-Sh "6" R 2 0.6 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.175 0.635
-$EndPAD
-$PAD
-Sh "7" R 2 0.6 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.175 -0.635
-$EndPAD
-$PAD
-Sh "8" R 2 0.6 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.175 -1.905
-$EndPAD
-$EndMODULE ICM7555CD
-$MODULE USB_MINI_B
-Po 0 0 0 15 53FDF7DC 00000000 ~~
-Li USB_MINI_B
-Cd USB Mini-B 5-pin SMD connector
-Kw USB, Mini-B, connector
-Sc 0
-AR 
-Op 0 0 0
-T0 0 6.90118 1.016 1.016 0 0.2032 N V 21 N "CON"
-T1 0 -7.0993 1.016 1.016 0 0.2032 N I 21 N "USB-Mini-B"
-DS 4.2 -3.8 4.2 3.8 0.15 21
-DS 4.2 3.8 -2.8 3.8 0.15 21
-DS -2.8 3.8 -2.8 -3.8 0.15 21
-DS -2.8 -3.8 4.2 -3.8 0.15 21
-$PAD
-Sh "1" R 2.30124 0.50038 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.44932 -1.6002
-$EndPAD
-$PAD
-Sh "2" R 2.30124 0.50038 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.44932 -0.8001
-$EndPAD
-$PAD
-Sh "3" R 2.30124 0.50038 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.44932 0
-$EndPAD
-$PAD
-Sh "4" R 2.30124 0.50038 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.44932 0.8001
-$EndPAD
-$PAD
-Sh "5" R 2.30124 0.50038 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 3.44932 1.6002
-$EndPAD
-$PAD
-Sh "6" R 1.8 2.5 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 2 -4.4
-$EndPAD
-$PAD
-Sh "7" R 1.8 2.5 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po -0.2 -4.4
-$EndPAD
-$PAD
-Sh "8" R 1.8 2.5 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po 2 4.4
-$EndPAD
-$PAD
-Sh "9" R 1.8 2.5 0 0 0
-Dr 0 0 0
-At SMD N 00888000
-Ne 0 ""
-Po -0.2 4.4
-$EndPAD
-$EndMODULE USB_MINI_B
 $MODULE my_3pin
 Po 0 0 0 15 53FE0687 00000000 ~~
 Li my_3pin
@@ -219,6 +67,22 @@ Ne 0 ""
 Po 2.54 0
 $EndPAD
 $EndMODULE my_3pin
+$MODULE my_M3_screw
+Po 0 0 0 15 5403105F 00000000 ~~
+Li my_M3_screw
+Sc 0
+AR 
+Op 0 0 0
+T0 0 -4 1 1 0 0.15 N V 21 N "my_M3_screw"
+T1 0 4 1 1 0 0.15 N V 21 N "VAL**"
+$PAD
+Sh "" C 6 6 0 0 0
+Dr 3 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 0 0
+$EndPAD
+$EndMODULE my_M3_screw
 $MODULE my_SMD5750
 Po 0 0 0 15 53F63111 00000000 ~~
 Li my_SMD5750
@@ -1044,6 +908,75 @@ Ne 0 ""
 Po -3.81 -5.08
 $EndPAD
 $EndMODULE my_dip8
+$MODULE my_dip_module
+Po 0 0 0 15 5402E50E 00000000 ~~
+Li my_dip_module
+Sc 0
+AR 
+Op 0 0 0
+T0 0 7 1 1 0 0.15 N V 21 N "my_dip_module"
+T1 -4 -7 1 1 0 0.15 N V 21 N "VAL**"
+DS -6 -6 6 -6 0.15 21
+DS 6 -6 6 6 0.15 21
+DS 6 6 -6 6 0.15 21
+DS -6 6 -6 -6 0.15 21
+$PAD
+Sh "1" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.81 -3.81
+$EndPAD
+$PAD
+Sh "2" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.81 -1.27
+$EndPAD
+$PAD
+Sh "3" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.81 1.27
+$EndPAD
+$PAD
+Sh "4" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -3.81 3.81
+$EndPAD
+$PAD
+Sh "5" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.81 3.81
+$EndPAD
+$PAD
+Sh "6" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.81 1.27
+$EndPAD
+$PAD
+Sh "7" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.81 -1.27
+$EndPAD
+$PAD
+Sh "8" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 3.81 -3.81
+$EndPAD
+$EndMODULE my_dip_module
 $MODULE my_double_layer_capacitor
 Po 0 0 0 15 53FDF1A4 00000000 ~~
 Li my_double_layer_capacitor
@@ -1074,22 +1007,6 @@ Ne 0 ""
 Po 6.5 0
 $EndPAD
 $EndMODULE my_double_layer_capacitor
-$MODULE my_drill_3mm
-Po 0 0 0 15 5401EA5D 00000000 ~~
-Li my_drill_3mm
-Sc 0
-AR 
-Op 0 0 0
-T0 0 -2.54 1 1 0 0.15 N V 21 N "my_drill_3mm"
-T1 0 2.54 1 1 0 0.15 N V 21 N "VAL**"
-$PAD
-Sh "1" C 3 3 0 0 0
-Dr 3 0 0
-At STD N 00E0FFFF
-Ne 0 ""
-Po 0 0
-$EndPAD
-$EndMODULE my_drill_3mm
 $MODULE my_inductor
 Po 0 0 0 15 53FE086E 00000000 ~~
 Li my_inductor
@@ -1784,7 +1701,7 @@ Po -3.81 0
 $EndPAD
 $EndMODULE my_sounder
 $MODULE my_tact_switch
-Po 0 0 0 15 53FF49B5 00000000 ~~
+Po 0 0 0 15 5403248F 00000000 ~~
 Li my_tact_switch
 Sc 0
 AR 
@@ -1810,14 +1727,14 @@ Ne 0 ""
 Po 2.25 4.05
 $EndPAD
 $PAD
-Sh "" C 1.8 1.8 0 0 0
+Sh "2" C 1.8 1.8 0 0 0
 Dr 1.2 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po 3.5 1.55
 $EndPAD
 $PAD
-Sh "" C 1.8 1.8 0 0 0
+Sh "2" C 1.8 1.8 0 0 0
 Dr 1.2 0 0
 At STD N 00E0FFFF
 Ne 0 ""

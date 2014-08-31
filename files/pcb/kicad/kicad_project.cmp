@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/31 0:54:44
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/08/31 18:07:11
 
 BeginCmp
 TimeStamp = /53F8B8E7;
@@ -263,7 +263,7 @@ BeginCmp
 TimeStamp = /53F9A377/53F95D31;
 Reference = IC12;
 ValeurCmp = LPS331AP;
-IdModule  = my_dip8;
+IdModule  = my_dip_module;
 EndCmp
 
 BeginCmp
