@@ -1,4 +1,4 @@
-EESchema-DOCLIB  Version 2.0  Date: 2014/08/29 1:24:07
+EESchema-DOCLIB  Version 2.0  Date: 2014/09/02 3:06:54
 #
 $CMP 2SA
 D 2SA sot23
@@ -27,7 +27,7 @@ $CMP CP1
 D Condensateur polarise
 $ENDCMP
 #
-$CMP my_3_terminal_regulator
+$CMP MY_3_TERMINAL_REGULATOR
 D Linear Regulator +5V
 K POWER REGUL
 F regulator\lm78xx.pdf

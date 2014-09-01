@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/09/01 2:24:48
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/09/02 3:13:52
 
 BeginCmp
 TimeStamp = /53F8B8E7;
@@ -106,20 +106,6 @@ IdModule  = SM0603_Capa;
 EndCmp
 
 BeginCmp
-TimeStamp = /53F9209B/53FF6073;
-Reference = C16;
-ValeurCmp = 0.1u;
-IdModule  = SM0603_Capa;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F9209D/53FF6211;
-Reference = C17;
-ValeurCmp = 0.1u;
-IdModule  = SM0603_Capa;
-EndCmp
-
-BeginCmp
 TimeStamp = /53F905A9/53FF68E6;
 Reference = C18;
 ValeurCmp = 0.1u;
@@ -169,6 +155,20 @@ IdModule  = SM0805;
 EndCmp
 
 BeginCmp
+TimeStamp = /53F8942B/5404BD97;
+Reference = D6;
+ValeurCmp = DIODE;
+IdModule  = SM0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F8942B/5404BDA6;
+Reference = D7;
+ValeurCmp = DIODE;
+IdModule  = SM0805;
+EndCmp
+
+BeginCmp
 TimeStamp = /53F8942B/53F8C1A7;
 Reference = F1;
 ValeurCmp = FUSE;
@@ -185,21 +185,21 @@ EndCmp
 BeginCmp
 TimeStamp = /53F77746/53FBC5F1;
 Reference = IC2;
-ValeurCmp = IC_16PIN;
+ValeurCmp = 74LC138;
 IdModule  = my_so16;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53FAC03B;
 Reference = IC3;
-ValeurCmp = IC_4PIN;
+ValeurCmp = TLP627;
 IdModule  = my_dip4;
 EndCmp
 
 BeginCmp
 TimeStamp = /53F77746/53FAC035;
 Reference = IC4;
-ValeurCmp = IC_4PIN;
+ValeurCmp = TLP627;
 IdModule  = my_dip4;
 EndCmp
 
@@ -239,10 +239,10 @@ IdModule  = so-8;
 EndCmp
 
 BeginCmp
-TimeStamp = /53F8942B/53F89AC9;
+TimeStamp = /53F8942B/5404BB69;
 Reference = IC10;
-ValeurCmp = FET;
-IdModule  = my_sot428;
+ValeurCmp = MY_FET_P;
+IdModule  = my_SOT23;
 EndCmp
 
 BeginCmp
@@ -250,6 +250,27 @@ TimeStamp = /53F905A9/53F95FB5;
 Reference = IC11;
 ValeurCmp = DS1307;
 IdModule  = so-8;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F8942B/5404C1BB;
+Reference = IC12;
+ValeurCmp = MY_NPN;
+IdModule  = my_SOT23;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F8942B/5404C3FB;
+Reference = IC13;
+ValeurCmp = MY_PNP;
+IdModule  = my_SOT23;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F8942B/5404BE62;
+Reference = IC14;
+ValeurCmp = MY_FET_N;
+IdModule  = my_sot428;
 EndCmp
 
 BeginCmp
@@ -519,10 +540,10 @@ IdModule  = SM0805;
 EndCmp
 
 BeginCmp
-TimeStamp = /53F90D02;
-Reference = SW1;
-ValeurCmp = SW_PUSH;
-IdModule  = my_tact_switch;
+TimeStamp = /53F8CD21/5404B94E;
+Reference = R32;
+ValeurCmp = 1M;
+IdModule  = SM0805;
 EndCmp
 
 BeginCmp
@@ -550,20 +571,6 @@ BeginCmp
 TimeStamp = /53F8942B/53F89B62;
 Reference = T1;
 ValeurCmp = 2SC;
-IdModule  = SOT23;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F8942B/53F89ABA;
-Reference = T2;
-ValeurCmp = 2SC;
-IdModule  = SOT23;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F8942B/53F89AC0;
-Reference = T3;
-ValeurCmp = 2SA;
 IdModule  = SOT23;
 EndCmp
 
@@ -642,27 +649,6 @@ TimeStamp = /53F8942B/53FB6A7A;
 Reference = U11;
 ValeurCmp = DC_JACK;
 IdModule  = my_dcjack;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F91D15/53F901A9;
-Reference = U12;
-ValeurCmp = LOAD;
-IdModule  = my_sounder;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F9209B/53F8FE49;
-Reference = U13;
-ValeurCmp = remocon;
-IdModule  = my_remocon;
-EndCmp
-
-BeginCmp
-TimeStamp = /53F9209D/53FB5E8C;
-Reference = U14;
-ValeurCmp = napion;
-IdModule  = my_napion;
 EndCmp
 
 BeginCmp

@@ -35,9 +35,9 @@ EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 3 11
+Sheet 3 8
 Title ""
-Date "31 aug 2014"
+Date "1 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -483,8 +483,6 @@ Text Label 8000 6500 1    60   ~ 0
 N8
 Text Label 8100 6500 1    60   ~ 0
 N9
-Text GLabel 2600 4600 0    60   Input ~ 0
-GND_L
 Wire Wire Line
 	8700 6550 8700 6350
 Wire Wire Line
@@ -768,8 +766,27 @@ Wire Wire Line
 Connection ~ 3000 2850
 Connection ~ 2800 2750
 Wire Wire Line
-	3000 4600 2600 4600
-Wire Wire Line
 	2800 4250 2800 4600
-Connection ~ 2800 4600
+$Comp
+L GND #PWR027
+U 1 1 5404E81E
+P 2800 4600
+F 0 "#PWR027" H 2800 4600 30  0001 C CNN
+F 1 "GND" H 2800 4530 30  0001 C CNN
+F 2 "" H 2800 4600 60  0000 C CNN
+F 3 "" H 2800 4600 60  0000 C CNN
+	1    2800 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR028
+U 1 1 5404E82D
+P 3000 4600
+F 0 "#PWR028" H 3000 4600 30  0001 C CNN
+F 1 "GND" H 3000 4530 30  0001 C CNN
+F 2 "" H 3000 4600 60  0000 C CNN
+F 3 "" H 3000 4600 60  0000 C CNN
+	1    3000 4600
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
