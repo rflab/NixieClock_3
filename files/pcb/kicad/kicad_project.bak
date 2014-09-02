@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 8
 Title ""
-Date "1 sep 2014"
+Date "2 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -381,17 +381,6 @@ F 3 "" H 7950 4950 60  0000 C CNN
 	1    7950 4950
 	1    0    0    -1  
 $EndComp
-$Comp
-L MY_PIN52 U18
-U 1 1 54009923
-P 10050 6350
-F 0 "U18" H 10000 6100 60  0000 C CNN
-F 1 "MY_PIN52" V 10050 6400 60  0000 C CNN
-F 2 "" H 10050 6350 60  0000 C CNN
-F 3 "" H 10050 6350 60  0000 C CNN
-	1    10050 6350
-	1    0    0    -1  
-$EndComp
 Text Notes 7550 4100 0    60   ~ 0
 upper board
 Text Notes 7550 5750 0    60   ~ 0
@@ -630,7 +619,7 @@ Wire Wire Line
 Wire Wire Line
 	4100 5500 4700 5500
 Wire Wire Line
-	10400 6500 10400 6650
+	10400 6100 10400 6650
 Wire Wire Line
 	10400 5100 10300 5100
 Wire Wire Line
@@ -722,10 +711,6 @@ NoConn ~ 10300 5000
 NoConn ~ 10300 4900
 NoConn ~ 10300 4800
 NoConn ~ 10300 4700
-NoConn ~ 10400 6400
-NoConn ~ 10400 6300
-NoConn ~ 10400 6200
-NoConn ~ 10400 6100
 NoConn ~ 9650 6200
 NoConn ~ 9650 6300
 NoConn ~ 9650 6400
@@ -810,4 +795,20 @@ Wire Wire Line
 	6100 1450 6300 1450
 Wire Wire Line
 	6100 1600 6300 1600
+$Comp
+L MY_PIN52 U18
+U 1 1 54009923
+P 10050 6350
+F 0 "U18" H 10000 6100 60  0000 C CNN
+F 1 "MY_PIN52" V 10050 6400 60  0000 C CNN
+F 2 "" H 10050 6350 60  0000 C CNN
+F 3 "" H 10050 6350 60  0000 C CNN
+	1    10050 6350
+	1    0    0    -1  
+$EndComp
+Connection ~ 10400 6500
+Connection ~ 10400 6400
+Connection ~ 10400 6300
+Connection ~ 10400 6200
+Connection ~ 10400 6100
 $EndSCHEMATC
