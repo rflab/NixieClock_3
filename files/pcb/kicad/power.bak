@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 5 8
 Title ""
-Date "2 sep 2014"
+Date "4 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -358,9 +358,7 @@ $EndComp
 Text GLabel 2550 6350 0    60   Input ~ 0
 PINGND
 Wire Wire Line
-	4300 3400 4300 3900
-Wire Wire Line
-	4300 3900 4300 4150
+	4300 3400 4300 4150
 Wire Wire Line
 	4300 3900 4150 3900
 Wire Wire Line
@@ -370,11 +368,7 @@ Wire Wire Line
 Wire Wire Line
 	4900 4950 4900 4700
 Wire Wire Line
-	3250 4950 4450 4950
-Wire Wire Line
-	4450 4950 4900 4950
-Wire Wire Line
-	4900 4950 5100 4950
+	3250 4950 5100 4950
 Wire Wire Line
 	5100 3400 5100 3450
 Wire Wire Line
@@ -392,9 +386,7 @@ Wire Wire Line
 Wire Wire Line
 	3100 4550 3100 5500
 Wire Wire Line
-	6450 4550 6450 4950
-Wire Wire Line
-	6450 4950 6450 5350
+	6450 4550 6450 5350
 Connection ~ 5100 4950
 Connection ~ 5100 3950
 Wire Wire Line
@@ -407,36 +399,20 @@ Wire Wire Line
 Wire Wire Line
 	6950 4150 6950 3950
 Wire Wire Line
-	2550 3400 3400 3400
-Wire Wire Line
-	3400 3400 4300 3400
-Wire Wire Line
-	4300 3400 5100 3400
-Wire Wire Line
-	5100 3400 6950 3400
-Wire Wire Line
-	6950 3400 7050 3400
+	2550 3400 7050 3400
 Wire Wire Line
 	6950 3400 6950 3450
 Connection ~ 5100 3400
-Wire Wire Line
-	6950 6350 6950 5750
 Connection ~ 6950 3400
 Wire Wire Line
-	7650 3400 7750 3400
-Wire Wire Line
-	7750 3400 7850 3400
+	7650 3400 7850 3400
 Wire Wire Line
 	7750 3400 7750 4800
 Wire Wire Line
 	7750 6350 7750 5100
 Connection ~ 7750 3400
 Wire Wire Line
-	8250 3400 8350 3400
-Wire Wire Line
-	8350 3400 8850 3400
-Wire Wire Line
-	8850 3400 9500 3400
+	8250 3400 9500 3400
 Wire Wire Line
 	8850 3400 8850 4400
 Wire Wire Line
@@ -444,9 +420,7 @@ Wire Wire Line
 Wire Wire Line
 	8350 3400 8350 3550
 Wire Wire Line
-	8350 4600 8350 4700
-Wire Wire Line
-	8350 4700 8350 4750
+	8350 4600 8350 4750
 Wire Wire Line
 	8350 5250 8350 5300
 Wire Wire Line
@@ -480,9 +454,7 @@ Wire Wire Line
 	6450 4950 6450 4950
 Connection ~ 6450 4950
 Wire Wire Line
-	2950 4150 3550 4150
-Wire Wire Line
-	3550 4150 3650 4150
+	2950 4150 3650 4150
 Connection ~ 4300 3400
 Wire Wire Line
 	5950 4950 5650 4950
@@ -491,28 +463,16 @@ Wire Wire Line
 Wire Wire Line
 	4650 2700 4650 2300
 Wire Wire Line
-	5050 2000 5100 2000
+	5050 2000 5650 2000
 Wire Wire Line
-	5100 2000 5350 2000
-Wire Wire Line
-	5350 2000 5650 2000
-Wire Wire Line
-	6050 2000 6200 2000
-Wire Wire Line
-	6200 2000 6550 2000
+	6050 2000 6750 2000
 Wire Wire Line
 	5100 2000 5100 2050
 Wire Wire Line
-	6200 1300 6200 2000
-Wire Wire Line
-	6200 2000 6200 2050
+	6200 1300 6200 2050
 Connection ~ 5100 2000
 Wire Wire Line
-	3750 2000 3850 2000
-Wire Wire Line
-	3850 2000 4200 2000
-Wire Wire Line
-	4200 2000 4250 2000
+	3750 2000 4250 2000
 Wire Wire Line
 	4200 2000 4200 2150
 Connection ~ 4200 2000
@@ -542,17 +502,7 @@ Connection ~ 4300 3900
 Wire Wire Line
 	3050 2200 3050 2700
 Wire Wire Line
-	3050 2700 3850 2700
-Wire Wire Line
-	3850 2700 4200 2700
-Wire Wire Line
-	4200 2700 4650 2700
-Wire Wire Line
-	4650 2700 5100 2700
-Wire Wire Line
-	5100 2700 6200 2700
-Wire Wire Line
-	6200 2700 6550 2700
+	3050 2700 6550 2700
 Wire Wire Line
 	8850 6350 8850 4800
 Wire Wire Line
@@ -570,19 +520,7 @@ Connection ~ 5100 2700
 Connection ~ 4650 2700
 Connection ~ 4200 2700
 Wire Wire Line
-	2550 6350 2950 6350
-Wire Wire Line
-	2950 6350 4300 6350
-Wire Wire Line
-	4300 6350 5100 6350
-Wire Wire Line
-	5100 6350 6950 6350
-Wire Wire Line
-	6950 6350 7750 6350
-Wire Wire Line
-	7750 6350 8350 6350
-Wire Wire Line
-	8350 6350 8850 6350
+	2550 6350 8850 6350
 Connection ~ 4300 6350
 Connection ~ 8350 6350
 Connection ~ 6950 6350
@@ -716,4 +654,31 @@ F 3 "" H 6550 1900 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Connection ~ 5350 2000
+$Comp
+L R R33
+U 1 1 54087537
+P 6950 6000
+F 0 "R33" V 7030 6000 40  0000 C CNN
+F 1 "R" V 6957 6001 40  0000 C CNN
+F 2 "~" V 6880 6000 30  0000 C CNN
+F 3 "~" H 6950 6000 30  0000 C CNN
+	1    6950 6000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6950 6350 6950 6250
+$Comp
+L PWR_FLAG #FLG036
+U 1 1 54087A33
+P 6750 1900
+F 0 "#FLG036" H 6750 1995 30  0001 C CNN
+F 1 "PWR_FLAG" H 6750 2080 30  0000 C CNN
+F 2 "" H 6750 1900 60  0000 C CNN
+F 3 "" H 6750 1900 60  0000 C CNN
+	1    6750 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6750 2000 6750 1900
+Connection ~ 6550 2000
 $EndSCHEMATC

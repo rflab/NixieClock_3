@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 8
 Title ""
-Date "2 sep 2014"
+Date "4 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -373,12 +373,12 @@ Text Notes 1500 1850 0    60   ~ 0
 $Comp
 L MY_PIN52 U15
 U 1 1 540098D6
-P 7950 4950
-F 0 "U15" H 7900 4700 60  0000 C CNN
-F 1 "MY_PIN52" V 7950 5000 60  0000 C CNN
-F 2 "" H 7950 4950 60  0000 C CNN
-F 3 "" H 7950 4950 60  0000 C CNN
-	1    7950 4950
+P 7700 4950
+F 0 "U15" H 7650 4700 60  0000 C CNN
+F 1 "MY_PIN52" V 7700 5000 60  0000 C CNN
+F 2 "" H 7700 4950 60  0000 C CNN
+F 3 "" H 7700 4950 60  0000 C CNN
+	1    7700 4950
 	1    0    0    -1  
 $EndComp
 Text Notes 7550 4100 0    60   ~ 0
@@ -428,17 +428,17 @@ Text Label 7850 3700 0    60   ~ 0
 SCL
 Text Label 8150 3700 0    60   ~ 0
 SDA
-Text GLabel 8450 4600 2    60   Input ~ 0
+Text GLabel 8200 5200 2    60   Input ~ 0
 PIN5V
 $Comp
 L +5V #PWR011
 U 1 1 54045B6C
-P 8250 6050
-F 0 "#PWR011" H 8250 6140 20  0001 C CNN
-F 1 "+5V" H 8250 6140 30  0000 C CNN
-F 2 "" H 8250 6050 60  0000 C CNN
-F 3 "" H 8250 6050 60  0000 C CNN
-	1    8250 6050
+P 8250 6550
+F 0 "#PWR011" H 8250 6640 20  0001 C CNN
+F 1 "+5V" H 8250 6640 30  0000 C CNN
+F 2 "" H 8250 6550 60  0000 C CNN
+F 3 "" H 8250 6550 60  0000 C CNN
+	1    8250 6550
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -500,7 +500,7 @@ F 3 "" H 10400 6650 60  0000 C CNN
 	1    10400 6650
 	1    0    0    -1  
 $EndComp
-Text GLabel 7400 5200 0    60   Input ~ 0
+Text GLabel 7150 5200 0    60   Input ~ 0
 PINGND
 $Comp
 L MY_PIN52 U17
@@ -528,9 +528,9 @@ F 3 "" H 9500 3850 60  0000 C CNN
 	1    9500 3850
 	1    0    0    -1  
 $EndComp
-Text Label 8250 6450 0    60   ~ 0
+Text Label 8250 6350 0    60   ~ 0
 SDA
-Text Label 8250 6550 0    60   ~ 0
+Text Label 8250 6450 0    60   ~ 0
 SCL
 Connection ~ 2600 6050
 Connection ~ 2600 4250
@@ -632,20 +632,16 @@ Wire Wire Line
 	8100 3700 8150 3700
 Wire Notes Line
 	7550 2500 8600 2500
-Wire Wire Line
-	8300 4700 8400 4700
-Wire Wire Line
-	8250 6050 8250 6150
 Wire Notes Line
 	8950 2500 10000 2500
-Text GLabel 8450 5200 2    60   Input ~ 0
+Text GLabel 8200 5050 2    60   Input ~ 0
 PINSCL
-Text GLabel 8450 5050 2    60   Input ~ 0
+Text GLabel 8200 4900 2    60   Input ~ 0
 PINSDA
 Wire Wire Line
-	8400 5100 8400 5200
+	8150 5100 8150 5200
 Wire Wire Line
-	8400 5200 8450 5200
+	8150 5200 8200 5200
 Wire Notes Line
 	8950 1000 10150 1000
 Wire Notes Line
@@ -662,20 +658,20 @@ Wire Wire Line
 	7750 1450 8000 1450
 Wire Wire Line
 	8000 1600 7750 1600
-Text Label 8250 6350 0    60   ~ 0
+Text Label 8250 6250 0    60   ~ 0
 PD4
-Text GLabel 8450 4900 2    60   Input ~ 0
+Text GLabel 8350 4700 2    60   Input ~ 0
 PINCLKOUT
 Wire Wire Line
-	8450 5050 8400 5050
+	8200 5050 8150 5050
 Wire Wire Line
-	8400 5050 8400 5000
+	8150 5050 8150 5000
 Wire Wire Line
-	8400 5000 8300 5000
+	8150 5000 8050 5000
 Wire Wire Line
-	8300 5100 8400 5100
+	8050 5100 8150 5100
 Wire Wire Line
-	8450 4900 8300 4900
+	8200 4900 8050 4900
 $Comp
 L +9V #PWR017
 U 1 1 5405402F
@@ -703,7 +699,6 @@ Wire Wire Line
 	9600 6500 9650 6500
 Wire Wire Line
 	7500 6750 7500 6550
-NoConn ~ 7550 5000
 NoConn ~ 9550 4800
 NoConn ~ 9550 4900
 NoConn ~ 9550 5000
@@ -714,27 +709,14 @@ NoConn ~ 10300 4700
 NoConn ~ 9650 6200
 NoConn ~ 9650 6300
 NoConn ~ 9650 6400
-NoConn ~ 7500 6450
-NoConn ~ 4650 5650
-NoConn ~ 4650 5550
 Text Label 2250 5300 0    60   ~ 0
 ADC6
 Wire Wire Line
 	2750 5300 2250 5300
-Text Label 8250 6250 0    60   ~ 0
+Text Label 8250 6150 0    60   ~ 0
 ADC6
-Wire Wire Line
-	8300 4800 8400 4800
-Wire Wire Line
-	8400 4800 8400 4750
-Wire Wire Line
-	8400 4750 8450 4750
-Text GLabel 8450 4750 2    60   Input ~ 0
+Text GLabel 8150 4550 2    60   Input ~ 0
 PINADC6
-Wire Wire Line
-	8400 4700 8400 4600
-Wire Wire Line
-	8400 4600 8450 4600
 Text GLabel 7750 2150 0    60   Input ~ 0
 PINADC6
 Wire Wire Line
@@ -752,37 +734,29 @@ PD6
 Text Label 7350 6350 0    60   ~ 0
 PD7
 Wire Wire Line
-	7500 6350 7350 6350
+	7350 6350 7500 6350
 Wire Wire Line
 	7350 6250 7500 6250
 Wire Wire Line
 	7500 6150 7350 6150
-Text GLabel 7400 4600 0    60   Input ~ 0
+Text GLabel 7150 4600 0    60   Input ~ 0
 PINPD5
-Text GLabel 7400 4750 0    60   Input ~ 0
+Text GLabel 7150 4800 0    60   Input ~ 0
 PINPD6
-Text GLabel 7400 4900 0    60   Input ~ 0
+Text GLabel 6700 4900 0    60   Input ~ 0
 PINPD7
 Wire Wire Line
-	7550 5100 7500 5100
+	7300 5100 7250 5100
 Wire Wire Line
-	7500 5100 7500 5200
+	7250 5100 7250 5200
 Wire Wire Line
-	7500 5200 7400 5200
+	7250 5200 7150 5200
 Wire Wire Line
-	7400 4900 7550 4900
+	7300 4700 7250 4700
 Wire Wire Line
-	7550 4800 7500 4800
+	7250 4700 7250 4600
 Wire Wire Line
-	7500 4800 7500 4750
-Wire Wire Line
-	7500 4750 7400 4750
-Wire Wire Line
-	7550 4700 7500 4700
-Wire Wire Line
-	7500 4700 7500 4600
-Wire Wire Line
-	7500 4600 7400 4600
+	7250 4600 7150 4600
 Text GLabel 6100 1300 0    60   Input ~ 0
 PINPD5
 Text GLabel 6100 1450 0    60   Input ~ 0
@@ -811,4 +785,43 @@ Connection ~ 10400 6400
 Connection ~ 10400 6300
 Connection ~ 10400 6200
 Connection ~ 10400 6100
+Wire Wire Line
+	8100 4700 8100 4550
+Wire Wire Line
+	8100 4550 8150 4550
+Wire Wire Line
+	8100 4700 8050 4700
+Wire Wire Line
+	8050 4800 8200 4800
+Wire Wire Line
+	8200 4800 8200 4700
+Wire Wire Line
+	8200 4700 8350 4700
+Wire Wire Line
+	7150 4800 7300 4800
+$Comp
+L +9V #PWR018
+U 1 1 5408AC70
+P 7150 6350
+F 0 "#PWR018" H 7150 6320 20  0001 C CNN
+F 1 "+9V" H 7150 6460 30  0000 C CNN
+F 2 "" H 7150 6350 60  0000 C CNN
+F 3 "" H 7150 6350 60  0000 C CNN
+	1    7150 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7500 6450 7150 6450
+Wire Wire Line
+	7150 6450 7150 6350
+Text GLabel 7100 5000 0    60   Input ~ 0
+PIN9V
+Wire Wire Line
+	7050 5400 7100 5400
+Wire Wire Line
+	7100 5000 7300 5000
+Wire Wire Line
+	7300 4900 6700 4900
+NoConn ~ 4650 5550
+NoConn ~ 4650 5650
 $EndSCHEMATC
