@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/09/04 23:10:14
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/09/06 1:51:31
 
 BeginCmp
 TimeStamp = /53F8B8E7;
@@ -656,6 +656,20 @@ TimeStamp = /53F8942B/53FB6A7A;
 Reference = U11;
 ValeurCmp = DC_JACK;
 IdModule  = my_dcjack;
+EndCmp
+
+BeginCmp
+TimeStamp = /540A6149;
+Reference = U12;
+ValeurCmp = MY_PIN72;
+IdModule  = my_pin72;
+EndCmp
+
+BeginCmp
+TimeStamp = /540A61B9;
+Reference = U13;
+ValeurCmp = MY_PIN72;
+IdModule  = my_pin72;
 EndCmp
 
 BeginCmp

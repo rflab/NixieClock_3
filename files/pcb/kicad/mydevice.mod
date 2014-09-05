@@ -1,8 +1,9 @@
-PCBNEW-LibModule-V1  2014/09/02 2:32:26
+PCBNEW-LibModule-V1  2014/09/06 1:51:01
 # encoding utf-8
 Units mm
 $INDEX
 my_3pin
+my_8pin
 my_M3_screw
 my_SMD5750
 my_SMD_VR
@@ -25,6 +26,7 @@ my_neon
 my_nixie
 my_photo_diode
 my_pin52
+my_pin72
 my_remocon
 my_rotary_switch
 my_smd10x10
@@ -68,6 +70,75 @@ Ne 0 ""
 Po 2.54 0
 $EndPAD
 $EndMODULE my_3pin
+$MODULE my_8pin
+Po 0 0 0 15 5408AFC3 00000000 ~~
+Li my_8pin
+Sc 0
+AR 
+Op 0 0 0
+T0 0 -6.35 0.8 0.8 0 0.15 N V 21 N "my_8pin"
+T1 0 6.35 0.8 0.8 0 0.15 N V 21 N "VAL**"
+DS -2.54 -5.08 -2.54 5.08 0.15 21
+DS -2.54 5.08 2.54 5.08 0.15 21
+DS 2.54 5.08 2.54 -5.08 0.15 21
+DS 2.54 -5.08 -2.54 -5.08 0.15 21
+$PAD
+Sh "1" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -3.81
+$EndPAD
+$PAD
+Sh "2" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -1.27
+$EndPAD
+$PAD
+Sh "3" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 1.27
+$EndPAD
+$PAD
+Sh "4" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 3.81
+$EndPAD
+$PAD
+Sh "5" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 3.81
+$EndPAD
+$PAD
+Sh "6" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 1.27
+$EndPAD
+$PAD
+Sh "7" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -1.27
+$EndPAD
+$PAD
+Sh "8" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -3.81
+$EndPAD
+$EndMODULE my_8pin
 $MODULE my_M3_screw
 Po 0 0 0 15 5403105F 00000000 ~~
 Li my_M3_screw
@@ -1362,6 +1433,117 @@ Ne 0 ""
 Po 1.27 -5.08
 $EndPAD
 $EndMODULE my_pin52
+$MODULE my_pin72
+Po 0 0 0 15 5409E9F3 00000000 ~~
+Li my_pin72
+Sc 0
+AR 
+Op 0 0 0
+T0 0 -10.16 0.8 0.8 0 0.15 N V 21 N "my_pin72"
+T1 0 10.16 0.8 0.8 0 0.15 N V 21 N "VAL**"
+DS -2.54 -8.89 -2.54 8.89 0.15 21
+DS -2.54 8.89 2.54 8.89 0.15 21
+DS 2.54 8.89 2.54 -8.89 0.15 21
+DS 2.54 -8.89 -2.54 -8.89 0.15 21
+$PAD
+Sh "1" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -7.62
+$EndPAD
+$PAD
+Sh "2" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -5.08
+$EndPAD
+$PAD
+Sh "3" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 -2.54
+$EndPAD
+$PAD
+Sh "4" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 0
+$EndPAD
+$PAD
+Sh "5" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 2.54
+$EndPAD
+$PAD
+Sh "6" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 5.08
+$EndPAD
+$PAD
+Sh "7" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po -1.27 7.62
+$EndPAD
+$PAD
+Sh "8" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 7.62
+$EndPAD
+$PAD
+Sh "9" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 5.08
+$EndPAD
+$PAD
+Sh "10" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 2.54
+$EndPAD
+$PAD
+Sh "11" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 0
+$EndPAD
+$PAD
+Sh "12" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -2.54
+$EndPAD
+$PAD
+Sh "13" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -5.08
+$EndPAD
+$PAD
+Sh "14" C 1.6 1.6 0 0 0
+Dr 1 0 0
+At STD N 00E0FFFF
+Ne 0 ""
+Po 1.27 -7.62
+$EndPAD
+$EndMODULE my_pin72
 $MODULE my_remocon
 Po 0 0 0 15 53FF45E8 00000000 ~~
 Li my_remocon

@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 8
 Title ""
-Date "4 sep 2014"
+Date "5 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -768,10 +768,10 @@ Connection ~ 2800 2750
 Wire Wire Line
 	2800 4250 2800 4600
 $Comp
-L GND #PWR028
+L GND #PWR019
 U 1 1 5404E81E
 P 2800 4600
-F 0 "#PWR028" H 2800 4600 30  0001 C CNN
+F 0 "#PWR019" H 2800 4600 30  0001 C CNN
 F 1 "GND" H 2800 4530 30  0001 C CNN
 F 2 "" H 2800 4600 60  0000 C CNN
 F 3 "" H 2800 4600 60  0000 C CNN
@@ -779,14 +779,26 @@ F 3 "" H 2800 4600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR029
+L GND #PWR020
 U 1 1 5404E82D
 P 3000 4600
-F 0 "#PWR029" H 3000 4600 30  0001 C CNN
+F 0 "#PWR020" H 3000 4600 30  0001 C CNN
 F 1 "GND" H 3000 4530 30  0001 C CNN
 F 2 "" H 3000 4600 60  0000 C CNN
 F 3 "" H 3000 4600 60  0000 C CNN
 	1    3000 4600
 	1    0    0    -1  
 $EndComp
+Text Label 4850 3950 0    60   ~ 0
+NEU2
+Text Label 4600 4050 0    60   ~ 0
+NEL2
+Text Label 4400 4850 0    60   ~ 0
+NEG2
+Text Label 3300 4850 0    60   ~ 0
+NEG1
+Text Label 3500 4050 0    60   ~ 0
+NEL1
+Text Label 3700 3950 0    60   ~ 0
+NEU1
 $EndSCHEMATC
