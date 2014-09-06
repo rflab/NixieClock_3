@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 8
 Title ""
-Date "5 sep 2014"
+Date "6 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -338,33 +338,19 @@ Wire Wire Line
 Wire Wire Line
 	4350 3100 4650 3100
 Wire Wire Line
-	2950 2700 4100 2700
+	2950 2700 3900 2700
 Wire Wire Line
 	4650 2900 4350 2900
 Wire Wire Line
 	4650 2700 4350 2700
 Wire Wire Line
-	4100 2600 3900 2600
-Wire Wire Line
-	4100 2500 3900 2500
-Wire Wire Line
 	4650 2500 4350 2500
 Wire Wire Line
-	4100 2400 3900 2400
-Wire Wire Line
 	4650 2200 4350 2200
-Wire Wire Line
-	4100 2300 3900 2300
-Wire Wire Line
-	3900 2200 4100 2200
 Wire Wire Line
 	4350 2000 4650 2000
 Wire Wire Line
 	4650 1800 4350 1800
-Wire Wire Line
-	4100 2100 3900 2100
-Wire Wire Line
-	3900 2000 4100 2000
 Wire Wire Line
 	4350 1600 4650 1600
 Wire Wire Line
@@ -557,21 +543,21 @@ Wire Wire Line
 Connection ~ 4000 1600
 Wire Wire Line
 	2850 1600 3250 1600
-Text Label 4000 2700 0    60   ~ 0
+Text Label 3900 2000 0    60   ~ 0
 L1
-Text Label 4000 2600 0    60   ~ 0
+Text Label 3900 2100 0    60   ~ 0
 L2
-Text Label 4000 2500 0    60   ~ 0
+Text Label 3900 2200 0    60   ~ 0
 L3
-Text Label 4000 2400 0    60   ~ 0
+Text Label 3900 2300 0    60   ~ 0
 L4
-Text Label 4000 2300 0    60   ~ 0
+Text Label 3900 2400 0    60   ~ 0
 L5
-Text Label 4000 2200 0    60   ~ 0
+Text Label 3900 2500 0    60   ~ 0
 L6
-Text Label 4000 2100 0    60   ~ 0
+Text Label 3900 2600 0    60   ~ 0
 L7
-Text Label 4000 2000 0    60   ~ 0
+Text Label 3900 2700 0    60   ~ 0
 L8
 Text Label 4350 1600 0    60   ~ 0
 L1
