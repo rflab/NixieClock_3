@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 8
 Title ""
-Date "6 sep 2014"
+Date "7 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -801,4 +801,68 @@ Text Label 3500 4050 0    60   ~ 0
 NEL1
 Text Label 3700 3950 0    60   ~ 0
 NEU1
+$Comp
+L NEON U14
+U 1 1 540C8497
+P 3550 6150
+F 0 "U14" H 3650 6350 60  0000 C CNN
+F 1 "NEON" H 3700 5950 60  0000 C CNN
+F 2 "" H 3650 6350 60  0000 C CNN
+F 3 "" H 3650 6350 60  0000 C CNN
+	1    3550 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L NEON U19
+U 1 1 540C849D
+P 3950 6150
+F 0 "U19" H 4050 6350 60  0000 C CNN
+F 1 "NEON" H 4100 5950 60  0000 C CNN
+F 2 "" H 4050 6350 60  0000 C CNN
+F 3 "" H 4050 6350 60  0000 C CNN
+	1    3950 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_3 K5
+U 1 1 540C84A3
+P 3350 5250
+F 0 "K5" V 3300 5250 50  0000 C CNN
+F 1 "CONN_3" V 3400 5250 40  0000 C CNN
+F 2 "~" H 3350 5250 60  0000 C CNN
+F 3 "~" H 3350 5250 60  0000 C CNN
+	1    3350 5250
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3950 5650 3950 5800
+Wire Wire Line
+	3550 6500 3550 6500
+Wire Wire Line
+	3950 6500 3950 6500
+Wire Wire Line
+	3950 6550 3950 6500
+Wire Wire Line
+	3250 6550 3950 6550
+Wire Wire Line
+	3550 6500 3550 6550
+Connection ~ 3550 6550
+Wire Wire Line
+	3550 5800 3550 5750
+Wire Wire Line
+	3550 5750 3350 5750
+Wire Wire Line
+	3350 5750 3350 5600
+Wire Wire Line
+	3450 5600 3450 5650
+Wire Wire Line
+	3450 5650 3950 5650
+Wire Wire Line
+	3250 6550 3250 5600
+Text Label 3300 6550 0    60   ~ 0
+NEG3
+Text Label 3500 5750 0    60   ~ 0
+NEL3
+Text Label 3700 5650 0    60   ~ 0
+NEU3
 $EndSCHEMATC

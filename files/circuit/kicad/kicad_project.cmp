@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/09/06 1:51:31
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 2014/09/08 0:54:58
 
 BeginCmp
 TimeStamp = /53F8B8E7;
@@ -297,6 +297,13 @@ EndCmp
 BeginCmp
 TimeStamp = /53F77746/53F9F7BB/53FA54D2;
 Reference = K4;
+ValeurCmp = CONN_3;
+IdModule  = my_3pin;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F77746/53F9F7BB/540C84A3;
+Reference = K5;
 ValeurCmp = CONN_3;
 IdModule  = my_3pin;
 EndCmp
@@ -673,6 +680,13 @@ IdModule  = my_pin72;
 EndCmp
 
 BeginCmp
+TimeStamp = /53F77746/53F9F7BB/540C8497;
+Reference = U14;
+ValeurCmp = NEON;
+IdModule  = my_neon;
+EndCmp
+
+BeginCmp
 TimeStamp = /540098D6;
 Reference = U15;
 ValeurCmp = MY_PIN52;
@@ -698,6 +712,13 @@ TimeStamp = /54009923;
 Reference = U18;
 ValeurCmp = MY_PIN52;
 IdModule  = my_pin52;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F77746/53F9F7BB/540C849D;
+Reference = U19;
+ValeurCmp = NEON;
+IdModule  = my_neon;
 EndCmp
 
 BeginCmp

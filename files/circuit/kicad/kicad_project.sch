@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 8
 Title ""
-Date "6 sep 2014"
+Date "7 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -660,7 +660,7 @@ Wire Wire Line
 Wire Wire Line
 	9600 6500 9650 6500
 Wire Wire Line
-	5900 6800 5900 6600
+	5900 6300 5900 6800
 Wire Wire Line
 	1850 5500 1350 5500
 Wire Wire Line
@@ -723,8 +723,6 @@ Wire Wire Line
 Wire Wire Line
 	6650 6750 5900 6750
 Connection ~ 5900 6750
-Wire Wire Line
-	5900 6300 5900 6400
 Wire Wire Line
 	5800 6400 5800 6700
 Wire Wire Line
@@ -818,4 +816,5 @@ Connection ~ 10400 6400
 Connection ~ 9650 6200
 Connection ~ 9650 6100
 Connection ~ 9650 6300
+Connection ~ 5900 6600
 $EndSCHEMATC
