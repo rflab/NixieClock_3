@@ -1,4 +1,4 @@
-PCBNEW-LibModule-V1  2014/09/06 1:51:01
+PCBNEW-LibModule-V1  2014/09/09 1:10:30
 # encoding utf-8
 Units mm
 $INDEX
@@ -1207,26 +1207,13 @@ Po 1 0
 $EndPAD
 $EndMODULE my_neon
 $MODULE my_nixie
-Po 0 0 0 15 53FF518F 00000000 ~~
+Po 0 0 0 15 540DD4F4 00000000 ~~
 Li my_nixie
 Sc 0
 AR 
 Op 0 0 0
-T0 -6.4 6.6 1 1 0 0.15 N V 21 N "my_nixie"
-T1 5.8 7.1 1 1 0 0.15 N V 21 N "VAL**"
-T2 -3.3 -6.4 1 1 0 0.15 N V 21 N "1"
-T2 -5.8 -3.9 1 1 0 0.15 N V 21 N "7"
-T2 -6.9 -0.9 1 1 0 0.15 N V 21 N "3"
-T2 -6.5 2.6 1 1 0 0.15 N V 21 N "l"
-T2 -4.8 5.4 1 1 0 0.15 N V 21 N "4"
-T2 -1.9 7.1 1 1 0 0.15 N V 21 N "5"
-T2 1.6 7.1 1 1 0 0.15 N V 21 N "6"
-T2 4.8 5.6 1 1 0 0.15 N V 21 N "2"
-T2 6.6 2.6 1 1 0 0.15 N V 21 N "r"
-T2 7 -0.9 1 1 0 0.15 N V 21 N "8"
-T2 5.9 -4 1 1 0 0.15 N V 21 N "9"
-T2 3.4 -6.2 1 1 0 0.15 N V 21 N "0"
-T2 0 -7.6 1 1 0 0.15 N V 21 N "Anode"
+T0 0 0 1 1 0 0.15 N V 21 N "my_nixie"
+T1 0 -7.62 1 1 0 0.15 N V 21 N "VAL**"
 DC 0 0 -6.5 0 0.15 21
 DC 0 0 -5.7 0 0.15 21
 $PAD
@@ -1237,84 +1224,84 @@ Ne 0 ""
 Po 0 -5.7
 $EndPAD
 $PAD
-Sh "2" C 1.4 1.4 0 0 0
+Sh "8" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po 1.4 5.4
 $EndPAD
 $PAD
-Sh "3" C 1.4 1.4 0 0 0
+Sh "9" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po 3.7 4.2
 $EndPAD
 $PAD
-Sh "4" C 1.4 1.4 0 0 0
+Sh "10" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po 5.3 2
 $EndPAD
 $PAD
-Sh "5" C 1.4 1.4 0 0 0
+Sh "11" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po 5.6 -0.7
 $EndPAD
 $PAD
-Sh "6" C 1.4 1.4 0 0 0
+Sh "12" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po 4.7 -3.2
 $EndPAD
 $PAD
-Sh "7" C 1.4 1.4 0 0 0
+Sh "13" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po 2.6 -5
 $EndPAD
 $PAD
-Sh "8" C 1.4 1.4 0 0 0
+Sh "2" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po -2.6 -5
 $EndPAD
 $PAD
-Sh "9" C 1.4 1.4 0 0 0
+Sh "3" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po -4.7 -3.2
 $EndPAD
 $PAD
-Sh "10" C 1.4 1.4 0 0 0
+Sh "4" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po -5.6 -0.7
 $EndPAD
 $PAD
-Sh "11" C 1.4 1.4 0 0 0
+Sh "5" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po -5.3 2
 $EndPAD
 $PAD
-Sh "12" C 1.4 1.4 0 0 0
+Sh "6" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""
 Po -3.7 4.2
 $EndPAD
 $PAD
-Sh "13" C 1.4 1.4 0 0 0
+Sh "7" C 1.4 1.4 0 0 0
 Dr 0.8 0 0
 At STD N 00E0FFFF
 Ne 0 ""

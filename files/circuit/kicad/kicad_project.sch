@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 8
 Title ""
-Date "7 sep 2014"
+Date "8 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -310,12 +310,12 @@ SDA
 $Comp
 L +5V #PWR01
 U 1 1 54045B6C
-P 5900 6200
-F 0 "#PWR01" H 5900 6290 20  0001 C CNN
-F 1 "+5V" H 5900 6290 30  0000 C CNN
-F 2 "" H 5900 6200 60  0000 C CNN
-F 3 "" H 5900 6200 60  0000 C CNN
-	1    5900 6200
+P 6650 6200
+F 0 "#PWR01" H 6650 6290 20  0001 C CNN
+F 1 "+5V" H 6650 6290 30  0000 C CNN
+F 2 "" H 6650 6200 60  0000 C CNN
+F 3 "" H 6650 6200 60  0000 C CNN
+	1    6650 6200
 	1    0    0    -1  
 $EndComp
 Text Label 3750 5850 0    60   ~ 0
@@ -395,15 +395,15 @@ PD7
 $Comp
 L +9V #PWR04
 U 1 1 5408AC70
-P 5550 6400
-F 0 "#PWR04" H 5550 6370 20  0001 C CNN
-F 1 "+9V" H 5550 6510 30  0000 C CNN
-F 2 "" H 5550 6400 60  0000 C CNN
-F 3 "" H 5550 6400 60  0000 C CNN
-	1    5550 6400
+P 6750 6650
+F 0 "#PWR04" H 6750 6620 20  0001 C CNN
+F 1 "+9V" H 6750 6760 30  0000 C CNN
+F 2 "" H 6750 6650 60  0000 C CNN
+F 3 "" H 6750 6650 60  0000 C CNN
+	1    6750 6650
 	1    0    0    -1  
 $EndComp
-Text GLabel 5950 5000 0    60   Input ~ 0
+Text GLabel 6900 5100 2    60   Input ~ 0
 PIN9V
 NoConn ~ 3750 5750
 NoConn ~ 3750 5850
@@ -571,7 +571,7 @@ F 3 "" H 7300 6800 60  0000 C CNN
 	1    7300 6800
 	1    0    0    -1  
 $EndComp
-Text GLabel 5950 4700 0    60   Input ~ 0
+Text GLabel 6900 4700 2    60   Input ~ 0
 PIN5V
 Text GLabel 7500 5500 0    60   Input ~ 0
 PINGND
@@ -660,7 +660,7 @@ Wire Wire Line
 Wire Wire Line
 	9600 6500 9650 6500
 Wire Wire Line
-	5900 6300 5900 6800
+	5900 6200 5900 6800
 Wire Wire Line
 	1850 5500 1350 5500
 Wire Wire Line
@@ -672,17 +672,9 @@ Wire Wire Line
 Wire Wire Line
 	6300 1300 6000 1300
 Wire Wire Line
-	6150 5100 6100 5100
-Wire Wire Line
-	6000 5200 6900 5200
-Wire Wire Line
-	5900 6500 5550 6500
-Wire Wire Line
-	5550 6500 5550 6400
+	6000 5200 7300 5200
 Wire Wire Line
 	5900 5400 5950 5400
-Wire Wire Line
-	5950 5000 6150 5000
 Wire Wire Line
 	5700 3250 6250 3250
 Wire Wire Line
@@ -712,39 +704,19 @@ Wire Wire Line
 	9500 3850 9950 3850
 Connection ~ 9750 2850
 Wire Wire Line
-	8300 3000 7800 3000
+	7800 3000 8300 3000
 Connection ~ 8100 3000
 Wire Wire Line
 	7650 6300 7300 6300
 Wire Wire Line
 	7300 6300 7300 6800
 Wire Wire Line
-	6650 6200 6650 6750
-Wire Wire Line
-	6650 6750 5900 6750
+	5900 6750 6900 6750
 Connection ~ 5900 6750
-Wire Wire Line
-	5800 6400 5800 6700
-Wire Wire Line
-	5800 6700 5900 6700
-Connection ~ 5900 6700
 Wire Wire Line
 	8450 6300 8950 6300
 Wire Wire Line
 	8950 6300 8950 6900
-Wire Wire Line
-	6900 5200 6900 4700
-Connection ~ 6100 5200
-Wire Wire Line
-	6100 4900 6150 4900
-Connection ~ 6100 5100
-Wire Wire Line
-	6100 4800 6150 4800
-Connection ~ 6100 4900
-Wire Wire Line
-	5950 4700 6150 4700
-Wire Wire Line
-	6100 4800 6100 5200
 Wire Wire Line
 	7650 4600 7500 4600
 Wire Wire Line
@@ -780,20 +752,8 @@ Connection ~ 10300 5000
 Connection ~ 9550 5000
 Connection ~ 9550 4900
 Connection ~ 9550 4800
-Wire Wire Line
-	6900 5100 6900 5000
-Connection ~ 6900 5000
-Connection ~ 6900 5100
-Wire Wire Line
-	6900 4900 6900 4800
-Connection ~ 6900 4800
 Connection ~ 6900 4900
-Wire Wire Line
-	6650 6600 6650 6500
 Connection ~ 6650 6500
-Connection ~ 6650 6600
-Wire Wire Line
-	6650 6400 6650 6300
 Connection ~ 6650 6300
 Connection ~ 6650 6400
 Connection ~ 5900 6400
@@ -801,12 +761,8 @@ Wire Wire Line
 	10400 6300 10400 6200
 Connection ~ 10400 6500
 Wire Wire Line
-	9650 6400 9650 6300
+	9650 6000 9650 6400
 Connection ~ 9650 6400
-Wire Wire Line
-	9650 6200 9650 6100
-Wire Wire Line
-	9650 6350 9650 6000
 Wire Wire Line
 	9650 6000 10400 6000
 Connection ~ 10400 6100
@@ -817,4 +773,30 @@ Connection ~ 9650 6200
 Connection ~ 9650 6100
 Connection ~ 9650 6300
 Connection ~ 5900 6600
+Connection ~ 5900 6500
+Wire Wire Line
+	6650 6500 6900 6500
+Wire Wire Line
+	6900 6500 6900 6750
+Wire Wire Line
+	7300 5200 7300 5000
+Wire Wire Line
+	7300 5000 6900 5000
+Connection ~ 6900 5000
+Wire Wire Line
+	6900 5000 6900 4800
+Wire Wire Line
+	6150 4700 6150 5200
+Connection ~ 6150 5200
+Connection ~ 6150 5100
+Connection ~ 6150 5000
+Connection ~ 6150 4900
+Connection ~ 6150 4800
+Wire Wire Line
+	6750 6650 6650 6650
+Wire Wire Line
+	6650 6650 6650 6600
+Wire Wire Line
+	6650 6500 6650 6300
+Connection ~ 5900 6300
 $EndSCHEMATC

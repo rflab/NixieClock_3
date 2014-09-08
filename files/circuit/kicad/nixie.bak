@@ -37,7 +37,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 8
 Title ""
-Date "6 sep 2014"
+Date "8 sep 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -224,25 +224,25 @@ Text Label 2550 6400 0    60   ~ 0
 PINPC1
 Text Label 2550 6200 0    60   ~ 0
 PINPC2
-Text Label 4050 6000 0    60   ~ 0
-N0
-Text Label 4050 5900 0    60   ~ 0
-N1
 Text Label 5450 6000 0    60   ~ 0
-N2
-Text Label 5450 5900 0    60   ~ 0
-N3
-Text Label 5450 6200 0    60   ~ 0
-N4
+N0
 Text Label 5450 6100 0    60   ~ 0
-N5
+N1
+Text Label 4100 6600 0    60   ~ 0
+N2
 Text Label 5450 6600 0    60   ~ 0
-N6
+N3
 Text Label 5450 6500 0    60   ~ 0
-N7
+N4
 Text Label 5450 6400 0    60   ~ 0
+N5
+Text Label 5450 6200 0    60   ~ 0
+N6
+Text Label 5450 5900 0    60   ~ 0
+N7
+Text Label 4100 5900 0    60   ~ 0
 N8
-Text Label 4050 6600 0    60   ~ 0
+Text Label 4100 6000 0    60   ~ 0
 N9
 Text Label 2850 4200 0    60   ~ 0
 PINPB3
