@@ -139,18 +139,29 @@ typedef struct BIT_FOELD_PORTD
 //----------------------------
 // globals
 //----------------------------
-volatile int number = 0;
+volatile int g_number = 0;
 volatile bool clkout_flag = false;
 volatile bool num_up   = false;
 volatile bool num_down = false;
+
+// 表示記憶領域
+//volatile static unsigned char g_disp_flag = 0b11111111;
+volatile static unsigned char g_disp[8] = {0, 0, 0, 0, 0, 0, 0, 6};
+//volatile static unsigned char g_disp_prev[8] = {0, 0, DIGIT_OFF, 0, 0, DIGIT_OFF, 0, 0};
+//volatile static unsigned char g_disp_transition[8] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+//volatile static unsigned char g_disp_capture[8] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+volatile static unsigned char g_disp_colon[8] = {0, 0, 3, 0, 0, 3, 0, 0};
+//volatile static unsigned char g_disp_colon_prev[8] = {0, 0, 3, 0, 0, 3, 0, 0};
+//volatile static unsigned char g_disp_colon_capture[8] = {0, 0, 3, 0, 0, 3, 0, 0};
 
 //
 volatile static unsigned char g_illuminance  = 0x00; 
 
 // 時間記憶領域
-volatile static unsigned char g_hour	     = 0x00;
-volatile static unsigned char g_minute	     = 0x00;
-volatile static unsigned char g_second	     = 0x00;
+// あとでBCDにする
+volatile static unsigned char g_hour	     = 1;
+volatile static unsigned char g_minute	     = 7;
+volatile static unsigned char g_second	     = 0;
 volatile static unsigned char g_year	     = 0x00;
 volatile static unsigned char g_month	     = 0x00;
 volatile static unsigned char g_date	     = 0x00;
@@ -422,17 +433,17 @@ unsigned char LPS331_init()
 static void LPS331_load()
 {
 	long tmp;
-	float pressure;
-	float temparature; 
+	//float pressure;
+	//float temparature; 
 	
 	tmp = LPS331_read(0x2A);
 	tmp = LPS331_read(0x29) | (tmp << 8);
 	tmp = LPS331_read(0x28) | (tmp << 8);
-	pressure = (float) tmp / 4096.0f;
+	//pressure = (float) tmp / 4096.0f;
 	
 	tmp = LPS331_read(0x2C);
 	tmp = LPS331_read(0x2B) | (tmp << 8);
-	temparature = ((float)tmp / 480.0f) + 42.5f;
+	//temparature = ((float)tmp / 480.0f) + 42.5f;
 }
 
 
@@ -660,7 +671,8 @@ static void DS1307_init()
 // 繰り返しコールしてダイナミック点灯を行う
 static void ChangeDigit(e_digit digit_)
 {
-	setbits(PORT_NIXIE_DIGIT, MASK_NIXIE_DIGIT, OFFSET_NIXIE_DIGIT, (char)digit_);
+	//setbits(PORT_NIXIE_DIGIT, MASK_NIXIE_DIGIT, OFFSET_NIXIE_DIGIT, (char)digit_);
+	PORTB = (PORTB & 0b11111000) | digit_;
 	return;
 }
 
@@ -669,11 +681,16 @@ static void ChangeDigit(e_digit digit_)
 // 10~15は点灯せず
 static void ChangeNumber(unsigned char num_)
 {
-	static const unsigned char num2bit[] = {3, 4, 6, 9, 8, 1, 5, 0, 2, 7, 10};
-	setbits(PORT_NIXIE_DRIVER, MASK_NIXIE_DRIVER, OFFSET_NIXIE_DRIVER, num2bit[num_]);
+	static const unsigned char num2bit[] = {9, 8, 4, 2, 10, 14, 6, 12, 0, 1, 3};
+	PORTC = (PORTC & 0b11110000) | num2bit[num_];
 	return;
 }
 
+static void ChangeColon(unsigned char num_)
+{	
+	PORTB = (PORTB & 0b11100111) | (((~num_) << 3) & 0b00011000);
+	return;
+}
 
 //----------------------------
 // interrupts
@@ -700,35 +717,43 @@ ISR(TIMER0_COMPA_vect)
 	{
 		case 0:
 			ChangeDigit(DIGIT_0);
-			ChangeNumber(number);
+			ChangeColon(g_disp_colon[DIGIT_0]);
+			ChangeNumber(g_disp[DIGIT_0]);
 			break;
 		case 1:
 			ChangeDigit(DIGIT_1);
-			ChangeNumber(number);
+			ChangeColon(g_disp_colon[DIGIT_1]);
+			ChangeNumber(g_disp[DIGIT_1]);
 			break;
 		case 2:
 			ChangeDigit(DIGIT_COLON_L);
-			ChangeNumber(number);
+			ChangeColon(g_disp_colon[DIGIT_COLON_L]);
+			ChangeNumber(g_disp[DIGIT_COLON_L]);
 			break;
 		case 3:
 			ChangeDigit(DIGIT_2);
-			ChangeNumber(number);
+			ChangeColon(g_disp_colon[DIGIT_2]);
+			ChangeNumber(g_disp[DIGIT_2]);
 			break;
 		case 4:
 			ChangeDigit(DIGIT_3);
-			ChangeNumber(number);
+			ChangeColon(g_disp_colon[DIGIT_3]);
+			ChangeNumber(g_disp[DIGIT_3]);
 			break;
 		case 5:
 			ChangeDigit(DIGIT_COLON_R);
-			ChangeNumber(number);
+			ChangeColon(g_disp_colon[DIGIT_COLON_R]);
+			ChangeNumber(g_disp[DIGIT_COLON_R]);
 			break;
 		case 6:
 			ChangeDigit(DIGIT_4);
-			ChangeNumber(number);
+			ChangeColon(g_disp_colon[DIGIT_4]);
+			ChangeNumber(g_disp[DIGIT_4]);
 			break;
 		case 7:
 			ChangeDigit(DIGIT_5);
-			ChangeNumber(number);
+			ChangeColon(g_disp_colon[DIGIT_5]);
+			ChangeNumber(g_disp[DIGIT_5]);
 			break;
 		default:
 			break;
@@ -795,13 +820,23 @@ static void setup()
 	// PIN (I/O, interrupt)
 	{
 		// port config
+#if 1
+		DDRB   = 0b11111111; // 0~5が有効 0134:line direct(012:line decoder), 6:beep
+		DDRC   = 0b10001111; // 0~7が有効 0123:nixie_driver, 45:IIC, 6:reset
+		DDRD   = 0b00001111; // 0~7が有効 0:rtc_out, 1:rtc_oe, 23:sw_AB, 5:remote, 6:焦電センサ(プルダウン内臓), 7:sw_push
+		PORTB  = 0b00000000;
+		PORTC  = 0b00110000; // 45:IICプルアップ, 6:resetプルアップ
+		PORTD  = 0b00000000; // 6はセンサが内臓プルダウンなのでHiZ
+#else
 		DDRB   = 0b11111111; // 0~5が有効 0134:line direct(012:line decoder), 6:beep
 		DDRC   = 0b10001111; // 0~7が有効 0123:nixie_driver, 45:IIC, 6:reset
 		DDRD   = 0b00010010; // 0~7が有効 0:rtc_out, 1:rtc_oe, 23:sw_AB, 5:remote, 6:焦電センサ(プルダウン内臓), 7:sw_push
 		PORTB  = 0b00000000;
 		PORTC  = 0b00110000; // 45:IICプルアップ, 6:resetプルアップ
-		PORTD  = 0b10101111; // 6はセンサが内臓プルダウンなのでHiZ
+		PORTD  = 0b10101111; // 6は焦電センサが内臓プルダウンなのでHiZ
+#endif
 
+#if 0
 		// pin change interrupt
 		PCMSK0 = 0b00000000;
 		PCMSK1 = 0b00000000;
@@ -811,8 +846,11 @@ static void setup()
 		// interrupt
 		EICRA  = 0b00001010; // INT0, INT1立ち下がり検出
 		EIMSK  = 0b00000011; // INT0, INT1有効化
+#endif
 	}
 
+
+#if 1
 	// Timer
 	// 8桁ニキシーを30Hz表示したい、ブランク時間を半分とする
 	// マスタクロック8Mhz / 8 / 30 / 2 = 166666 (16.3 * 1024)回に一度割り込みでOK
@@ -830,7 +868,9 @@ static void setup()
 		// Compare Match A Interrupt Enable
 		TIMSK0 = 0b00000010;
 	}
+#endif
 	
+#if 0
 	// IIC
 	{
 		// 温度湿度センサ・AM2321と通信するI2Cバスのデータ転送速度は、最大100KHzです。
@@ -841,16 +881,21 @@ static void setup()
 		TWBR = ((F_CPU/20000UL) - 16) / 2;
 		TWCR = 1<<TWEN;
 	}
+#endif
 	
+#if 0
 	// ADC
 	{
 		// デジタルピンdisable
 		DIDR0 = 0b00000000;
 	}
+#endif
 
 	// 割り込み有効化アセンブラ命令コール
 	sei();
-	
+
+
+#if 0	
 	///// 外部デバイス初期化
 	_delay_ms(200); // DS1307の電源充電を待つ
 	//RTC8564NB_init();
@@ -859,6 +904,7 @@ static void setup()
 	LPS331_load();
 	AM2321_load();
 	DS1307_init();
+#endif
 	
 	// 初期化完了、起動時一度だけ
 	beep(1);
@@ -871,9 +917,10 @@ static void setup()
 // loop
 static void loop()
 {	
+#if 0
 	if ((PIND & 0b10000000) == 0)
 	{
-		number = 0;
+		g_number = 0;
 		//RTC8564NB_load();
 		//beep(g_second);
 
@@ -887,19 +934,19 @@ static void loop()
 	
 	if (num_up)
 	{
-		++number;
-		if (number > 9)
+		++g_number;
+		if (g_number > 9)
 		{
-			number = 0;
+			g_number = 0;
 		}
 		_delay_ms(200);
 	}
 	else if (num_down)
 	{
-		--number;
-		if (number < 0)
+		--g_number;
+		if (g_number < 0)
 		{
-			number = 9;
+			g_number = 9;
 		}
 		_delay_ms(200);
 	}
@@ -922,9 +969,41 @@ static void loop()
 		//beep(1);
 		clkout_flag = 0;
 	}
-
 	_delay_ms(20);
+#endif
 
+	// 割り込みにする
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+	
+	g_disp_colon[2] = g_disp_colon[2] == 0 ? 3 : 0;
+	g_disp_colon[5] = g_disp_colon[5] == 0 ? 3 : 0;
+	
+	g_second++;
+	if (g_second >= 60)
+	{
+		g_second = 0;
+		g_minute++;
+		if (g_minute >= 60)
+		{
+			g_minute = 0;
+			g_hour++;
+			if (g_hour >= 24)
+			{
+				g_hour = 0;
+			}
+		}
+	}
+	
+	g_disp[0] = g_second % 10;
+	g_disp[1] = g_second / 10;
+	g_disp[3] = g_minute % 10;
+	g_disp[4] = g_minute / 10;
+	g_disp[6] = g_hour % 10;
+	g_disp[7] = g_hour / 10;
 }
 
 // main
