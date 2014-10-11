@@ -635,34 +635,46 @@ static void DS1307_read()
 
 static void DS1307_write()
 {
+	iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+	iic_write(0x00);  // word address
+	//static const unsigned char CH  = 7;
+	iic_write(g_second); // 0x00 seconds
+	iic_write(g_minute); // 0x01 minutes
+	iic_write(g_hour); // 0x02 hours, bit6=1:24 hour mode
+	iic_write(g_week); // 0x03 week
+	iic_write(g_date); // 0x04 date
+	iic_write(g_month); // 0x05 month
+	iic_write(g_year); // 0x06 year
+	iic_stop();
+	
 	return;
 }
 
 
 static void DS1307_init()
 {
-	// VLビットをチェック
-	// 読み出しの場合はrepeatする
-	// 秒のアドレスの先頭ビットがバックアップ異常検出VL
+	DS1307_read();
+	
 	iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
-	#if 0
-		iic_write(0x00);  // word address
-		//static const unsigned char CH  = 7;
-		iic_write(0x00); // 0x00 seconds
-		iic_write(0x00); // 0x01 minutes
-		iic_write(0x00); // 0x02 hours, bit6=1:24 hour mode
-		iic_write(0x00); // 0x03 week
-		iic_write(0x00); // 0x04 date
-		iic_write(0x00); // 0x05 month
-		iic_write(0x00); // 0x06 year
-	#else
-		iic_write(0x07);  // word address
-	#endif
+	iic_write(0x00);  // word address
+	//static const unsigned char CH  = 7;
+	iic_write(g_second); // 0x00 seconds
+	iic_write(g_minute); // 0x01 minutes
+	iic_write(g_hour); // 0x02 hours, bit6=1:24 hour mode
+	iic_write(g_week); // 0x03 week
+	iic_write(g_date); // 0x04 date
+	iic_write(g_month); // 0x05 month
+	iic_write(g_year); // 0x06 year
+	iic_stop();
+	
+	//
 	static const unsigned char OUT  = 7;
 	static const unsigned char SQWE = 4;
 	static const unsigned char RS1  = 1;
 	static const unsigned char RS0  = 0;
-	iic_write((1<<OUT) | (1<<SQWE) | (0<<RS1) | (0<<RS0));  // 0x07 control 1kHz 
+	iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
+	iic_write(0x07);  // word address
+	iic_write((1<<OUT) | (1<<SQWE) | (0<<RS1) | (0<<RS0));  // 0x07 control 1kHz
 	iic_stop();
 }
 
@@ -701,11 +713,15 @@ ISR(TIMER0_COMPA_vect)
 	static unsigned char digit = 0;
 	static unsigned char blank = 0;
 
+
 	// blank期間なら全LEDをOFF
 	blank = blank == 0 ? 1 : 0;
 	if (blank)
 	{
 		ChangeNumber(10); // 10は点灯せず
+		ChangeColon(0);
+		_delay_us(50);
+		ChangeDigit(2); // とりあえずコロンのところに退避
 
 		return;
 	}
@@ -713,51 +729,64 @@ ISR(TIMER0_COMPA_vect)
 	// 表示LEDを切り替え
 	digit++;
 	digit &= 0x7;
-	switch (digit)
-	{
-		case 0:
-			ChangeDigit(DIGIT_0);
-			ChangeColon(g_disp_colon[DIGIT_0]);
-			ChangeNumber(g_disp[DIGIT_0]);
-			break;
-		case 1:
-			ChangeDigit(DIGIT_1);
-			ChangeColon(g_disp_colon[DIGIT_1]);
-			ChangeNumber(g_disp[DIGIT_1]);
-			break;
-		case 2:
-			ChangeDigit(DIGIT_COLON_L);
-			ChangeColon(g_disp_colon[DIGIT_COLON_L]);
-			ChangeNumber(g_disp[DIGIT_COLON_L]);
-			break;
-		case 3:
-			ChangeDigit(DIGIT_2);
-			ChangeColon(g_disp_colon[DIGIT_2]);
-			ChangeNumber(g_disp[DIGIT_2]);
-			break;
-		case 4:
-			ChangeDigit(DIGIT_3);
-			ChangeColon(g_disp_colon[DIGIT_3]);
-			ChangeNumber(g_disp[DIGIT_3]);
-			break;
-		case 5:
-			ChangeDigit(DIGIT_COLON_R);
-			ChangeColon(g_disp_colon[DIGIT_COLON_R]);
-			ChangeNumber(g_disp[DIGIT_COLON_R]);
-			break;
-		case 6:
-			ChangeDigit(DIGIT_4);
-			ChangeColon(g_disp_colon[DIGIT_4]);
-			ChangeNumber(g_disp[DIGIT_4]);
-			break;
-		case 7:
-			ChangeDigit(DIGIT_5);
-			ChangeColon(g_disp_colon[DIGIT_5]);
-			ChangeNumber(g_disp[DIGIT_5]);
-			break;
-		default:
-			break;
-	}
+	ChangeDigit(digit);
+	_delay_us(50);
+	ChangeColon(g_disp_colon[digit]);
+	ChangeNumber(g_disp[digit]);
+	
+//	switch (digit)
+//	{
+//		case 0:
+//			ChangeDigit(DIGIT_0);
+//			ChangeColon(g_disp_colon[DIGIT_0]);
+//			_delay_us(50);
+//			ChangeNumber(g_disp[DIGIT_0]);
+//			break;
+//		case 1:
+//			ChangeDigit(DIGIT_1);
+//			ChangeColon(g_disp_colon[DIGIT_1]);
+//			_delay_us(50);
+//			ChangeNumber(g_disp[DIGIT_1]);
+//			break;
+//		case 2:
+//			ChangeDigit(DIGIT_COLON_L);
+//			ChangeColon(g_disp_colon[DIGIT_COLON_L]);
+//			_delay_us(50);
+//			ChangeNumber(g_disp[DIGIT_COLON_L]);
+//			break;
+//		case 3:
+//			ChangeDigit(DIGIT_2);
+//			ChangeColon(g_disp_colon[DIGIT_2]);
+//			_delay_us(50);
+//			ChangeNumber(g_disp[DIGIT_2]);
+//			break;
+//		case 4:
+//			ChangeDigit(DIGIT_3);
+//			ChangeColon(g_disp_colon[DIGIT_3]);
+//			_delay_us(50);
+//			ChangeNumber(g_disp[DIGIT_3]);
+//			break;
+//		case 5:
+//			ChangeDigit(DIGIT_COLON_R);
+//			ChangeColon(g_disp_colon[DIGIT_COLON_R]);
+//			_delay_us(50);
+//			ChangeNumber(g_disp[DIGIT_COLON_R]);
+//			break;
+//		case 6:
+//			ChangeDigit(DIGIT_4);
+//			ChangeColon(g_disp_colon[DIGIT_4]);
+//			_delay_us(50);
+//			ChangeNumber(g_disp[DIGIT_4]);
+//			break;
+//		case 7:
+//			ChangeDigit(DIGIT_5);
+//			ChangeColon(g_disp_colon[DIGIT_5]);
+//			_delay_us(50);
+//			ChangeNumber(g_disp[DIGIT_5]);
+//			break;
+//		default:
+//			break;
+//	}
 	return;
 }
 
@@ -782,30 +811,49 @@ ISR(INT1_vect)
 // PIN change interrupt
 ISR(PCINT2_vect)
 {
-	// PCINTでロータリーエンコーダ検出するとき
-	#if 0
-	if (((PIND & 0b10000000) == 0)
-	||  ((PIND & 0b01000000) == 1))
+	// クロック割り込み
+	if(PIND & (1<<4))
 	{
-		if (!num_up)
+		g_disp_colon[2] = g_disp_colon[2] == 0 ? 3 : 0;
+		g_disp_colon[5] = g_disp_colon[5] == 0 ? 3 : 0;
+		
+		g_second++;
+		if ((g_second&0xf) >= 0xa)
 		{
-			num_down = true;
+			g_second &= 0xf0;
+			g_second += 0x10;
+			if ((g_second&0xf0) >= 0x60)
+			{
+				g_second = 0;
+				g_minute++;
+				if ((g_minute&0xf) >= 0xa)
+				{
+					g_minute &= 0xf0;
+					g_minute += 0x10;
+					if ((g_minute&0xf0) >= 0x60)
+					{
+						g_minute = 0;
+						g_hour++;
+						if ((g_hour&0xf) >= 0xa)
+						{
+							g_hour &= 0xf0;
+							g_hour += 0x10;
+							if (g_hour >= 24)
+							{
+								g_hour = 0;
+							}
+						}
+					}
+				}
+			}
 		}
-	}
-
-	if (((PIND & 0b01000000) == 0)
-	||  ((PIND & 0b10000000) == 1))
-	{
-		if (!num_down)
-		{
-			num_up = true;
-		}
-	}
-	#endif
-	
-	if (PIN_RTC_CLKOUT & MASK_RTC_CLKOUT)
-	{
-		clkout_flag = true;
+		
+		g_disp[0] = g_second & 0xf;
+		g_disp[1] = (g_second >> 4) & 0xf;
+		g_disp[3] = g_minute & 0xf;
+		g_disp[4] = (g_minute >> 4) & 0xf;
+		g_disp[6] = g_hour & 0xf;
+		g_disp[7] = (g_hour>> 4) & 0xf;
 	}
 }
 
@@ -836,12 +884,12 @@ static void setup()
 		PORTD  = 0b10101111; // 6は焦電センサが内臓プルダウンなのでHiZ
 #endif
 
-#if 0
+#if 1
 		// pin change interrupt
-		PCMSK0 = 0b00000000;
-		PCMSK1 = 0b00000000;
-		PCMSK2 = 0b00000001; // 7:PCINT7
-		PCICR  = 0b00000100; // PCINT2 enable
+		PCICR  = (1<<PCIE2)|(0<<PCIE1)|(0<<PCIE0);
+		PCMSK0 = 0;
+		PCMSK1 = 0;
+		PCMSK2 = (1<<PCINT20);
 		
 		// interrupt
 		EICRA  = 0b00001010; // INT0, INT1立ち下がり検出
@@ -870,7 +918,7 @@ static void setup()
 	}
 #endif
 	
-#if 0
+#if 1
 	// IIC
 	{
 		// 温度湿度センサ・AM2321と通信するI2Cバスのデータ転送速度は、最大100KHzです。
@@ -895,17 +943,26 @@ static void setup()
 	sei();
 
 
-#if 0	
+
+ChangeColon(0);
+
 	///// 外部デバイス初期化
 	_delay_ms(200); // DS1307の電源充電を待つ
+#if 0
 	//RTC8564NB_init();
 	//RTC8564NB_load();
+#endif
+#if 0
 	LPS331_init();
 	LPS331_load();
+#endif
+#if 0
 	AM2321_load();
+#endif
+#if 1
 	DS1307_init();
 #endif
-	
+
 	// 初期化完了、起動時一度だけ
 	beep(1);
 }
@@ -917,21 +974,21 @@ static void setup()
 // loop
 static void loop()
 {	
-#if 0
 	if ((PIND & 0b10000000) == 0)
 	{
-		g_number = 0;
-		//RTC8564NB_load();
-		//beep(g_second);
-
-		DS1307_read();
-		beep_hex(g_second);
-		
-		//g_illuminance = adc_get(ADC_ILLUMINANCE_SENSOR);
-		//beep_hex(g_illuminance);
-		led(true);
+		g_second = 0x0;
+		g_minute = 0x0;
+		g_hour   = 0x16;
 	}	
-	
+	if ((PIND & 0b01000000) == 0)
+	{
+		DS1307_write();
+	}
+	if ((PIND & 0b00100000) == 0)
+	{
+	}
+
+#if 0
 	if (num_up)
 	{
 		++g_number;
@@ -963,47 +1020,8 @@ static void loop()
 	//	led(false);
 	//}
 
-
-	if (clkout_flag)
-	{
-		//beep(1);
-		clkout_flag = 0;
-	}
 	_delay_ms(20);
 #endif
-
-	// 割り込みにする
-	_delay_ms(200);
-	_delay_ms(200);
-	_delay_ms(200);
-	_delay_ms(200);
-	_delay_ms(200);
-	
-	g_disp_colon[2] = g_disp_colon[2] == 0 ? 3 : 0;
-	g_disp_colon[5] = g_disp_colon[5] == 0 ? 3 : 0;
-	
-	g_second++;
-	if (g_second >= 60)
-	{
-		g_second = 0;
-		g_minute++;
-		if (g_minute >= 60)
-		{
-			g_minute = 0;
-			g_hour++;
-			if (g_hour >= 24)
-			{
-				g_hour = 0;
-			}
-		}
-	}
-	
-	g_disp[0] = g_second % 10;
-	g_disp[1] = g_second / 10;
-	g_disp[3] = g_minute % 10;
-	g_disp[4] = g_minute / 10;
-	g_disp[6] = g_hour % 10;
-	g_disp[7] = g_hour / 10;
 }
 
 // main
