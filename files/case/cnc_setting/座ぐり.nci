@@ -36,12 +36,12 @@ CircleHalf          =        0     ; ‘S‰~‚Í2•ªŠ„
 Ellipse             =        0.500 ; ‘È‰~Œö·
 EllipseFlg          =        1     ; ’·Œa‚Æ’ZŒa‚ª“™‚µ‚¢‘È‰~‚Í‰~‚Æ‚İ‚È‚·
 #--> Page:4
-MakeEnd             =        1     ; ‰ÁHÏ‚İ[‚³‚Ìw¦(0:‚È‚µ,1:µÌ¾¯Ä,2:ŒÅ’èZ)
+MakeEnd             =        2     ; ‰ÁHÏ‚İ[‚³‚Ìw¦(0:‚È‚µ,1:µÌ¾¯Ä,2:ŒÅ’èZ)
 MakeEndValue        =        1.000 ; µÌ¾¯Ä’l or ŒÅ’èZ’l
 MakeEndFeed         =       50.000 ; ‰ÁHÏ‚İ[‚³‚ÌZ‘—‚è‘¬“x
 Deep                =        1     ; [’¤‚ğs‚¤
 DeepFinal           =       -3.000 ; ÅIØ‚è‚İ
-ZStep               =       -0.100 ; Z²Ø‚è‚İ½Ã¯Ìß
+ZStep               =       -0.500 ; Z²Ø‚è‚İ½Ã¯Ìß
 DeepAProcess        =        1     ; [’¤Øíè‡(0:‘S‘Ì,1:ˆê•M)
 DeepCProcess        =        1     ; [’¤Øí•ûŒü(0:‰•œ,1:ˆê•û)
 DeepZProcess        =        1     ; R“_‚Ö‚ÌZ²•œ‹A(0:‘‘—‚è,1:Øí‘—‚è)
