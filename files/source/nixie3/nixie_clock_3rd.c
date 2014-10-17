@@ -136,17 +136,35 @@ typedef struct BIT_FOELD_PORTD
 
 #define ADC_ILLUMINANCE_SENSOR 6
 
+
+//----------------------------
+// types
+//----------------------------
+// コールバックタイプ
+typedef void (*t_callback)();
+
+#define NULL ((void*)0)
+
 //----------------------------
 // globals
 //----------------------------
-volatile int g_number = 0;
-volatile bool clkout_flag = false;
-volatile bool num_up   = false;
-volatile bool num_down = false;
+// 二代目時計の時のステートマシンのかわり
+volatile static t_callback g_on_button0 = NULL;
+volatile static t_callback g_on_button1 = NULL;
+volatile static t_callback g_on_button2 = NULL;
+
+// ボタン状態
+volatile static unsigned char g_button0_push = 0;
+volatile static unsigned char g_button1_push = 0;
+volatile static unsigned char g_button2_push = 0;
+volatile static unsigned char g_button0_press = 0;
+volatile static unsigned char g_button1_press = 0;
+volatile static unsigned char g_button2_press = 0;
 
 // 表示記憶領域
-//volatile static unsigned char g_disp_flag = 0b11111111;
-volatile static unsigned char g_disp[8] = {0, 0, 0, 0, 0, 0, 0, 6};
+volatile static unsigned char g_disp[8] = {0, 0, 3, 0, 0, 3, 0, 0};
+volatile static unsigned char g_disp_off_flag = 0b00000000;
+volatile static unsigned char g_disp_blink_flag = 0b00000000;
 //volatile static unsigned char g_disp_prev[8] = {0, 0, DIGIT_OFF, 0, 0, DIGIT_OFF, 0, 0};
 //volatile static unsigned char g_disp_transition[8] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
 //volatile static unsigned char g_disp_capture[8] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
@@ -178,6 +196,19 @@ void beep_hex(unsigned char hex_);
 //----------------------------
 // util
 //----------------------------
+// 二進化十進数を10進数に変換
+inline unsigned char bcd2num(unsigned char bcd_)
+{
+	return (((bcd_>>4)&0xf)*10) + (bcd_&0xf);
+	
+}
+
+// 10進数を二進化十進数に変換
+// 重いよ
+inline unsigned char num2bcd(unsigned char num_)
+{
+	return ((num_/10)<<4) + (num_%10);
+}
 
 //------
 // ADC
@@ -378,13 +409,16 @@ void beep_hex(unsigned char hex_)
 	return;
 }
 
+#if 0
+//-----------------
 // 明るさセンサ / brightness sensor
 static void update_brightness()
 {
 	return;
 }
+#endif
 
-
+#if 0
 //-----------------
 // 気圧センサ / atmospheric pressure sensor
 // update_atmospheric_pressureから呼び出す１バイト読み出し
@@ -445,8 +479,9 @@ static void LPS331_load()
 	tmp = LPS331_read(0x2B) | (tmp << 8);
 	//temparature = ((float)tmp / 480.0f) + 42.5f;
 }
+#endif
 
-
+#if 0
 //--------------------
 // 湿度センサ / temparature and humidity sensor
 static void AM2321_load()
@@ -484,15 +519,18 @@ static void AM2321_load()
 	
 	return;
 }
+#endif
 
+#if 0
 //----------
 // 人感センサ / motion sensor
 static void Napion_update()
 {
 	return;
 }
+#endif
 
-
+#if 0
 //---------------
 // RTC / real time clock
 static void RTC8564NB_load()
@@ -589,7 +627,9 @@ static void RTC8564NB_init()
 		
 	return;
 }
+#endif
 
+#if 1
 //---------------
 // RTC / real time clock
 static void DS1307_read()
@@ -650,11 +690,11 @@ static void DS1307_write()
 	return;
 }
 
-
 static void DS1307_init()
 {
 	DS1307_read();
 	
+	// 値を書き込まないと何故かクロックが動かない
 	iic_start(DS1307_SLAVE_ADDRESS_8BIT|IIC_WRITE_BIT);
 	iic_write(0x00);  // word address
 	//static const unsigned char CH  = 7;
@@ -677,8 +717,17 @@ static void DS1307_init()
 	iic_write((1<<OUT) | (1<<SQWE) | (0<<RS1) | (0<<RS0));  // 0x07 control 1kHz
 	iic_stop();
 }
+#endif
 
-// ニキシー管 / Nixie tube
+// 現在表示桁を指定した値に変更
+// 10~15は点灯せず
+static void ChangeNumber(unsigned char num_)
+{
+	static const unsigned char num2bit[] = {9, 8, 4, 2, 10, 14, 6, 12, 0, 1, 3};
+	PORTC = (PORTC & 0b11110000) | num2bit[num_];
+	return;
+}
+
 // 現在表示桁の変更
 // 繰り返しコールしてダイナミック点灯を行う
 static void ChangeDigit(e_digit digit_)
@@ -688,15 +737,6 @@ static void ChangeDigit(e_digit digit_)
 	return;
 }
 
-// ニキシー管 / Nixie tube
-// 現在表示桁を指定した値に変更
-// 10~15は点灯せず
-static void ChangeNumber(unsigned char num_)
-{
-	static const unsigned char num2bit[] = {9, 8, 4, 2, 10, 14, 6, 12, 0, 1, 3};
-	PORTC = (PORTC & 0b11110000) | num2bit[num_];
-	return;
-}
 
 static void ChangeColon(unsigned char num_)
 {	
@@ -707,184 +747,288 @@ static void ChangeColon(unsigned char num_)
 //----------------------------
 // interrupts
 //----------------------------
-// タイマ割り込み
+// 表示用タイマ割り込み
 ISR(TIMER0_COMPA_vect)
 {
 	static unsigned char digit = 0;
 	static unsigned char blank = 0;
-
+	static unsigned char blink = 0;
 
 	// blank期間なら全LEDをOFF
 	blank = blank == 0 ? 1 : 0;
 	if (blank)
 	{
-		ChangeNumber(10); // 10は点灯せず
+		//ChangeNumber(10); // 10は点灯せず
 		ChangeColon(0);
-		_delay_us(50);
-		ChangeDigit(2); // とりあえずコロンのところに退避
-
+		ChangeDigit(2);
+		return;
+	}
+		
+	// 表示LEDを切り替え
+	digit++;
+	digit&=0x7;
+	
+	// 点滅の消灯期間はreturn
+	blink++;
+	if ((g_disp_blink_flag & (1 << digit))
+	&&  (blink & 0x80))
+	{
 		return;
 	}
 	
-	// 表示LEDを切り替え
-	digit++;
-	digit &= 0x7;
+	// 表示flagなしならなら表示
+	if (g_disp_off_flag & (1 << digit))
+	{
+		return;
+	}
+
 	ChangeDigit(digit);
-	_delay_us(50);
 	ChangeColon(g_disp_colon[digit]);
 	ChangeNumber(g_disp[digit]);
-	
-//	switch (digit)
-//	{
-//		case 0:
-//			ChangeDigit(DIGIT_0);
-//			ChangeColon(g_disp_colon[DIGIT_0]);
-//			_delay_us(50);
-//			ChangeNumber(g_disp[DIGIT_0]);
-//			break;
-//		case 1:
-//			ChangeDigit(DIGIT_1);
-//			ChangeColon(g_disp_colon[DIGIT_1]);
-//			_delay_us(50);
-//			ChangeNumber(g_disp[DIGIT_1]);
-//			break;
-//		case 2:
-//			ChangeDigit(DIGIT_COLON_L);
-//			ChangeColon(g_disp_colon[DIGIT_COLON_L]);
-//			_delay_us(50);
-//			ChangeNumber(g_disp[DIGIT_COLON_L]);
-//			break;
-//		case 3:
-//			ChangeDigit(DIGIT_2);
-//			ChangeColon(g_disp_colon[DIGIT_2]);
-//			_delay_us(50);
-//			ChangeNumber(g_disp[DIGIT_2]);
-//			break;
-//		case 4:
-//			ChangeDigit(DIGIT_3);
-//			ChangeColon(g_disp_colon[DIGIT_3]);
-//			_delay_us(50);
-//			ChangeNumber(g_disp[DIGIT_3]);
-//			break;
-//		case 5:
-//			ChangeDigit(DIGIT_COLON_R);
-//			ChangeColon(g_disp_colon[DIGIT_COLON_R]);
-//			_delay_us(50);
-//			ChangeNumber(g_disp[DIGIT_COLON_R]);
-//			break;
-//		case 6:
-//			ChangeDigit(DIGIT_4);
-//			ChangeColon(g_disp_colon[DIGIT_4]);
-//			_delay_us(50);
-//			ChangeNumber(g_disp[DIGIT_4]);
-//			break;
-//		case 7:
-//			ChangeDigit(DIGIT_5);
-//			ChangeColon(g_disp_colon[DIGIT_5]);
-//			_delay_us(50);
-//			ChangeNumber(g_disp[DIGIT_5]);
-//			break;
-//		default:
-//			break;
-//	}
 	return;
 }
 
 // External interrupt 0
 ISR(INT0_vect)
 {
-	if (!num_up)
-	{
-		num_down = true;
-	}
 }
 
 // External interrupt 1
 ISR(INT1_vect)
 {
-	if (!num_down)
-	{
-		num_up = true;
-	}
 }
 
 // PIN change interrupt
 ISR(PCINT2_vect)
 {
-	// クロック割り込み
+	// 外部1Hzクロック割り込み
 	if(PIND & (1<<4))
 	{
-		g_disp_colon[2] = g_disp_colon[2] == 0 ? 3 : 0;
-		g_disp_colon[5] = g_disp_colon[5] == 0 ? 3 : 0;
-		
-		g_second++;
-		if ((g_second&0xf) >= 0xa)
 		{
-			g_second &= 0xf0;
-			g_second += 0x10;
-			if ((g_second&0xf0) >= 0x60)
+			g_disp_colon[2] = g_disp_colon[2] == 0 ? 3 : 0;
+			g_disp_colon[5] = g_disp_colon[5] == 0 ? 3 : 0;
+		
+			g_second++;
+			if ((g_second&0xf) >= 0xa)
 			{
-				g_second = 0;
-				g_minute++;
-				if ((g_minute&0xf) >= 0xa)
+				g_second &= 0xf0;
+				g_second += 0x10;
+				if ((g_second&0xf0) >= 0x60)
 				{
-					g_minute &= 0xf0;
-					g_minute += 0x10;
-					if ((g_minute&0xf0) >= 0x60)
+					g_second = 0;
+					g_minute++;
+					if ((g_minute&0xf) >= 0xa)
 					{
-						g_minute = 0;
-						g_hour++;
-						if ((g_hour&0xf) >= 0xa)
+						g_minute &= 0xf0;
+						g_minute += 0x10;
+						if ((g_minute&0xf0) >= 0x60)
 						{
-							g_hour &= 0xf0;
-							g_hour += 0x10;
-							if (g_hour >= 24)
+							g_minute = 0;
+							g_hour++;
+							if ((g_hour&0xf) >= 0xa)
 							{
-								g_hour = 0;
+								g_hour &= 0xf0;
+								g_hour += 0x10;
+								if (g_hour >= 24)
+								{
+									g_hour = 0;
+								}
 							}
 						}
 					}
 				}
 			}
-		}
 		
-		g_disp[0] = g_second & 0xf;
-		g_disp[1] = (g_second >> 4) & 0xf;
-		g_disp[3] = g_minute & 0xf;
-		g_disp[4] = (g_minute >> 4) & 0xf;
-		g_disp[6] = g_hour & 0xf;
-		g_disp[7] = (g_hour>> 4) & 0xf;
+			g_disp[0] = g_second & 0xf;
+			g_disp[1] = (g_second >> 4) & 0xf;
+			g_disp[3] = g_minute & 0xf;
+			g_disp[4] = (g_minute >> 4) & 0xf;
+			g_disp[6] = g_hour & 0xf;
+			g_disp[7] = (g_hour>> 4) & 0xf;
+		
+		}
 	}
 }
 
 
 //----------------------------
-// initialize
+// state machine
 //----------------------------
-static void setup()
+
+// prototype
+void State_CallbackSetSecond();
+void State_CallbackSetMinute();
+void State_CallbackSetHour();
+void State_CallbackClock();
+void State_CallbackHourUp();
+void State_CallbackHourDown();
+void State_CallbackMinuteUp();
+void State_CallbackMinuteDown();
+void State_CallbackSecondUp();
+void State_CallbackSecondDown();
+
+// Button0 / state change
+void State_CallbackClock()
 {
+	g_on_button0 = State_CallbackSetHour;
+	g_on_button1 = State_CallbackHourUp;
+	g_on_button2 = State_CallbackHourDown;
+	g_disp_blink_flag = 0b11000000;
+}
+void State_CallbackSetHour()
+{
+	g_on_button0 = State_CallbackSetMinute;
+	g_on_button1 = State_CallbackMinuteUp;
+	g_on_button2 = State_CallbackMinuteDown;
+	g_disp_blink_flag = 0b00011000;
+}
+void State_CallbackSetMinute()
+{
+	g_on_button0 = State_CallbackSetSecond;
+	g_on_button1 = State_CallbackSecondUp;
+	g_on_button2 = State_CallbackSecondDown;
+	g_disp_blink_flag = 0b00000011;
+}
+void State_CallbackSetSecond()
+{
+	g_on_button0 = State_CallbackClock;
+	g_on_button1 = NULL;
+	g_on_button2 = NULL;
+	g_disp_blink_flag = 0b00000000;
+	DS1307_write();
+}
+
+// Button1&Button2 / action in current state
+void State_CallbackHourUp()
+{
+	unsigned char tmp = bcd2num(g_hour);
+	g_hour = num2bcd(tmp>=23 ? 0 : tmp+1);
+	g_disp[6] = g_hour & 0xf;
+	g_disp[7] = (g_hour>> 4) & 0xf;
+}
+void State_CallbackHourDown()
+{
+	unsigned char tmp = bcd2num(g_hour);
+	g_hour = num2bcd(tmp==0 ? 23 : tmp-1);
+	g_disp[6] = g_hour & 0xf;
+	g_disp[7] = (g_hour>> 4) & 0xf;
+}
+void State_CallbackMinuteUp()
+{
+	unsigned char tmp = bcd2num(g_minute);
+	g_minute = num2bcd(tmp>=59 ? 0 : tmp+1);
+	g_disp[3] = g_minute & 0xf;
+	g_disp[4] = (g_minute >> 4) & 0xf;
+}
+void State_CallbackMinuteDown()
+{
+	unsigned char tmp = bcd2num(g_minute);
+	g_minute = num2bcd(tmp==0 ? 59 : tmp-1);
+	g_disp[3] = g_minute & 0xf;
+	g_disp[4] = (g_minute >> 4) & 0xf;
+}
+void State_CallbackSecondUp()
+{
+	unsigned char tmp = bcd2num(g_second);
+	g_second = num2bcd(tmp>=59 ? 0 : tmp+1);
+	g_disp[0] = g_second & 0xf;
+	g_disp[1] = (g_second >> 4) & 0xf;
+}
+void State_CallbackSecondDown()
+{
+	unsigned char tmp = bcd2num(g_second);
+	g_second = num2bcd(tmp==0 ? 59 : tmp-1);
+	g_disp[0] = g_second & 0xf;
+	g_disp[1] = (g_second >> 4) & 0xf;
+}
+//----------------------------
+// routine
+//----------------------------
+
+// loop
+static void loop()
+{	
+	
+	// ボタン取得
+	if ((PIND & 0b10000000) == 0)
+	{
+		if (g_button0_press == 0)
+			g_button0_push = 1;
+		else
+			g_button0_push = 0;
+
+		g_button0_press = 1;
+	}
+	else
+	{
+		g_button0_push = 0;
+		g_button0_press = 0;
+	}
+
+	if ((PIND & 0b01000000) == 0)
+	{
+		if (g_button1_press == 0)
+			g_button1_push = 1;
+		else
+			g_button1_push = 0;
+
+		g_button1_press = 1;
+	}
+	else
+	{
+		g_button1_press = 0;
+		g_button1_push = 0;
+	}
+	
+	if ((PIND & 0b00100000) == 0)
+	{
+		if (g_button2_press == 0)
+			g_button2_push = 1;
+		else
+			g_button2_push = 0;
+
+		g_button2_press = 1;
+	}
+	else
+	{
+		g_button2_press = 0;
+		g_button2_push = 0;
+	}
+
+	// プッシュ時動作実行
+	if (g_button0_push)
+	{
+		if (g_on_button0 != NULL)
+			g_on_button0();
+	}	
+	if (g_button1_push == 0)
+	{
+		if (g_on_button1 != NULL)
+			g_on_button1();
+	}
+	if (g_button2_push == 0)
+	{
+		if (g_on_button2 != NULL)
+			g_on_button2();
+	}
+
+	_delay_ms(20);
+}
+
+void init()
+{	
 	MCUCR &= 0b11101111; // PUD = 0, intrrupt on
 
 	// PIN (I/O, interrupt)
 	{
 		// port config
-#if 1
 		DDRB   = 0b11111111; // 0~5が有効 0134:line direct(012:line decoder), 6:beep
 		DDRC   = 0b10001111; // 0~7が有効 0123:nixie_driver, 45:IIC, 6:reset
 		DDRD   = 0b00001111; // 0~7が有効 0:rtc_out, 1:rtc_oe, 23:sw_AB, 5:remote, 6:焦電センサ(プルダウン内臓), 7:sw_push
 		PORTB  = 0b00000000;
 		PORTC  = 0b00110000; // 45:IICプルアップ, 6:resetプルアップ
 		PORTD  = 0b00000000; // 6はセンサが内臓プルダウンなのでHiZ
-#else
-		DDRB   = 0b11111111; // 0~5が有効 0134:line direct(012:line decoder), 6:beep
-		DDRC   = 0b10001111; // 0~7が有効 0123:nixie_driver, 45:IIC, 6:reset
-		DDRD   = 0b00010010; // 0~7が有効 0:rtc_out, 1:rtc_oe, 23:sw_AB, 5:remote, 6:焦電センサ(プルダウン内臓), 7:sw_push
-		PORTB  = 0b00000000;
-		PORTC  = 0b00110000; // 45:IICプルアップ, 6:resetプルアップ
-		PORTD  = 0b10101111; // 6は焦電センサが内臓プルダウンなのでHiZ
-#endif
 
-#if 1
 		// pin change interrupt
 		PCICR  = (1<<PCIE2)|(0<<PCIE1)|(0<<PCIE0);
 		PCMSK0 = 0;
@@ -894,31 +1038,25 @@ static void setup()
 		// interrupt
 		EICRA  = 0b00001010; // INT0, INT1立ち下がり検出
 		EIMSK  = 0b00000011; // INT0, INT1有効化
-#endif
 	}
 
-
-#if 1
 	// Timer
-	// 8桁ニキシーを30Hz表示したい、ブランク時間を半分とする
-	// マスタクロック8Mhz / 8 / 30 / 2 = 166666 (16.3 * 1024)回に一度割り込みでOK
+	// 8桁ニキシーを60Hz表示したい、ブランク時間を半分とする
 	// 約2msで割り込みさせる
+	// マスタクロック8Mhz / 1024 / 8 / 60 / 2 = 8.13 回に一度割り込みでOK
 	{
 		TIMSK0 = 0b0000010; // output compare A
 
-		// CTC, 1024分周prescaler入力
+		// 8でCTC(ClearTimerCompareMatch), 1024分周prescaler入力
 		TCCR0A = 0b00000010;
 		TCCR0B = 0b00000101;
-		
-		// 16でリセット
-		OCR0A  = 8; // 暫定で16→8
+		OCR0A  = 8;
 		
 		// Compare Match A Interrupt Enable
 		TIMSK0 = 0b00000010;
 	}
-#endif
 	
-#if 1
+	#if 1
 	// IIC
 	{
 		// 温度湿度センサ・AM2321と通信するI2Cバスのデータ転送速度は、最大100KHzです。
@@ -929,106 +1067,49 @@ static void setup()
 		TWBR = ((F_CPU/20000UL) - 16) / 2;
 		TWCR = 1<<TWEN;
 	}
-#endif
+	#endif
 	
-#if 0
+	#if 0
 	// ADC
 	{
 		// デジタルピンdisable
 		DIDR0 = 0b00000000;
 	}
-#endif
+	#endif
 
-	// 割り込み有効化アセンブラ命令コール
+	// 割り込み有効化ニーモニック
 	sei();
-
-
-
-ChangeColon(0);
 
 	///// 外部デバイス初期化
 	_delay_ms(200); // DS1307の電源充電を待つ
-#if 0
-	//RTC8564NB_init();
-	//RTC8564NB_load();
-#endif
-#if 0
+	
+	#if 0
+	RTC8564NB_init();
+	RTC8564NB_load();
+	#endif
+	#if 0
 	LPS331_init();
 	LPS331_load();
-#endif
-#if 0
+	#endif
+	#if 0
 	AM2321_load();
-#endif
-#if 1
+	#endif
+	#if 1
 	DS1307_init();
-#endif
+	#endif
 
 	// 初期化完了、起動時一度だけ
 	beep(1);
 }
 
-//----------------------------
-// routine
-//----------------------------
-
-// loop
-static void loop()
-{	
-	if ((PIND & 0b10000000) == 0)
-	{
-		g_second = 0x0;
-		g_minute = 0x0;
-		g_hour   = 0x16;
-	}	
-	if ((PIND & 0b01000000) == 0)
-	{
-		DS1307_write();
-	}
-	if ((PIND & 0b00100000) == 0)
-	{
-	}
-
-#if 0
-	if (num_up)
-	{
-		++g_number;
-		if (g_number > 9)
-		{
-			g_number = 0;
-		}
-		_delay_ms(200);
-	}
-	else if (num_down)
-	{
-		--g_number;
-		if (g_number < 0)
-		{
-			g_number = 9;
-		}
-		_delay_ms(200);
-	}
-	num_up = false;
-	num_down = false;
-	
-	////人感センサ
-	//if (chkbit(PIND, PIND6))
-	//{
-	//	led(true);
-	//}
-	//else
-	//{
-	//	led(false);
-	//}
-
-	_delay_ms(20);
-#endif
-}
-
-// main
 int main(void)
 {
-	setup();
+	g_on_button0 = State_CallbackClock;
+	g_on_button1 = NULL;
+	g_on_button2 = NULL;
 	
+	init();
+
 	while(1)
 	{
 		loop();

@@ -1,5 +1,7 @@
 Archive member included because of file (symbol)
 
+c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+                              nixie_clock_3rd.o (__udivmodqi4)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5/crtm328p.o (exit)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_copy_data.o)
@@ -16,21 +18,25 @@ Discarded input sections
  .text.led      0x00000000        0xc nixie_clock_3rd.o
  .text.beep_hex
                 0x00000000       0x90 nixie_clock_3rd.o
- .text.LPS331_read
-                0x00000000       0x38 nixie_clock_3rd.o
- .text.LPS331_write
-                0x00000000       0x34 nixie_clock_3rd.o
- .text.LPS331_init
-                0x00000000       0x36 nixie_clock_3rd.o
  .bss.g_alarm_minute
                 0x00000000        0x1 nixie_clock_3rd.o
  .data.g_alarm_hour
                 0x00000000        0x1 nixie_clock_3rd.o
  .bss.g_illuminance
                 0x00000000        0x1 nixie_clock_3rd.o
- .bss.clkout_flag
-                0x00000000        0x1 nixie_clock_3rd.o
- .bss.g_number  0x00000000        0x2 nixie_clock_3rd.o
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+ .text.libgcc.mul
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+ .text.libgcc.fixed
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
  .text.libgcc.mul
@@ -193,7 +199,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x5a0
+.text           0x00000000      0x8e4
  *(.vectors)
  .vectors       0x00000000       0x68 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5/crtm328p.o
                 0x00000000                __vector_default
@@ -272,52 +278,87 @@ END GROUP
                 0x000000a2                __vector_20
                 0x000000a6                . = ALIGN (0x2)
  *(.text.*)
+ .text.State_CallbackClock
+                0x000000a6       0x2c nixie_clock_3rd.o
+                0x000000a6                State_CallbackClock
+ .text.State_CallbackSetHour
+                0x000000d2       0x2c nixie_clock_3rd.o
+                0x000000d2                State_CallbackSetHour
+ .text.State_CallbackSetMinute
+                0x000000fe       0x2c nixie_clock_3rd.o
+                0x000000fe                State_CallbackSetMinute
+ .text.State_CallbackHourUp
+                0x0000012a       0x48 nixie_clock_3rd.o
+                0x0000012a                State_CallbackHourUp
+ .text.State_CallbackHourDown
+                0x00000172       0x48 nixie_clock_3rd.o
+                0x00000172                State_CallbackHourDown
+ .text.State_CallbackMinuteUp
+                0x000001ba       0x48 nixie_clock_3rd.o
+                0x000001ba                State_CallbackMinuteUp
+ .text.State_CallbackMinuteDown
+                0x00000202       0x48 nixie_clock_3rd.o
+                0x00000202                State_CallbackMinuteDown
+ .text.State_CallbackSecondUp
+                0x0000024a       0x48 nixie_clock_3rd.o
+                0x0000024a                State_CallbackSecondUp
+ .text.State_CallbackSecondDown
+                0x00000292       0x48 nixie_clock_3rd.o
+                0x00000292                State_CallbackSecondDown
  .text.__vector_21
-                0x000000a6       0x14 nixie_clock_3rd.o
-                0x000000a6                __vector_21
+                0x000002da       0x14 nixie_clock_3rd.o
+                0x000002da                __vector_21
  .text.__vector_24
-                0x000000ba       0x14 nixie_clock_3rd.o
-                0x000000ba                __vector_24
+                0x000002ee       0x14 nixie_clock_3rd.o
+                0x000002ee                __vector_24
  .text.iic_wait_job
-                0x000000ce        0xc nixie_clock_3rd.o
-                0x000000ce                iic_wait_job
+                0x00000302        0xc nixie_clock_3rd.o
+                0x00000302                iic_wait_job
  .text.iic_start
-                0x000000da       0x2a nixie_clock_3rd.o
-                0x000000da                iic_start
+                0x0000030e       0x2a nixie_clock_3rd.o
+                0x0000030e                iic_start
  .text.iic_repeat
-                0x00000104        0x4 nixie_clock_3rd.o
-                0x00000104                iic_repeat
+                0x00000338        0x4 nixie_clock_3rd.o
+                0x00000338                iic_repeat
  .text.iic_stop
-                0x00000108       0x10 nixie_clock_3rd.o
-                0x00000108                iic_stop
+                0x0000033c       0x10 nixie_clock_3rd.o
+                0x0000033c                iic_stop
  .text.iic_write
-                0x00000118       0x12 nixie_clock_3rd.o
-                0x00000118                iic_write
+                0x0000034c       0x12 nixie_clock_3rd.o
+                0x0000034c                iic_write
+ .text.State_CallbackSetSecond
+                0x0000035e       0x68 nixie_clock_3rd.o
+                0x0000035e                State_CallbackSetSecond
  .text.iic_read
-                0x0000012a       0x1c nixie_clock_3rd.o
-                0x0000012a                iic_read
- .text.beep     0x00000146       0x3c nixie_clock_3rd.o
-                0x00000146                beep
+                0x000003c6       0x1c nixie_clock_3rd.o
+                0x000003c6                iic_read
+ .text.beep     0x000003e2       0x3c nixie_clock_3rd.o
+                0x000003e2                beep
  .text.__vector_14
-                0x00000182       0xb8 nixie_clock_3rd.o
-                0x00000182                __vector_14
+                0x0000041e       0xde nixie_clock_3rd.o
+                0x0000041e                __vector_14
  .text.__vector_1
-                0x0000023a       0x26 nixie_clock_3rd.o
-                0x0000023a                __vector_1
+                0x000004fc       0x14 nixie_clock_3rd.o
+                0x000004fc                __vector_1
  .text.__vector_2
-                0x00000260       0x26 nixie_clock_3rd.o
-                0x00000260                __vector_2
+                0x00000510       0x14 nixie_clock_3rd.o
+                0x00000510                __vector_2
  .text.__vector_5
-                0x00000286      0x136 nixie_clock_3rd.o
-                0x00000286                __vector_5
+                0x00000524      0x136 nixie_clock_3rd.o
+                0x00000524                __vector_5
+ .text.init     0x0000065a      0x178 nixie_clock_3rd.o
+                0x0000065a                init
  .text.startup.main
-                0x000003bc      0x1e0 nixie_clock_3rd.o
-                0x000003bc                main
-                0x0000059c                . = ALIGN (0x2)
+                0x000007d2       0xf6 nixie_clock_3rd.o
+                0x000007d2                main
+ .text.libgcc.div
+                0x000008c8       0x18 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
+                0x000008c8                __udivmodqi4
+                0x000008e0                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000059c        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
-                0x0000059c                _exit
-                0x0000059c                exit
+ .fini9         0x000008e0        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
+                0x000008e0                _exit
+                0x000008e0                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -336,15 +377,16 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000059c        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
+ .fini0         0x000008e0        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000005a0                _etext = .
+                0x000008e4                _etext = .
 
-.data           0x00800100       0x1e load address 0x000005a0
+.data           0x00800100       0x1e load address 0x000008e4
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5/crtm328p.o
  .data          0x00800100        0x0 nixie_clock_3rd.o
+ .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_udivmodqi4.o)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_copy_data.o)
  .data          0x00800100        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_clear_bss.o)
@@ -357,7 +399,7 @@ END GROUP
  .data.g_disp   0x0080010a        0x8 nixie_clock_3rd.o
  *(.rodata)
  *(.rodata*)
- .rodata.num2bit.1746
+ .rodata.num2bit.1729
                 0x00800112        0xb nixie_clock_3rd.o
  *(.gnu.linkonce.d*)
                 0x0080011e                . = ALIGN (0x2)
@@ -365,34 +407,54 @@ END GROUP
                 0x0080011e                _edata = .
                 0x0080011e                PROVIDE (__data_end, .)
 
-.bss            0x0080011e        0x9
+.bss            0x0080011e       0x16
                 0x0080011e                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.digit.1755
+ .bss.blink.1743
                 0x0080011e        0x1 nixie_clock_3rd.o
- .bss.blank.1756
+ .bss.digit.1741
                 0x0080011f        0x1 nixie_clock_3rd.o
- .bss.g_week    0x00800120        0x1 nixie_clock_3rd.o
- .bss.g_date    0x00800121        0x1 nixie_clock_3rd.o
- .bss.g_month   0x00800122        0x1 nixie_clock_3rd.o
- .bss.g_year    0x00800123        0x1 nixie_clock_3rd.o
- .bss.g_second  0x00800124        0x1 nixie_clock_3rd.o
- .bss.num_down  0x00800125        0x1 nixie_clock_3rd.o
-                0x00800125                num_down
- .bss.num_up    0x00800126        0x1 nixie_clock_3rd.o
-                0x00800126                num_up
+ .bss.blank.1742
+                0x00800120        0x1 nixie_clock_3rd.o
+ .bss.g_week    0x00800121        0x1 nixie_clock_3rd.o
+ .bss.g_date    0x00800122        0x1 nixie_clock_3rd.o
+ .bss.g_month   0x00800123        0x1 nixie_clock_3rd.o
+ .bss.g_year    0x00800124        0x1 nixie_clock_3rd.o
+ .bss.g_second  0x00800125        0x1 nixie_clock_3rd.o
+ .bss.g_disp_blink_flag
+                0x00800126        0x1 nixie_clock_3rd.o
+ .bss.g_disp_off_flag
+                0x00800127        0x1 nixie_clock_3rd.o
+ .bss.g_button2_press
+                0x00800128        0x1 nixie_clock_3rd.o
+ .bss.g_button1_press
+                0x00800129        0x1 nixie_clock_3rd.o
+ .bss.g_button0_press
+                0x0080012a        0x1 nixie_clock_3rd.o
+ .bss.g_button2_push
+                0x0080012b        0x1 nixie_clock_3rd.o
+ .bss.g_button1_push
+                0x0080012c        0x1 nixie_clock_3rd.o
+ .bss.g_button0_push
+                0x0080012d        0x1 nixie_clock_3rd.o
+ .bss.g_on_button2
+                0x0080012e        0x2 nixie_clock_3rd.o
+ .bss.g_on_button1
+                0x00800130        0x2 nixie_clock_3rd.o
+ .bss.g_on_button0
+                0x00800132        0x2 nixie_clock_3rd.o
  *(COMMON)
-                0x00800127                PROVIDE (__bss_end, .)
-                0x000005a0                __data_load_start = LOADADDR (.data)
-                0x000005be                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00800134                PROVIDE (__bss_end, .)
+                0x000008e4                __data_load_start = LOADADDR (.data)
+                0x00000902                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800127        0x0
-                0x00800127                PROVIDE (__noinit_start, .)
+.noinit         0x00800134        0x0
+                0x00800134                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800127                PROVIDE (__noinit_end, .)
-                0x00800127                _end = .
-                0x00800127                PROVIDE (__heap_start, .)
+                0x00800134                PROVIDE (__noinit_end, .)
+                0x00800134                _end = .
+                0x00800134                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
